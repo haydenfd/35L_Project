@@ -1,0 +1,3 @@
+# IMPORTANT NOTES
+
+If the frontend cannot connect to the backend, it is likely because the proxy server is not set up properly due to caching issues. To fix this, delete the package-lock.json and node_modules of the **client** directory and then run npm install again in the same directory. This will reload everything with the proper server proxy in place mentioned in the package.json file in the client directory.
