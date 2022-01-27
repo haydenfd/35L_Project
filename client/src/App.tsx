@@ -5,16 +5,19 @@ import Navbar from './Components/Navbar'
 function App() {
 
     useEffect(() => {
-        (async () => {
-            await fetch('/api/getuser', {
-                method: 'POST',
-                body: JSON.stringify({ "userEmail": "someEmail"}),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(res => res.json()).then(response => console.log(response.result))
-        })()
+        
     }, [])
+
+    async function getUser(e: React.FormEvent) {
+        e.preventDefault()
+        await fetch('/api/getuser', {
+            method: 'POST',
+            body: JSON.stringify({ "userEmail": "someEmail"}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(response => console.log(response.result))
+    }
 
     async function submitTest(e: React.FormEvent) {
         e.preventDefault()
@@ -38,6 +41,7 @@ function App() {
         let form = document.getElementById('imgform') as HTMLFormElement
         if (!form) return
         let formData = new FormData(form)
+        formData.append('email', 'someEmail')
         await fetch('/api/uploadimg', {
             method: 'POST',
             body: formData,
@@ -64,13 +68,16 @@ function App() {
         <iframe title="labelimg" name="labelimg" style={{display: "none"}}></iframe>
         <form action="/api/uploadimg" target="labelimg" id="imgform" onSubmit={submitFile}>
             <input type="file" name="labelimg" id="labelimg" />
-            <input type="submit" id="imageSubmit" />
+            <input type="submit" />
         </form>
         <form onSubmit={submitTest}>
             <input type="submit" />
         </form>
         <form onSubmit={getImg}>
             <input type="submit" value='getIMG' />
+        </form>
+        <form onSubmit={getUser}>
+            <input type="submit" value="getUser" />
         </form>
         {/* <h1>SHOULD BE USING GRID LAYOUT FOR THE MAIN CONTENT</h1> */}
       </div>
