@@ -5,9 +5,15 @@ import './App.css';
 function App() {
 
     useEffect(() => {
-        // fetch('/api/test')
-        // console.log("hi");
-        
+        (async () => {
+            await fetch('/api/getuser', {
+                method: 'POST',
+                body: JSON.stringify({ "userEmail": "someEmail"}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json()).then(response => console.log(response.result))
+        })()
     }, [])
 
     async function submitTest(e: React.FormEvent) {
@@ -76,6 +82,7 @@ function App() {
         <form onSubmit={getImg}>
             <input type="submit" value='getIMG' />
         </form>
+        
       </header>
     </div>
   );
