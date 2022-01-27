@@ -18,7 +18,8 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(express.bodyParser()) // deprecated
+// app.use(express.urlencoded({ extended: true }))
+// app.use(express.bodyParser())
 
 client.connect(err => {
     if (err) throw err
@@ -31,14 +32,10 @@ app.listen(PORT, () => {
 
 app.post('/uploadimg', (req, res) => {
     console.log("received");
-    //WIP
+    res.render("HI")
 })
 
 app.post('/api/test', (req, res) => {
     res.send({ express: "APP IS CONNECTED" })
     console.log(req.body);
-    let data = { myData: req.body.MYDATA }
-    client.db('projectdb').collection('userinfo').insertOne(data, (err, res) => {
-        if (err) throw err
-    })
 })
