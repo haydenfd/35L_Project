@@ -7,6 +7,7 @@ import multer from 'multer'
 import { GridFsStorage } from 'multer-gridfs-storage'
 import path from 'path'
 import crypto from 'crypto'
+import CryptoJS from 'crypto-js' // doesn't support partial imports as of writing :(
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ const client = new MongoClient(process.env.MONGO_URI, {
 { useUnifiedTopology: true }, { useNewUrlParser: true })
 
 const PORT = process.env.PORT || 8000
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY
 
 const app = express()
 app.use(cors())
@@ -28,6 +30,20 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //     if (err) throw err
 //     console.log("db connected");
 // })
+
+/* user interface (db)
+{
+    email: <email>
+    userinfo: {
+        password: <password> <---encrypted!
+        first: <first>
+        last: <last>
+        bio: <bio>
+        followers: <followers>
+        following: <following>
+    }
+}
+ */
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)
@@ -112,3 +128,11 @@ app.post('/api/test', async (req, res) => {
         await client.close()
     }
 })
+
+function decryptString(string) {
+    return CryptoJS.AES.decrypt(string, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+}
+
+function encryptString(string) {
+    return CryptoJS.AES.encrypt(string, ENCRYPTION_KEY).toString()
+}
