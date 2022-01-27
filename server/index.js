@@ -36,7 +36,6 @@ app.listen(PORT, () => {
 app.post('/api/uploadimg', async (req, res) => {
     await client.connect()
     const db = client.db('projectdb')
-    // const storage = new GridFsStorage({ url: process.env.MONGO_URI, options: { useUnifiedTopology: true, useNewUrlParser: true, sslKey: process.env.CRED_PATH, sslCert: process.env.CRED_PATH }, file: (req, file) => {
     const storage = new GridFsStorage({ db: db, options: { useUnifiedTopology: true, useNewUrlParser: true}, file: (req, file) => {
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, (err, buf) => {
@@ -57,7 +56,7 @@ app.post('/api/uploadimg', async (req, res) => {
     upload(req, res, async function (err) {
         if (err) {
             // This is a good practice when you want to handle your errors differently
-            console.log(err);
+            console.error(err);
             await client.close()
             return
         }
