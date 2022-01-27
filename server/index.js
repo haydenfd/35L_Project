@@ -41,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
         bio: <bio>
         followers: <followers>
         following: <following>
+        pfp: <picturename>
     }
 }
  */
