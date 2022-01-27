@@ -81,6 +81,69 @@ app.post('/api/uploadimg', async (req, res) => {
     })
 })
 
+app.post('/api/getuser', async (req, res) => {
+    let userEmail = req.body.userEmail
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    let result
+    try {
+        result = await collection.findOne({ email: userEmail })
+    } catch (err) {
+        console.error(err)
+    } finally {
+        res.send({ result: result })
+        await client.close()
+    }
+})
+
+app.post('/api/signin', async (req, res) => {
+    let userEmail = req.body.userEmail
+    let userPassword = req.body.userPassword
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    let isValid = false
+    try {
+        let user = await collection.findOne({ email: userEmail })
+        isValid = decryptString(user.userinfo.password) === userPassword
+    } catch (err) {
+        console.error(err)
+    } finally {
+        res.send({ isValid: isValid })
+    }
+})
+
+// this assumes user does not yet exist
+app.post('/api/adduser', async (req, res) => {
+    let userEmail = req.body.userEmail
+    let userPassword = req.body.userPassword
+    let first = req.body.first
+    let last = req.body.last
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    let userOb = {
+        email: userEmail,
+        userinfo: {
+            password: encryptString(userPassword),
+            first: first,
+            last: last,
+            bio: '',
+            followers: [],
+            following: [],
+            pfp: ''
+        }
+    }
+    try {
+        await collection.insertOne(userOb)
+    } catch (err) {
+        console.error(err)
+    } finally {
+        await client.close()
+    }
+})
+
 app.post('/api/getimg', async (req, res) => {
     let fileName = req.body.fileName
     await client.connect()
