@@ -37,6 +37,13 @@ function App() {
       <Navbar />
       <div className="body">
         <h1>CONTENT CONTENT CONTENT</h1>
+        <form method="POST" encType="multipart/form-data" action="/uploadimg" target="labelimg">
+            <input type="file" name="labelimg" id="labelimg" />
+            {/* <input type="submit" id="imageSubmit" /> */}
+        </form>
+        <form onSubmit={submitTest}>
+            <input type="submit" />
+        </form>
         {/* <h1>SHOULD BE USING GRID LAYOUT FOR THE MAIN CONTENT</h1> */}
       </div>
     </div>
