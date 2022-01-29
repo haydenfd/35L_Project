@@ -3,3 +3,4 @@
 **Group Members**
 * Ryan Jackson
 * Riley Bruins
+* Dharma Shah
