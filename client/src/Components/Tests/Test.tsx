@@ -4,12 +4,20 @@ import React, { useEffect } from 'react';
 import './index.css';
 
 function Test() {
-
     useEffect(() => {
-        // fetch('/api/test')
-        // console.log("hi");
         
     }, [])
+
+    async function getUser(e: React.FormEvent) {
+        e.preventDefault()
+        await fetch('/api/getuser', {
+            method: 'POST',
+            body: JSON.stringify({ "userEmail": "someEmail"}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(response => console.log(response.result))
+    }
 
     async function submitTest(e: React.FormEvent) {
         e.preventDefault()
@@ -33,6 +41,7 @@ function Test() {
         let form = document.getElementById('imgform') as HTMLFormElement
         if (!form) return
         let formData = new FormData(form)
+        formData.append('email', 'someEmail')
         await fetch('/api/uploadimg', {
             method: 'POST',
             body: formData,
@@ -53,12 +62,13 @@ function Test() {
 
   return (
     <div className="app">
+      <Navbar />
       <div className="body">
         <h1>CONTENT CONTENT CONTENT</h1>
         <iframe title="labelimg" name="labelimg" style={{display: "none"}}></iframe>
         <form action="/api/uploadimg" target="labelimg" id="imgform" onSubmit={submitFile}>
             <input type="file" name="labelimg" id="labelimg" />
-            <input type="submit" id="imageSubmit" />
+            <input type="submit" />
         </form>
         <form onSubmit={submitTest}>
             <input type="submit" />
@@ -66,10 +76,13 @@ function Test() {
         <form onSubmit={getImg}>
             <input type="submit" value='getIMG' />
         </form>
+        <form onSubmit={getUser}>
+            <input type="submit" value="getUser" />
+        </form>
         {/* <h1>SHOULD BE USING GRID LAYOUT FOR THE MAIN CONTENT</h1> */}
       </div>
-    </div>
-  );
+   </div>
+  )
 }
 
 export default Test;

@@ -25,6 +25,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(multer().any())
 
 // client.connect(err => {
 //     if (err) throw err
@@ -41,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
         bio: <bio>
         followers: <followers>
         following: <following>
+        pfp: <picturename>
     }
 }
  */
@@ -54,7 +56,7 @@ app.post('/api/uploadimg', async (req, res) => {
     const db = client.db('projectdb')
     const storage = new GridFsStorage({ db: db, options: { useUnifiedTopology: true, useNewUrlParser: true}, file: (req, file) => {
         return new Promise((resolve, reject) => {
-            crypto.randomBytes(16, (err, buf) => {
+            crypto.randomBytes(16, async (err, buf) => {
                 if (err) {
                     return reject(err);
                 }
@@ -64,11 +66,15 @@ app.post('/api/uploadimg', async (req, res) => {
                     bucketName: 'fs'
                 };
                 // store filename somewhere relating to user pfp so file can be retrieved later
+                if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
+                    await db.collection('userinfo').updateOne({email: req.body.email}, {$set: {'userinfo.pfp': filename}})
+                }
                 resolve(fileInfo);
             })
         })
     }})
-    const upload = multer({ storage }).single('labelimg')
+    // const upload = multer({ storage }).any('labelimg')
+    const upload = multer({ storage }).any()
     upload(req, res, async function (err) {
         if (err) {
             // This is a good practice when you want to handle your errors differently
@@ -114,7 +120,7 @@ app.post('/api/signin', async (req, res) => {
     }
 })
 
-// this assumes user does not yet exist
+// this assumes user does not yet exist, always check this first
 app.post('/api/adduser', async (req, res) => {
     let userEmail = req.body.userEmail
     let userPassword = req.body.userPassword
