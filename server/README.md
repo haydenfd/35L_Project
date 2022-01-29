@@ -10,23 +10,23 @@ To connect to MongoDB properly, create a .env file in the server directory and p
 
 ## User info
 
-The user data is structured as follows:
-        email: <email>
-        userinfo: {
-            password: <password> <---encrypted!
-            first: <first>
-            last: <last>
-            bio: <bio>
-            followers: <followers>
-            following: <following>
-            pfp: <picturename>
-        }
+The user data is structured as follows: <br />
+email: <email> <br />
+userinfo: { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: <password> <---encrypted! <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first: <first> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last: <last> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bio: <bio> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;followers: <followers> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;following: <following> <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pfp: <picturename> <br />
+} <br />
   
-You (the frontend) can query this data using the following example:
-      await fetch('/api/getuser', {
-                method: 'POST',
-                body: JSON.stringify({ "userEmail": "someEmail"}),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(res => res.json()).then(response => console.log(response.result))
+You (the frontend) can query this data using the following example: <br />
+await fetch('/api/getuser', {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body: JSON.stringify({ "userEmail": "someEmail"}),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers: {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Content-Type": "application/json"<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}).then(res => res.json()).then(response => console.log(response.result))<br />
