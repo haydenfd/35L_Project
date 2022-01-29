@@ -7,3 +7,26 @@ If the frontend cannot connect to the backend, it is likely because the proxy se
 ## Relating to setting up the database
 
 To connect to MongoDB properly, create a .env file in the server directory and put the certificate file in the server directory as well. Then add the Mongo URI under the environment variable MONGO_URI and add the name of the certificate file under the environment variable CRED_PATH
+
+## User info
+
+The user data is structured as follows:
+email: <email>
+userinfo: {
+    password: <password> <---encrypted!
+    first: <first>
+    last: <last>
+    bio: <bio>
+    followers: <followers>
+    following: <following>
+    pfp: <picturename>
+}
+  
+You (the frontend) can query this data using the following example:
+  await fetch('/api/getuser', {
+            method: 'POST',
+            body: JSON.stringify({ "userEmail": "someEmail"}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(response => console.log(response.result))
