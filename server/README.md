@@ -11,7 +11,7 @@ To connect to MongoDB properly, create a .env file in the server directory and p
 ## User info
 
 The user data is structured as follows:
-email: <email>
+`email: <email>
 userinfo: {
     password: <password> <---encrypted!
     first: <first>
@@ -20,13 +20,13 @@ userinfo: {
     followers: <followers>
     following: <following>
     pfp: <picturename>
-}
+}`
   
 You (the frontend) can query this data using the following example:
-  await fetch('/api/getuser', {
+  `await fetch('/api/getuser', {
             method: 'POST',
             body: JSON.stringify({ "userEmail": "someEmail"}),
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(res => res.json()).then(response => console.log(response.result))
+        }).then(res => res.json()).then(response => console.log(response.result))`
