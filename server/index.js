@@ -60,10 +60,17 @@ app.post('/api/uploadimg', async (req, res) => {
                 if (err) {
                     return reject(err);
                 }
-                const filename = buf.toString('hex') + path.extname(file.originalname);
+                console.log(req.body);
+                let filename
+                if (req.body && req.body.originalname) {
+                    filename = file.originalname
+                } else {
+                    filename = buf.toString('hex') + path.extname(file.originalname);
+                }
                 const fileInfo = {
                     filename: filename,
-                    bucketName: 'fs'
+                    bucketName: 'fs',
+                    metadata: '550000,420 Waukesha Rd'
                 };
                 // store filename somewhere relating to user pfp so file can be retrieved later
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)

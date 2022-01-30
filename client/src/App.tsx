@@ -38,10 +38,15 @@ function App() {
 
     async function submitFile(e: React.FormEvent) {
         e.preventDefault()
-        let form = document.getElementById('imgform') as HTMLFormElement
-        if (!form) return
-        let formData = new FormData(form)
-        formData.append('email', 'someEmail')
+        // let form = document.getElementById('imgform') as HTMLFormElement
+        let file = document.getElementById('labelimg') as HTMLInputElement
+        // if (!form) return
+        if (!file.files) return
+        // let formData = new FormData(form)
+        let formData = new FormData()
+        // formData.append('email', 'someEmail')
+        formData.append('originalname', 'true')
+        formData.append('labelimg', file.files[0])
         await fetch('/api/uploadimg', {
             method: 'POST',
             body: formData,
