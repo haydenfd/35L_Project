@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import './index.css';
 
 function Test() {
-
     useEffect(() => {
         
     }, [])
