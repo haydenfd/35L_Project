@@ -60,10 +60,17 @@ app.post('/api/uploadimg', async (req, res) => {
                 if (err) {
                     return reject(err);
                 }
-                const filename = buf.toString('hex') + path.extname(file.originalname);
+                console.log(req.body);
+                let filename
+                if (req.body && req.body.originalname) {
+                    filename = file.originalname
+                } else {
+                    filename = buf.toString('hex') + path.extname(file.originalname);
+                }
                 const fileInfo = {
                     filename: filename,
-                    bucketName: 'fs'
+                    bucketName: 'fs',
+                    metadata: '2220000,901 Harborfront Way'
                 };
                 // store filename somewhere relating to user pfp so file can be retrieved later
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
@@ -176,6 +183,29 @@ app.post('/api/getimg', async (req, res) => {
     } catch (err) {
         console.error(err)
         // throw err // still want to crash
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/getdummydata', async (req, res) => {
+    let fileName = req.body.fileName
+    await client.connect()
+    const db = client.db('projectdb')
+    const filescoll = db.collection('fs.files')
+    const chunkscoll = db.collection('fs.chunks')
+    try {
+        const file = await filescoll.findOne({ filename: fileName })
+        const chunks = await chunkscoll.find({ files_id: file._id }).sort({ n: 1 }).toArray()
+        if (!chunks || chunks.length === 0) return
+        let fileData = []
+        for (let i = 0; i < chunks.length; i++) {
+            fileData.push(chunks[i].data.toString('base64'))
+        }
+        let finishedFile = `data:${file.contentType};base64,${fileData.join('')}`
+        res.send({ base64Data: finishedFile, infostring: file.metadata })
+    } catch (err) {
+        console.error(err)
     } finally {
         await client.close()
     }

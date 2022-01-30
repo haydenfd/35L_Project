@@ -38,10 +38,15 @@ function Test() {
 
     async function submitFile(e: React.FormEvent) {
         e.preventDefault()
-        let form = document.getElementById('imgform') as HTMLFormElement
-        if (!form) return
-        let formData = new FormData(form)
-        formData.append('email', 'someEmail')
+        // let form = document.getElementById('imgform') as HTMLFormElement
+        let file = document.getElementById('labelimg') as HTMLInputElement
+        // if (!form) return
+        if (!file.files) return
+        // let formData = new FormData(form)
+        let formData = new FormData()
+        // formData.append('email', 'someEmail')
+        formData.append('originalname', 'true')
+        formData.append('labelimg', file.files[0])
         await fetch('/api/uploadimg', {
             method: 'POST',
             body: formData,
@@ -59,30 +64,6 @@ function Test() {
             headers: {'Content-Type': 'application/json'}}
         ).then(res => res.json()).then(response => console.log(response))
     }
-
-  return (
-    <div className="app">
-      <Navbar />
-      <div className="body">
-        <h1>CONTENT CONTENT CONTENT</h1>
-        <iframe title="labelimg" name="labelimg" style={{display: "none"}}></iframe>
-        <form action="/api/uploadimg" target="labelimg" id="imgform" onSubmit={submitFile}>
-            <input type="file" name="labelimg" id="labelimg" />
-            <input type="submit" />
-        </form>
-        <form onSubmit={submitTest}>
-            <input type="submit" />
-        </form>
-        <form onSubmit={getImg}>
-            <input type="submit" value='getIMG' />
-        </form>
-        <form onSubmit={getUser}>
-            <input type="submit" value="getUser" />
-        </form>
-        {/* <h1>SHOULD BE USING GRID LAYOUT FOR THE MAIN CONTENT</h1> */}
-      </div>
-   </div>
-  )
 }
 
 export default Test;
