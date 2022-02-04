@@ -1,0 +1,49 @@
+.parent {
+    max-width: 280px;
+    position: relative;
+    cursor: pointer;
+}
+
+.timeframe {
+    font-weight: 400;
+    size: 10px;
+    color: #585858;
+    float: right;
+    margin-top: 4px;
+}
+
+.featuredImage {
+    width: 280px;
+    height: 250px;
+    border-radius: 25px;
+}
+
+.address {
+    float: left;
+    margin-top: 7px;
+    font-weight: 600;
+}
+
+.price {
+    float:right;
+    margin-top: 6px;
+}
+
+.proximity {
+    font-weight: 400;
+    size: 10px;
+    color: #585858;
+    float: left;
+    margin-top: 4px;
+}
+
+.wrapperdiv {
+    margin-top: 10px;
+    margin-left: 2%;
+}
+
+.flex-pos {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+}

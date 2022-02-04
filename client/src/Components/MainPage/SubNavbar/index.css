@@ -1,0 +1,25 @@
+.flex {
+    display: flex;
+    flex-direction: row;
+    margin-left: 4%;
+  }
+
+@media (max-width: 800px) {
+    .flex {
+      flex-direction: column;
+    }
+  }
+    
+
+.flex > button {
+    margin-left: 1%;
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    color: #606060;
+    font-family: Helvetica, sans-serif;
+  }

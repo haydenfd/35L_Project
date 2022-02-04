@@ -190,6 +190,7 @@ app.post('/api/getimg', async (req, res) => {
 
 app.post('/api/getdummydata', async (req, res) => {
     let fileName = req.body.fileName
+    console.log(fileName)
     await client.connect()
     const db = client.db('projectdb')
     const filescoll = db.collection('fs.files')
