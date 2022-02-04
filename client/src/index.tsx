@@ -10,13 +10,14 @@ import App from './App';
 import ProfilePage from './Components/Profile/ProfilePage'
 import Test from './Components/Tests/Test'
 import reportWebVitals from './reportWebVitals';
+import MainPage from './Components/MainPage/MainPage';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <App />
         <Routes>
-          <Route path="/" element={<Test />}/>
+          <Route path="/" element={<MainPage />}/>
           <Route path="/profile" element={<ProfilePage />}/>
         </Routes>
     </Router>
