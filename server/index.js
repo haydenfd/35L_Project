@@ -61,15 +61,25 @@ app.post('/api/uploadimg', async (req, res) => {
                     return reject(err);
                 }
                 let filename
+                let fileInfo
                 if (req.body && req.body.listingName) { // if listingName specified, treat as a listing name
                     filename = file.originalname
+                    fileInfo = {
+                        filename: filename,
+                        bucketName: 'fs',
+                        metadata: `${req.body.price},${req.body.location}`
+                    }
                 } else {
                     filename = buf.toString('hex') + path.extname(file.originalname)
+                    fileInfo = {
+                        filename: filename,
+                        bucketName: 'fs',
+                    }
                 }
-                const fileInfo = {
-                    filename: filename,
-                    bucketName: 'fs',
-                };
+                // const fileInfo = {
+                //     filename: filename,
+                //     bucketName: 'fs',
+                // }
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
                     const theUser = await db.collection('userinfo').findOne({ email: req.body.email })
                     const oldPfpName = theUser.userinfo.pfp
