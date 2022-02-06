@@ -29,7 +29,27 @@ function Test() {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(res => res.json()).then(response => console.log(response.result))
+        }).then(res => res.json()).then(response => {
+            // console.log(response.result)
+            return response.result as userObject
+        })
+    }
+
+    async function signIn(e: React.FormEvent, userEmail: string, userPassword: string) {
+        e.preventDefault()
+        await fetch('/api/signin', {
+            method: 'POST',
+            body: JSON.stringify({
+                "userEmail": userEmail,
+                "userPassword": userPassword
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(response => {
+            // console.log(response)
+            return response
+        })
     }
 
     async function submitTest(e: React.FormEvent) {
@@ -86,7 +106,7 @@ function Test() {
             body: JSON.stringify({ "fileName": fileName}),
             headers: {'Content-Type': 'application/json'}}
         ).then(res => res.json()).then(response => {
-            console.log(response)
+            // console.log(response)
             return response
         })
     }
