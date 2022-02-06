@@ -72,6 +72,11 @@ app.post('/api/uploadimg', async (req, res) => {
                 };
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
                     // TODO: DELETE PREVIOUS PROFILE PIC IF ONE EXISTED
+                    const theUser = await db.collection('userinfo').findOne({ email: req.body.email })
+                    const oldPfpName = theUser.userinfo.pfp
+                    if (oldPfpName) {
+                        await deleteImg(oldPfpName)
+                    }
                     await db.collection('userinfo').updateOne({email: req.body.email}, {$set: {'userinfo.pfp': filename}})
                 }
                 
