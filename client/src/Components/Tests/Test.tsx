@@ -3,20 +3,53 @@
 import React, { useEffect } from 'react';
 import './index.css';
 
+interface userObject {
+    email: string,
+    userinfo: {
+        password: string,
+        first: string,
+        last: string,
+        bio: string,
+        followers: string[],
+        following: string[],
+        pfp: string
+    }
+}
+
 function Test() {
     useEffect(() => {
         
     }, [])
 
-    async function getUser(e: React.FormEvent) {
+    async function getUser(e: React.FormEvent, email: string) {
         e.preventDefault()
         await fetch('/api/getuser', {
             method: 'POST',
-            body: JSON.stringify({ "userEmail": "someEmail"}),
+            body: JSON.stringify({ "userEmail": email}),
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(res => res.json()).then(response => console.log(response.result))
+        }).then(res => res.json()).then(response => {
+            // console.log(response.result)
+            return response.result as userObject
+        })
+    }
+
+    async function signIn(e: React.FormEvent, userEmail: string, userPassword: string) {
+        e.preventDefault()
+        await fetch('/api/signin', {
+            method: 'POST',
+            body: JSON.stringify({
+                "userEmail": userEmail,
+                "userPassword": userPassword
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(response => {
+            // console.log(response)
+            return response
+        })
     }
 
     async function submitTest(e: React.FormEvent) {
@@ -36,16 +69,26 @@ function Test() {
         await fetch('/api/test', postData)
     }
 
-    async function submitFile(e: React.FormEvent) {
+    async function submitFile(e: React.FormEvent, file: HTMLInputElement, isPfp: boolean, email: string, isListing: boolean = false, price: string, location: string) {
         e.preventDefault()
-        // let form = document.getElementById('imgform') as HTMLFormElement
-        let file = document.getElementById('labelimg') as HTMLInputElement
-        // if (!form) return
         if (!file.files) return
-        // let formData = new FormData(form)
+        if (!isPfp && !isListing) {
+            console.error("Must either be pfp or listing!")
+            return
+        }
+        if (isPfp && isListing) {
+            console.error("Image cannot be a listing and a profile picture!")
+            return
+        }
         let formData = new FormData()
-        // formData.append('email', 'someEmail')
-        formData.append('originalname', 'true')
+        if (isPfp) {
+            formData.append('email', email)
+        }
+        if (isListing) {
+            formData.append('listingName', 'true')
+            formData.append('price', price)
+            formData.append('location', location)
+        }
         formData.append('labelimg', file.files[0])
         await fetch('/api/uploadimg', {
             method: 'POST',
@@ -56,13 +99,16 @@ function Test() {
         })
     }
 
-    async function getImg(e: React.FormEvent) {
+    async function getImg(e: React.FormEvent, fileName: string) {
         e.preventDefault()
         await fetch('/api/getimg', {
             method: 'POST',
-            body: JSON.stringify({ "fileName": "1e8309b5b21b77e02a2ab3318a5c498b.jpg"}),
+            body: JSON.stringify({ "fileName": fileName}),
             headers: {'Content-Type': 'application/json'}}
-        ).then(res => res.json()).then(response => console.log(response))
+        ).then(res => res.json()).then(response => {
+            // console.log(response)
+            return response
+        })
     }
 }
 

@@ -60,22 +60,35 @@ app.post('/api/uploadimg', async (req, res) => {
                 if (err) {
                     return reject(err);
                 }
-                console.log(req.body);
                 let filename
-                if (req.body && req.body.originalname) {
+                let fileInfo
+                if (req.body && req.body.listingName) { // if listingName specified, treat as a listing name
                     filename = file.originalname
+                    fileInfo = {
+                        filename: filename,
+                        bucketName: 'fs',
+                        metadata: `${req.body.price},${req.body.location}`
+                    }
                 } else {
-                    filename = buf.toString('hex') + path.extname(file.originalname);
+                    filename = buf.toString('hex') + path.extname(file.originalname)
+                    fileInfo = {
+                        filename: filename,
+                        bucketName: 'fs',
+                    }
                 }
-                const fileInfo = {
-                    filename: filename,
-                    bucketName: 'fs',
-                    metadata: '2220000,901 Harborfront Way'
-                };
-                // store filename somewhere relating to user pfp so file can be retrieved later
+                // const fileInfo = {
+                //     filename: filename,
+                //     bucketName: 'fs',
+                // }
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
+                    const theUser = await db.collection('userinfo').findOne({ email: req.body.email })
+                    const oldPfpName = theUser.userinfo.pfp
+                    if (oldPfpName) {
+                        await deleteImg(oldPfpName)
+                    }
                     await db.collection('userinfo').updateOne({email: req.body.email}, {$set: {'userinfo.pfp': filename}})
                 }
+                
                 resolve(fileInfo);
             })
         })
@@ -83,6 +96,7 @@ app.post('/api/uploadimg', async (req, res) => {
     // const upload = multer({ storage }).any('labelimg')
     const upload = multer({ storage }).any()
     upload(req, res, async function (err) {
+        console.log(req.body);
         if (err) {
             // This is a good practice when you want to handle your errors differently
             console.error(err);
@@ -235,4 +249,25 @@ function decryptString(string) {
 
 function encryptString(string) {
     return CryptoJS.AES.encrypt(string, ENCRYPTION_KEY).toString()
+}
+
+async function deleteImg(imgName) {
+    await client.connect()
+    const db = client.db('projectdb')
+    const filescoll = db.collection('fs.files')
+    const chunkscoll = db.collection('fs.chunks')
+    try {
+        if (!imgName) return
+        const docs = await filescoll.find({ filename: fileName }).toArray()
+        if (!docs || docs.length === 0) return // file not found
+        const chunks = await chunkscoll.find({ files_id: docs[0]._id }).sort({ n: 1 }).toArray()
+        if (chunks && chunks.length !== 0) {
+            await chunkscoll.deleteMany({ files_id: docs[0]._id})
+        }
+        await filescoll.deleteOne({_id: docs[0]._id})
+    } catch (err) {
+        console.error(err)
+    } finally {
+        await client.close()
+    }
 }
