@@ -229,7 +229,7 @@ app.post('/api/getdummydata', async (req, res) => {
     console.log(fileName)
     await client.connect()
     const db = client.db('projectdb')
-    const filescoll = db.collection('fs.files')
+    const filescoll = awaitdb.collection('fs.files')
     const chunkscoll = db.collection('fs.chunks')
     try {
         const file = await filescoll.findOne({ filename: fileName })
@@ -241,6 +241,22 @@ app.post('/api/getdummydata', async (req, res) => {
         }
         let finishedFile = `data:${file.contentType};base64,${fileData.join('')}`
         res.send({ base64Data: finishedFile, infostring: file.metadata })
+    } catch (err) {
+        console.error(err)
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/follow', async (req, res) => {
+    let follower = req.body.follower
+    let followee = req.body.followee
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    try {
+        await collection.updateOne({username: follower}, {$push: {'userinfo.following': followee}})
+        await collection.updateOne({username: followee}, {$push: {'userinfo.followers': follower}})
     } catch (err) {
         console.error(err)
     } finally {
