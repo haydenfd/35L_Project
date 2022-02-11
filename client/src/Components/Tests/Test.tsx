@@ -5,6 +5,7 @@ import './index.css';
 
 interface userObject {
     email: string,
+    username: string,
     userinfo: {
         password: string,
         first: string,
@@ -12,7 +13,9 @@ interface userObject {
         bio: string,
         followers: string[],
         following: string[],
-        pfp: string
+        pfp: string,
+        phoneNumber: string,
+        favoritePosts: string[]
     }
 }
 
@@ -108,6 +111,19 @@ function Test() {
         ).then(res => res.json()).then(response => {
             // console.log(response)
             return response
+        })
+    }
+
+    async function addUser(e: React.FormEvent, email: string, password: string, username: string) {
+        e.preventDefault()
+        await fetch('/api/adduser', {
+            method: 'POST',
+            body: JSON.stringify({
+                "userEmail": email,
+                "userPassword": password,
+                "userName": username
+            }),
+            headers: {'Content-Type': 'application/json'}
         })
     }
 }

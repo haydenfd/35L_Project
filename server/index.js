@@ -145,6 +145,7 @@ app.post('/api/signin', async (req, res) => {
 app.post('/api/adduser', async (req, res) => {
     let userEmail = req.body.userEmail
     let userPassword = req.body.userPassword
+    let userName = req.body.userName
     let first = req.body.first
     let last = req.body.last
     await client.connect()
@@ -152,6 +153,7 @@ app.post('/api/adduser', async (req, res) => {
     const collection = db.collection('userinfo')
     let userOb = {
         email: userEmail,
+        username: userName,
         userinfo: {
             password: encryptString(userPassword),
             first: first,
@@ -159,7 +161,9 @@ app.post('/api/adduser', async (req, res) => {
             bio: '',
             followers: [],
             following: [],
-            pfp: ''
+            pfp: '',
+            phoneNumber: '',
+            favoritedPosts: []
         }
     }
     try {
