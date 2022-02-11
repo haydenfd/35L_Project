@@ -264,6 +264,22 @@ app.post('/api/follow', async (req, res) => {
     }
 })
 
+app.post('/api/unfollow', async (req, res) => {
+    let follower = req.body.follower
+    let followee = req.body.followee
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    try {
+        await collection.updateOne({username: follower}, {$pull: {'userinfo.following': followee}})
+        await collection.updateOne({username: followee}, {$pull: {'userinfo.following': follower}})
+    } catch (err) {
+        console.error(err)
+    } finally {
+        await client.close()
+    }
+})
+
 app.post('/api/test', async (req, res) => {
     res.send({ express: "APP IS CONNECTED" })
     await client.connect()

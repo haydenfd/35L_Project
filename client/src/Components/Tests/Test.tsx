@@ -148,6 +148,20 @@ function Test() {
             }),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.json()).then(response => {
+
+        })
+    }
+
+    async function unfollow(e: React.FormEvent, follower: string, followee: string) {
+        e.preventDefault()
+        await fetch('/api/unfollow', {
+            method: 'POST',
+            body: JSON.stringify({
+                "follower": follower,
+                "followee": followee
+            }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json()).then(response => {
             
         })
     }
