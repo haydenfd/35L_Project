@@ -126,13 +126,19 @@ app.post('/api/getuser', async (req, res) => {
 
 app.post('/api/signin', async (req, res) => {
     let userEmail = req.body.userEmail
+    let username = req.body.username
     let userPassword = req.body.userPassword
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
     let isValid = false
     try {
-        let user = await collection.findOne({ email: userEmail })
+        let user
+        if (userEmail) {
+            user = await collection.findOne({ email: userEmail })
+        } else {
+            user = await collection.findOne({ username: username })
+        }
         isValid = decryptString(user.userinfo.password) === userPassword
     } catch (err) {
         console.error(err)
@@ -145,13 +151,27 @@ app.post('/api/signin', async (req, res) => {
 app.post('/api/adduser', async (req, res) => {
     let userEmail = req.body.userEmail
     let userPassword = req.body.userPassword
+    let userName = req.body.userName
     let first = req.body.first
     let last = req.body.last
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
+    try {
+        let sameEmail = await collection.findOne({ email: userEmail })
+        let sameUsername = await collection.findOne({ username: userName })
+        if (sameEmail || sameUsername) {
+            await client.close()
+            res.send({ result: "Duplicate user" })
+            return
+        }
+    } catch (err) {
+        console.error(err)
+        await client.close()
+    }
     let userOb = {
         email: userEmail,
+        username: userName,
         userinfo: {
             password: encryptString(userPassword),
             first: first,
@@ -159,7 +179,9 @@ app.post('/api/adduser', async (req, res) => {
             bio: '',
             followers: [],
             following: [],
-            pfp: ''
+            pfp: '',
+            phoneNumber: '',
+            favoritedPosts: []
         }
     }
     try {
