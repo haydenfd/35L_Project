@@ -338,30 +338,6 @@ app.post('/api/getdummydata', async (req, res) => {
 })
 
 
-app.post('/api/getdummydata', async (req, res) => {
-    let fileName = req.body.fileName
-    console.log(fileName)
-    await client.connect()
-    const db = client.db('projectdb')
-    const filescoll = db.collection('fs.files')
-    const chunkscoll = db.collection('fs.chunks')
-    try {
-        const file = await filescoll.findOne({ filename: fileName })
-        const chunks = await chunkscoll.find({ files_id: file._id }).sort({ n: 1 }).toArray()
-        if (!chunks || chunks.length === 0) return
-        let fileData = []
-        for (let i = 0; i < chunks.length; i++) {
-            fileData.push(chunks[i].data.toString('base64'))
-        }
-        let finishedFile = `data:${file.contentType};base64,${fileData.join('')}`
-        res.send({ base64Data: finishedFile, infostring: file.metadata })
-    } catch (err) {
-        console.error(err)
-    } finally {
-        await client.close()
-    }
-})
-
 
 app.post('/api/test', async (req, res) => {
     res.send({ express: "APP IS CONNECTED" })
