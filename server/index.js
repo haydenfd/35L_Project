@@ -162,11 +162,12 @@ app.post('/api/adduser', async (req, res) => {
         let sameUsername = await collection.findOne({ username: userName })
         if (sameEmail || sameUsername) {
             await client.close()
-            res.send({ result: "Duplicate user" })
+            res.send({ result: 201 })
             return
         }
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
         await client.close()
     }
     let userOb = {
@@ -186,8 +187,10 @@ app.post('/api/adduser', async (req, res) => {
     }
     try {
         await collection.insertOne(userOb)
+        res.send({ result: 200 })
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
     } finally {
         await client.close()
     }
