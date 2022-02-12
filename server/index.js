@@ -162,11 +162,12 @@ app.post('/api/adduser', async (req, res) => {
         let sameUsername = await collection.findOne({ username: userName })
         if (sameEmail || sameUsername) {
             await client.close()
-            res.send({ result: "Duplicate user" })
+            res.send({ result: 201 })
             return
         }
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
         await client.close()
     }
     let userOb = {
@@ -186,8 +187,10 @@ app.post('/api/adduser', async (req, res) => {
     }
     try {
         await collection.insertOne(userOb)
+        res.send({ result: 200 })
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
     } finally {
         await client.close()
     }
@@ -229,7 +232,7 @@ app.post('/api/getdummydata', async (req, res) => {
     console.log(fileName)
     await client.connect()
     const db = client.db('projectdb')
-    const filescoll = db.collection('fs.files')
+    const filescoll = awaitdb.collection('fs.files')
     const chunkscoll = db.collection('fs.chunks')
     try {
         const file = await filescoll.findOne({ filename: fileName })
@@ -241,6 +244,38 @@ app.post('/api/getdummydata', async (req, res) => {
         }
         let finishedFile = `data:${file.contentType};base64,${fileData.join('')}`
         res.send({ base64Data: finishedFile, infostring: file.metadata })
+    } catch (err) {
+        console.error(err)
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/follow', async (req, res) => {
+    let follower = req.body.follower
+    let followee = req.body.followee
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    try {
+        await collection.updateOne({username: follower}, {$push: {'userinfo.following': followee}})
+        await collection.updateOne({username: followee}, {$push: {'userinfo.followers': follower}})
+    } catch (err) {
+        console.error(err)
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/unfollow', async (req, res) => {
+    let follower = req.body.follower
+    let followee = req.body.followee
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    try {
+        await collection.updateOne({username: follower}, {$pull: {'userinfo.following': followee}})
+        await collection.updateOne({username: followee}, {$pull: {'userinfo.following': follower}})
     } catch (err) {
         console.error(err)
     } finally {
