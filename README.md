@@ -5,3 +5,4 @@
 * Riley Bruins
 * Dharma Shah
 * Hayden D'Souza
+* Richard Li
