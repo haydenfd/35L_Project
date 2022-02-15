@@ -8,18 +8,56 @@
     .flex {
       flex-direction: column;
     }
+    .base_dropdown {
+      display: none;
+    }
+
+    .baseButton { 
+      width: 100%;
+    }
   }
     
 
-.flex > button {
-    margin-left: 1%;
-    cursor: pointer;
-    border-radius: 20px;
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    padding: 12px;
-    padding-left: 16px;
-    padding-right: 16px;
-    color: #606060;
-    font-family: Helvetica, sans-serif;
-  }
+.buttonWrapper {
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.baseButton {
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  padding: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: #606060;
+  font-family: Helvetica, sans-serif;
+}
+
+.separator {
+  margin-left: 1%;
+}
+
+.clicked {
+  border: 1px solid black;
+}
+
+.base_dropdown {
+  white-space: normal;
+  border-radius: 10px;
+  position: absolute;
+  background-color: white;
+  margin-top: 12px;
+  max-width: 250px;
+  min-width: 200px;
+  min-height: 350px;
+  z-index: 1;
+  border: 1px solid #C8C8C8;
+}
+
+
+.notClickedDisplay {
+  display: none;
+}
