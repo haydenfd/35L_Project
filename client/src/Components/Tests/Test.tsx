@@ -116,7 +116,7 @@ function Test() {
         ).then(res => res.json()).then(response => {
             // console.log(response)
             return response
-        })
+        }).catch(err => console.log(err))
     }
 
     async function addUser( email: string, password: string, username: string) {
