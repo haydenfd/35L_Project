@@ -108,7 +108,6 @@ function MainPage() {
         )
     })
 
-
     return (
         <div className="wrapperdiv">
             <div className="flex-pos">

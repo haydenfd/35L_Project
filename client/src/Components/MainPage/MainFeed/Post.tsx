@@ -7,7 +7,6 @@ import {Card, CardActions, CardContent, CardMedia, Button, Typography} from '@ma
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import axios from 'axios';
 
-
 function Post(props:TimelinePost) {
     return (
         <div>
@@ -21,7 +20,7 @@ function Post(props:TimelinePost) {
                 &nbsp; &nbsp; 
                 {/* {postObject.favorites}   */}
                 </Button>
-
+                
             </div>
         </div>
     )
