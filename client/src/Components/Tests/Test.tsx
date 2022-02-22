@@ -27,6 +27,7 @@ function Test() {
         
     }, [])
 
+    // this function WILL NOT WORK with PASSWORDS OR EMAILS: I will make a separate one if necessary
     async function updateUser(e: React.FormEvent, newUserData: userObject) {
         e.preventDefault()
         await fetch('/api/updateuser', {

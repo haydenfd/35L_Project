@@ -271,10 +271,6 @@ app.post('/api/follow', async (req, res) => {
     }
 })
 
-app.post('/api/updateuser', async (req, res) => {
-    
-})
-
 app.post('/api/unfollow', async (req, res) => {
     let follower = req.body.follower
     let followee = req.body.followee
@@ -284,6 +280,30 @@ app.post('/api/unfollow', async (req, res) => {
     try {
         await collection.updateOne({username: follower}, {$pull: {'userinfo.following': followee}})
         await collection.updateOne({username: followee}, {$pull: {'userinfo.following': follower}})
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/updateuser', async (req, res) => {
+    let updatedUser = req.body.updatedUser
+    let userEmail = updatedUser.email
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    await client.connect()
+    try {
+        let user = await collection.findOne({ email: userEmail })
+        let checkdupe = await collection.findOne({ username: updatedUser.username })
+        if (checkdupe) {
+            res.send({ result: 201 }) // username already exists
+            return
+        }
+        updatedUser.userinfo.password = user.userinfo.password
+        await collection.updateOne({email: userEmail}, updatedUser)
         res.send({ result: 200 })
     } catch (err) {
         console.error(err)
