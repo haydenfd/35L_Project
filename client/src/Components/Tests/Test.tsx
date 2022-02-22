@@ -153,6 +153,32 @@ function Test() {
         })
     }
 
+    async function addPost(
+        price: Number, bedrooms: Number, bathrooms: Number, amenities: String,
+        facilities: String, address: String, rentDate: String
+        ) {
+        // e.preventDefault()
+        await fetch('/api/addpost', {
+            method: 'POST',
+            body: JSON.stringify({
+                "price": price,
+                "bedrooms": bedrooms,
+                "bathrooms": bathrooms,
+                "amenities": amenities,
+                "facilities": facilities,
+                "adress": address,
+                "rentDate": rentDate
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(res => res.json()).then(response => {
+            if (response.result) {
+                // console.log(response.result);
+                return false // duplicate username or email
+            }
+            return true
+        })
+    }
+
     async function follow(e: React.FormEvent, follower: string, followee: string) {
         e.preventDefault()
         await fetch('/api/follow', {
