@@ -9,6 +9,7 @@ import path from 'path'
 import crypto from 'crypto'
 import CryptoJS from 'crypto-js' // doesn't support partial imports as of writing :(
 
+
 dotenv.config()
 
 const MongoClient = mongodb.MongoClient
@@ -32,7 +33,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //     console.log("db connected");
 // })
 
+
 /* user interface (db)
+
 {
     email: <email>
     userinfo: {
@@ -47,9 +50,111 @@ app.use(bodyParser.urlencoded({ extended: true }))
 }
  */
 
+
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)
 })
+
+
+/// ******* MY CODE 
+
+const postObject = {
+    uniqueID: Number,  
+    price: Number, 
+    distance: Number, // distance from campus, in miles
+    address: String,
+    rentByDate: String, // (fall 2022, winter 2023, etc)
+    seller: userObject,
+    favorites: userObject[],
+    bathrooms: Number,
+    bedrooms: Number,
+    amenities: String,
+    facilities: String,
+    images: String[]
+};
+
+const userObject = {
+    uniqueID: String, 
+    uniqueUsername: String, 
+    password: String,
+    firstName: String,
+    lastName: String,
+    favoritedPosts: postObject[], 
+    pfp: '',
+    followers: userObject[], 
+    following: userObject[], 
+    phoneNumber: String 
+};
+
+
+export const getPosts = async (req, res) => {
+
+    try {
+
+        const postMessages = await PostMessage.find();
+        console.log(postMessages);
+        res.status(200).json(postMessages);
+       
+    } catch (error) {
+
+        res.status(404).json({message: error.message});
+    }
+}
+
+export const createPost = async (req, res) => {
+
+    const post = req.body;
+
+    const newPost = new postObject(post);
+
+    try {
+        await newPost.save();
+
+        res.status(201).json(newPost);
+
+    } catch (error) {
+
+        res.status(409).json({ message: error.message});
+
+    }
+}
+
+export const updatePost = async (req, res) => {
+    const {id: _id} = req.params;
+    const post = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, {new: true });
+
+    res.json(updatedPost);
+}
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+
+    const updatedPost = await PostMessage.findByIdAndRemove(id);
+
+    res.json({message: 'Post Deleted Successfully'});
+}
+
+export const likePost = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+
+
+    const post = await PostMessage.findById(id);
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new: true});
+
+    res.json(updatedPost);
+}
+
+
+/// ******* MY CODE 
+
 
 app.post('/api/uploadimg', async (req, res) => {
     await client.connect()
@@ -108,6 +213,7 @@ app.post('/api/uploadimg', async (req, res) => {
     })
 })
 
+// *****
 app.post('/api/getuser', async (req, res) => {
     let userEmail = req.body.userEmail
     await client.connect()
@@ -123,6 +229,7 @@ app.post('/api/getuser', async (req, res) => {
         await client.close()
     }
 })
+
 
 app.post('/api/signin', async (req, res) => {
     let userEmail = req.body.userEmail
@@ -171,12 +278,17 @@ app.post('/api/adduser', async (req, res) => {
     }
 })
 
+
+
 app.post('/api/getimg', async (req, res) => {
     let fileName = req.body.fileName
     await client.connect()
+
     const db = client.db('projectdb')
     const filescoll = db.collection('fs.files')
     const chunkscoll = db.collection('fs.chunks')
+
+
     try {
         const docs = await filescoll.find({ filename: fileName }).toArray()
         if (!docs || docs.length === 0) return // file not found
@@ -225,6 +337,8 @@ app.post('/api/getdummydata', async (req, res) => {
         await client.close()
     }
 })
+
+
 
 app.post('/api/test', async (req, res) => {
     res.send({ express: "APP IS CONNECTED" })
