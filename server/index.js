@@ -271,6 +271,10 @@ app.post('/api/follow', async (req, res) => {
     }
 })
 
+app.post('/api/updateuser', async (req, res) => {
+    
+})
+
 app.post('/api/unfollow', async (req, res) => {
     let follower = req.body.follower
     let followee = req.body.followee
