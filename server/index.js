@@ -101,9 +101,11 @@ app.post('/api/uploadimg', async (req, res) => {
             // This is a good practice when you want to handle your errors differently
             console.error(err);
             await client.close()
+            res.send({ result: 201 })
             return
         }
         await client.close()
+        res.send({ result: 200 })
         // Everything went fine 
     })
 })
@@ -113,7 +115,7 @@ app.post('/api/getuser', async (req, res) => {
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
-    let result
+    let result = null
     try {
         result = await collection.findOne({ email: userEmail })
     } catch (err) {
@@ -260,8 +262,10 @@ app.post('/api/follow', async (req, res) => {
     try {
         await collection.updateOne({username: follower}, {$push: {'userinfo.following': followee}})
         await collection.updateOne({username: followee}, {$push: {'userinfo.followers': follower}})
+        res.send({ result: 200 })
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
     } finally {
         await client.close()
     }
@@ -276,8 +280,34 @@ app.post('/api/unfollow', async (req, res) => {
     try {
         await collection.updateOne({username: follower}, {$pull: {'userinfo.following': followee}})
         await collection.updateOne({username: followee}, {$pull: {'userinfo.following': follower}})
+        res.send({ result: 200 })
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/updateuser', async (req, res) => {
+    let updatedUser = req.body.updatedUser
+    let userEmail = updatedUser.email
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    await client.connect()
+    try {
+        let user = await collection.findOne({ email: userEmail })
+        let checkdupe = await collection.findOne({ username: updatedUser.username })
+        if (checkdupe) {
+            res.send({ result: 201 }) // username already exists
+            return
+        }
+        updatedUser.userinfo.password = user.userinfo.password
+        await collection.updateOne({email: userEmail}, updatedUser)
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
     } finally {
         await client.close()
     }

@@ -15,7 +15,7 @@ interface userObject {
         following: string[],
         pfp: string,
         phoneNumber: string,
-        favoritePosts: string[]
+        favoritePosts: string[],
     }
 }
 
@@ -26,6 +26,20 @@ function Test() {
         // console.log("HI");
         
     }, [])
+
+    // this function WILL NOT WORK with PASSWORDS OR EMAILS: I will make a separate one if necessary
+    async function updateUser(e: React.FormEvent, newUserData: userObject) {
+        e.preventDefault()
+        await fetch('/api/updateuser', {
+            method: 'POST',
+            body: JSON.stringify({ "updatedUser": newUserData }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json()).then(response => {
+            return response
+        })
+    }
 
     async function getUser(e: React.FormEvent, email: string) {
         e.preventDefault()
@@ -148,7 +162,7 @@ function Test() {
             }),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.json()).then(response => {
-
+            return response
         })
     }
 
@@ -162,7 +176,7 @@ function Test() {
             }),
             headers: { 'Content-Type': 'application/json' }
         }).then(res => res.json()).then(response => {
-            
+            return response
         })
     }
 }
