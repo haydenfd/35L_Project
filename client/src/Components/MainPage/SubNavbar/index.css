@@ -8,18 +8,224 @@
     .flex {
       flex-direction: column;
     }
+    .base_dropdown {
+      display: none;
+    }
+
+    .baseButton { 
+      width: 100%;
+    }
   }
     
 
-.flex > button {
-    margin-left: 1%;
-    cursor: pointer;
-    border-radius: 20px;
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    padding: 12px;
-    padding-left: 16px;
-    padding-right: 16px;
-    color: #606060;
-    font-family: Helvetica, sans-serif;
-  }
+.buttonWrapper {
+  white-space: nowrap;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.baseButton {
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  padding: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: #606060;
+  font-family: Helvetica, sans-serif;
+}
+
+.separator {
+  margin-left: 1%;
+}
+
+.clicked {
+  border: 1px solid black;
+}
+
+.base_dropdown {
+  white-space: normal;
+  border-radius: 10px;
+  position: absolute;
+  background-color: white;
+  margin-top: 12px;
+  max-width: 850px;
+  min-width: 300px;
+  min-height: 350px;
+  z-index: 1;
+  border: 1px solid #C8C8C8;
+}
+
+.price_dropdown {
+  min-height: 140px
+}
+
+.checklist_dropdown {
+  min-width: 205px;
+  min-height: 320px;
+}
+
+.facilities_dropdown {
+  min-width: 180px;
+  min-height: 280px;
+}
+
+.counter_dropdown {
+  min-width: 200px;
+  min-height: 150px;
+}
+
+
+.notClickedDisplay {
+  display: none;
+}
+
+input {
+  border-radius: 8px;
+  border: 1px solid grey;
+  outline: none;
+  padding: 6px 10px;
+}
+
+.price_fields {
+  padding: 15px 15px;
+}
+
+.update_price {
+  cursor: pointer;
+  margin-top: 20px;
+  float:right;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 0px;
+  background-color: #282828;
+  color: #F5F5F5;
+  font-family: Helvetica, sans-serif
+}
+
+.update_amenities {
+  cursor: pointer;
+  margin-top: 15px;
+  float:center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  border: 0px;
+  background-color: white;
+  color: #282828;
+  border: 1px solid #282828;
+  font-family: Helvetica, sans-serif
+}
+
+.update_counter {
+  cursor: pointer;
+  margin-top: 15px;
+  float:center;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 0px;
+  background-color: #098bd5;
+  color: white;
+  font-family: Helvetica, sans-serif
+}
+
+.update_counter_idle {
+  cursor: default;
+  background-color: #D0D0D0;
+}
+
+.check_wrapper {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.check_wrapper input {
+  position: absolute;
+  opacity: 0;
+}
+
+.check {
+  top: 5px;
+  left: 20px;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  border-radius: 5px;
+  background-color: white;
+  border: 2px solid #C8C8C8
+}
+
+.check:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.check_wrapper input:checked ~ .check:after {
+  display: block;
+}
+
+.check_wrapper .check:after {
+  left: 6px;
+  top: 1px;
+  width: 5px;
+  height: 12px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+.counter_wrapper {
+  border: 1px solid #D3D3D3;
+  width: 100%;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.minus {
+  cursor: pointer;
+  width: 33%;
+  height: 100%;
+  background-color: #098bd5;
+  border-radius: 2px 0px 0px 2px;
+  padding: 10px;
+  color: white;
+  font-weight: 600;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.plus {
+  cursor: pointer;
+  width: 33%;
+  height: 100%;
+  background-color: #098bd5;
+  border-radius: 0px 2px 2px 0px;
+  padding: 10px;
+  color: white;
+  line-height: 16px;
+  font-weight: 600;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.at_min {
+  cursor: default;
+  background-color: #D0D0D0;
+}
