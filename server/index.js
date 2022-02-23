@@ -7,7 +7,9 @@ import multer from 'multer'
 import { GridFsStorage } from 'multer-gridfs-storage'
 import path from 'path'
 import crypto from 'crypto'
+import jwt from "jsonwebtoken"
 import CryptoJS from 'crypto-js' // doesn't support partial imports as of writing :(
+import authenticateJWT from './middleware/authenticate.js'
 
 
 dotenv.config()
@@ -18,6 +20,10 @@ const client = new MongoClient(process.env.MONGO_URI, {
     sslCert: process.env.CRED_PATH
 },
 { useUnifiedTopology: true }, { useNewUrlParser: true })
+
+
+// const client_ = new MongoClient(process.env.MONGO_URI);
+
 
 const PORT = process.env.PORT || 8000
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY
@@ -234,50 +240,84 @@ app.post('/api/getuser', async (req, res) => {
 
 
 app.post('/api/signin', async (req, res) => {
+    var secretKey;
+    var token;
     let userEmail = req.body.userEmail
     let username = req.body.username
     let userPassword = req.body.userPassword
-    await client.connect()
+    try {
+        await client.connect();
+    }
+    catch(err) {
+        res.json({
+            res: 500
+        })
+    }
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
     let isValid = false
     try {
         let user
-        if (userEmail) {
-            user = await collection.findOne({ email: userEmail })
-        } else {
-            user = await collection.findOne({ username: username })
-        }
+        user = await collection.findOne({ username: username })
+        // if (userEmail) {
+        //     user = await collection.findOne({ email: userEmail })
+        // } else {
+        //     user = await collection.findOne({ username: username })
+        // }
         isValid = decryptString(user.userinfo.password) === userPassword
+        if (isValid) {
+            secretKey = process.env.TOKEN_SECRET;
+            token = jwt.sign(username, process.env.TOKEN_SECRET);
+            res.json(
+                {
+                    res: 200,
+                    token: token
+                }
+            );
+        }
     } catch (err) {
+        console.log(err);
+        res.json({
+            res: 500
+        })
         console.error(err)
     } finally {
-        res.send({ isValid: isValid })
+        res.json({res:401}) 
     }
 })
 
+app.get('/api/testValidation', authenticateJWT, async (req, res) => {
+    res.json(200);
+})
+
 // this assumes user does not yet exist, always check this first
-app.post('/api/adduser', async (req, res) => {
+app.post('/api/adduser', async (req, res) => {    
+    console.log(process.env.MONGO_URI);
     let userEmail = req.body.userEmail
     let userPassword = req.body.userPassword
     let userName = req.body.userName
     let first = req.body.first
     let last = req.body.last
-    await client.connect()
+    try {
+        await client.connect();
+    }
+    catch {
+        console.log("ERR: ")
+    }
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
     try {
         let sameEmail = await collection.findOne({ email: userEmail })
         let sameUsername = await collection.findOne({ username: userName })
         if (sameEmail || sameUsername) {
-            await client.close()
+            // await client.close()
             res.send({ result: 201 })
             return
         }
     } catch (err) {
         console.error(err)
         res.send({ result: 201 })
-        await client.close()
+        // await client.close()
     }
     let userOb = {
         email: userEmail,
@@ -301,7 +341,7 @@ app.post('/api/adduser', async (req, res) => {
         console.error(err)
         res.send({ result: 201 })
     } finally {
-        await client.close()
+        // await client.close()
     }
 })
 

@@ -146,9 +146,10 @@ function Test() {
             headers: {'Content-Type': 'application/json'}
         }).then(res => res.json()).then(response => {
             if (response.result) {
-                // console.log(response.result);
+                console.log(response.result);
                 return false // duplicate username or email
             }
+            console.log(response.result)
             return true
         })
     }
