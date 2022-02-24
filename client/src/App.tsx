@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import Navbar from './Components/Navbar'
-// import Test from './Components/Tests/Test'
+// import Middleware from './Components/Middleware/Middleware';
+// import { userObject, postObject } from './Components/Middleware/Middlewaretypes'
+
 function App() {
   // Test()
   return (
