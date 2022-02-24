@@ -8,7 +8,7 @@ import {
 import './index.css';
 import App from './App';
 import ProfilePage from './Components/Profile/ProfilePage'
-import Test from './Components/Tests/Test'
+// import Test from './Components/Tests/Test'
 import reportWebVitals from './reportWebVitals';
 import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';

@@ -11,6 +11,7 @@ import jwt from "jsonwebtoken"
 import CryptoJS from 'crypto-js' // doesn't support partial imports as of writing :(
 import authenticateJWT from './middleware/authenticate.js'
 
+
 dotenv.config()
 
 const MongoClient = mongodb.MongoClient
@@ -38,7 +39,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //     console.log("db connected");
 // })
 
+
 /* user interface (db)
+
 {
     email: <email>
     userinfo: {
@@ -56,6 +59,93 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)
 })
+
+
+/// ******* MY CODE 
+
+// const postObject = {
+//     uniqueID: Number,  
+//     price: Number, 
+//     distance: Number, // distance from campus, in miles
+//     address: String,
+//     rentByDate: String, // (fall 2022, winter 2023, etc)
+//     seller: userObject,
+//     favorites: userObject[],
+//     bathrooms: Number,
+//     bedrooms: Number,
+//     amenities: String,
+//     facilities: String,
+//     images: String[]
+// };
+
+export const getPosts = async (req, res) => {
+
+    try {
+
+        const postMessages = await PostMessage.find();
+        console.log(postMessages);
+        res.status(200).json(postMessages);
+       
+    } catch (error) {
+
+        res.status(404).json({message: error.message});
+    }
+}
+
+export const createPost = async (req, res) => {
+
+    const post = req.body;
+
+    const newPost = new postObject(post);
+
+    try {
+        await newPost.save();
+
+        res.status(201).json(newPost);
+
+    } catch (error) {
+
+        res.status(409).json({ message: error.message});
+
+    }
+}
+
+export const updatePost = async (req, res) => {
+    const {id: _id} = req.params;
+    const post = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, {new: true });
+
+    res.json(updatedPost);
+}
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+
+    const updatedPost = await PostMessage.findByIdAndRemove(id);
+
+    res.json({message: 'Post Deleted Successfully'});
+}
+
+export const likePost = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+
+
+    const post = await PostMessage.findById(id);
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new: true});
+
+    res.json(updatedPost);
+}
+
+
+/// ******* MY CODE 
+
 
 app.post('/api/uploadimg', async (req, res) => {
     await client.connect()
@@ -107,19 +197,22 @@ app.post('/api/uploadimg', async (req, res) => {
             // This is a good practice when you want to handle your errors differently
             console.error(err);
             await client.close()
+            res.send({ result: 201 })
             return
         }
         await client.close()
+        res.send({ result: 200 })
         // Everything went fine 
     })
 })
 
+// *****
 app.post('/api/getuser', async (req, res) => {
     let userEmail = req.body.userEmail
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
-    let result
+    let result = null
     try {
         result = await collection.findOne({ email: userEmail })
     } catch (err) {
@@ -129,6 +222,7 @@ app.post('/api/getuser', async (req, res) => {
         await client.close()
     }
 })
+
 
 app.post('/api/signin', async (req, res) => {
     var secretKey;
@@ -236,12 +330,73 @@ app.post('/api/adduser', async (req, res) => {
     }
 })
 
+//api for post
+app.post('/api/addpost', async (req, res) => {
+
+    let price = req.body.price
+    let bedrooms = req.body.bedrooms
+    let bathrooms = req.body.bathrooms
+    let amenities = req.body.amenities
+    let facilities = req.body.facilities
+    let address = req.body.adress
+    let rentDate = req.body.rentDate
+
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+/*
+    try {
+        let sameEmail = await collection.findOne({ email: userEmail })
+        let sameUsername = await collection.findOne({ username: userName })
+        if (sameEmail || sameUsername) {
+            await client.close()
+            res.send({ result: 201 })
+            return
+        }
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+        await client.close()
+    }
+*/
+
+    // let postObject = {
+    //     uniqueID: Number,
+    //     price: Number, 
+    //     distance: Number, // distance from campus, in miles
+    //     address: String,
+    //     rentByDate: String, // (fall 2022, winter 2023, etc)
+    //     seller: userObject,
+    //     favorites: userObject[],
+    //     bathrooms: Number,
+    //     bedrooms: Number,
+    //     amenities: String,
+    //     facilities: String,
+    //     images: String[]
+        
+    // }
+
+    try {
+        await collection.insertOne(postOb)
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
+
+
 app.post('/api/getimg', async (req, res) => {
     let fileName = req.body.fileName
     await client.connect()
+
     const db = client.db('projectdb')
     const filescoll = db.collection('fs.files')
     const chunkscoll = db.collection('fs.chunks')
+
+
     try {
         const docs = await filescoll.find({ filename: fileName }).toArray()
         if (!docs || docs.length === 0) return // file not found
@@ -300,8 +455,10 @@ app.post('/api/follow', async (req, res) => {
     try {
         await collection.updateOne({username: follower}, {$push: {'userinfo.following': followee}})
         await collection.updateOne({username: followee}, {$push: {'userinfo.followers': follower}})
+        res.send({ result: 200 })
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
     } finally {
         await client.close()
     }
@@ -316,8 +473,34 @@ app.post('/api/unfollow', async (req, res) => {
     try {
         await collection.updateOne({username: follower}, {$pull: {'userinfo.following': followee}})
         await collection.updateOne({username: followee}, {$pull: {'userinfo.following': follower}})
+        res.send({ result: 200 })
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/updateuser', async (req, res) => {
+    let updatedUser = req.body.updatedUser
+    let userEmail = updatedUser.email
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    await client.connect()
+    try {
+        let user = await collection.findOne({ email: userEmail })
+        let checkdupe = await collection.findOne({ username: updatedUser.username })
+        if (checkdupe) {
+            res.send({ result: 201 }) // username already exists
+            return
+        }
+        updatedUser.userinfo.password = user.userinfo.password
+        await collection.updateOne({email: userEmail}, updatedUser)
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
     } finally {
         await client.close()
     }
