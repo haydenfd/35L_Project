@@ -44,6 +44,7 @@ const ApiService = {
             if (token.res == 200) {
                 console.log("Sign in successfuly!");
                 localStorage.setItem("token", token.token);
+                return token.res;
             }
             else {
                 console.log("Sign in failed!");

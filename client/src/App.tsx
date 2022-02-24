@@ -8,7 +8,7 @@ function App() {
   // Test()
   return (
     <div className="app">
-      <Navbar />
+      <Navbar /> 
     </div>
   );
 }
