@@ -56,7 +56,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 }
  */
 
-
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)
 })
@@ -64,34 +63,20 @@ app.listen(PORT, () => {
 
 /// ******* MY CODE 
 
-const postObject = {
-    uniqueID: Number,  
-    price: Number, 
-    distance: Number, // distance from campus, in miles
-    address: String,
-    rentByDate: String, // (fall 2022, winter 2023, etc)
-    seller: userObject,
-    favorites: userObject[],
-    bathrooms: Number,
-    bedrooms: Number,
-    amenities: String,
-    facilities: String,
-    images: String[]
-};
-
-const userObject = {
-    uniqueID: String, 
-    uniqueUsername: String, 
-    password: String,
-    firstName: String,
-    lastName: String,
-    favoritedPosts: postObject[], 
-    pfp: '',
-    followers: userObject[], 
-    following: userObject[], 
-    phoneNumber: String 
-};
-
+// const postObject = {
+//     uniqueID: Number,  
+//     price: Number, 
+//     distance: Number, // distance from campus, in miles
+//     address: String,
+//     rentByDate: String, // (fall 2022, winter 2023, etc)
+//     seller: userObject,
+//     favorites: userObject[],
+//     bathrooms: Number,
+//     bedrooms: Number,
+//     amenities: String,
+//     facilities: String,
+//     images: String[]
+// };
 
 export const getPosts = async (req, res) => {
 
@@ -375,21 +360,21 @@ app.post('/api/addpost', async (req, res) => {
     }
 */
 
-    let postObject = {
-        uniqueID: Number,
-        price: Number, 
-        distance: Number, // distance from campus, in miles
-        address: String,
-        rentByDate: String, // (fall 2022, winter 2023, etc)
-        seller: userObject,
-        favorites: userObject[],
-        bathrooms: Number,
-        bedrooms: Number,
-        amenities: String,
-        facilities: String,
-        images: String[]
+    // let postObject = {
+    //     uniqueID: Number,
+    //     price: Number, 
+    //     distance: Number, // distance from campus, in miles
+    //     address: String,
+    //     rentByDate: String, // (fall 2022, winter 2023, etc)
+    //     seller: userObject,
+    //     favorites: userObject[],
+    //     bathrooms: Number,
+    //     bedrooms: Number,
+    //     amenities: String,
+    //     facilities: String,
+    //     images: String[]
         
-    }
+    // }
 
     try {
         await collection.insertOne(postOb)
@@ -461,9 +446,6 @@ app.post('/api/getdummydata', async (req, res) => {
     }
 })
 
-<<<<<<< HEAD
-
-=======
 app.post('/api/follow', async (req, res) => {
     let follower = req.body.follower
     let followee = req.body.followee
@@ -523,7 +505,6 @@ app.post('/api/updateuser', async (req, res) => {
         await client.close()
     }
 })
->>>>>>> 3ff826229e6750a4a1b513317b930bace6511a66
 
 app.post('/api/test', async (req, res) => {
     res.send({ express: "APP IS CONNECTED" })

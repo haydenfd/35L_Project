@@ -1,35 +1,13 @@
 // TO BE USED FOR TESTING CLIENT-SERVER CONNECTIONS, WILL BE REFINED ELSEWHERE
 
-import React, { useEffect } from 'react';
+import React from 'react';
+import { userObject, postObject } from './Middlewaretypes';
 import './index.css';
 
-
-interface userObject {
-    email: string,
-    username: string,
-    userinfo: {
-        password: string,
-        first: string,
-        last: string,
-        bio: string,
-        followers: string[],
-        following: string[],
-        pfp: string,
-        phoneNumber: string,
-        favoritePosts: string[],
-    }
-}
-
-function Test() {
-
-    useEffect(() => {
-        // addUser("hi", "goodbye", "ribru17")
-        // console.log("HI");
-        
-    }, [])
+const Middleware = {
 
     // this function WILL NOT WORK with PASSWORDS OR EMAILS: I will make a separate one if necessary
-    async function updateUser(e: React.FormEvent, newUserData: userObject) {
+    updateUser: async function updateUser(e: React.FormEvent, newUserData: userObject) {
         e.preventDefault()
         await fetch('/api/updateuser', {
             method: 'POST',
@@ -40,9 +18,9 @@ function Test() {
         }).then(res => res.json()).then(response => {
             return response
         })
-    }
+    },
 
-    async function getUser(e: React.FormEvent, email: string) {
+    getUser: async function getUser(e: React.FormEvent, email: string) {
         e.preventDefault()
         await fetch('/api/getuser', {
             method: 'POST',
@@ -54,10 +32,10 @@ function Test() {
             // console.log(response.result)
             return response.result as userObject
         })
-    }
+    },
 
     // needs username OR email to log in; doesn't need both
-    async function signIn(e: React.FormEvent, userEmail: string = '', username: string = '', userPassword: string) {
+    signIn: async function signIn(e: React.FormEvent, userEmail: string = '', username: string = '', userPassword: string) {
         e.preventDefault()
         await fetch('/api/signin', {
             method: 'POST',
@@ -73,9 +51,9 @@ function Test() {
             // console.log(response)
             return response
         })
-    }
+    },
 
-    async function submitTest(e: React.FormEvent) {
+    submitTest: async function submitTest(e: React.FormEvent) {
         e.preventDefault()
         
         const postData = {
@@ -90,9 +68,9 @@ function Test() {
 
         }
         await fetch('/api/test', postData)
-    }
+    },
 
-    async function submitFile(e: React.FormEvent, file: HTMLInputElement, isPfp: boolean, email: string, isListing: boolean = false, price: string, location: string) {
+    submitFile: async function submitFile(e: React.FormEvent, file: HTMLInputElement, isPfp: boolean, email: string, isListing: boolean = false, price: string, location: string) {
         e.preventDefault()
         if (!file.files) return
         if (!isPfp && !isListing) {
@@ -120,9 +98,9 @@ function Test() {
             //     'Content-Type': 'multipart/form-data'
             // }
         })
-    }
+    },
 
-    async function getImg(e: React.FormEvent, fileName: string) {
+    getImg: async function getImg(e: React.FormEvent, fileName: string) {
         e.preventDefault()
         await fetch('/api/getimg', {
             method: 'POST',
@@ -132,9 +110,9 @@ function Test() {
             // console.log(response)
             return response
         }).catch(err => console.log(err))
-    }
+    },
 
-    async function addUser( email: string, password: string, username: string) {
+    addUser: async function addUser( email: string, password: string, username: string) {
         // e.preventDefault()
         await fetch('/api/adduser', {
             method: 'POST',
@@ -152,9 +130,9 @@ function Test() {
             console.log(response.result)
             return true
         })
-    }
+    },
 
-    async function addPost(
+    addPost: async function addPost(
         price: Number, bedrooms: Number, bathrooms: Number, amenities: String,
         facilities: String, address: String, rentDate: String
         ) {
@@ -178,9 +156,9 @@ function Test() {
             }
             return true
         })
-    }
+    },
 
-    async function follow(e: React.FormEvent, follower: string, followee: string) {
+    follow: async function follow(e: React.FormEvent, follower: string, followee: string) {
         e.preventDefault()
         await fetch('/api/follow', {
             method: 'POST',
@@ -192,9 +170,9 @@ function Test() {
         }).then(res => res.json()).then(response => {
             return response
         })
-    }
+    },
 
-    async function unfollow(e: React.FormEvent, follower: string, followee: string) {
+    unfollow: async function unfollow(e: React.FormEvent, follower: string, followee: string) {
         e.preventDefault()
         await fetch('/api/unfollow', {
             method: 'POST',
@@ -206,8 +184,8 @@ function Test() {
         }).then(res => res.json()).then(response => {
             return response
         })
-    }
+    },
 
 }
 
-export default Test;
+export default Middleware;
