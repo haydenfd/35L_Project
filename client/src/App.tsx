@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Navbar from './Components/Navbar'
+import Navbar from './Components/Navbar/Navbar'
 // import Middleware from './Components/Middleware/Middleware';
 // import { userObject, postObject } from './Components/Middleware/Middlewaretypes'
 
