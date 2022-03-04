@@ -183,7 +183,7 @@ function ProfilePage(props:any) {
       
   
        <div className="wrapperdiv">
-       <div className="flex-pos">
+       <div className="flex-pos_">
  
        {Object.keys(postImages).map((key:any) => {
        return (

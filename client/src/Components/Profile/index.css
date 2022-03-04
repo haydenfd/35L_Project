@@ -248,7 +248,7 @@
   /* width: 80%; */
 }
 
-.flex-pos {
+.flex-pos_ {
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
