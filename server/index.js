@@ -376,37 +376,34 @@ app.post('/api/addpost', async (req, res) => {
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
-/*
+
     try {
-        let sameEmail = await collection.findOne({ email: userEmail })
-        let sameUsername = await collection.findOne({ username: userName })
-        if (sameEmail || sameUsername) {
-            await client.close()
+        let sameID = await collection.findOne({ id: uniqueID })
+        if (sameID) {
+          //  await client.close()
             res.send({ result: 201 })
             return
         }
     } catch (err) {
         console.error(err)
         res.send({ result: 201 })
-        await client.close()
+        // await client.close()
     }
-*/
 
-    // let postObject = {
-    //     uniqueID: Number,
-    //     price: Number, 
-    //     distance: Number, // distance from campus, in miles
-    //     address: String,
-    //     rentByDate: String, // (fall 2022, winter 2023, etc)
-    //     seller: userObject,
-    //     favorites: userObject[],
-    //     bathrooms: Number,
-    //     bedrooms: Number,
-    //     amenities: String,
-    //     facilities: String,
-    //     images: String[]
-        
-    // }
+    let postObject = {
+        uniqueID: Number,
+        price: Number, 
+        distance: Number, // distance from campus, in miles
+        address: String,
+        rentByDate: String, // (fall 2022, winter 2023, etc)
+        seller: String,
+        favorites: [],
+        bathrooms: Number,
+        bedrooms: Number,
+        amenities: String,
+        facilities: String,
+        images: [] 
+    }
 
     try {
         await collection.insertOne(postOb)
