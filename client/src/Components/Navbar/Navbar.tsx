@@ -24,8 +24,10 @@ function Navbar() {
     }
 
     function clickProfile(): void {
-        navigate('/profile');
+        navigate('/profile/' + localStorage.getItem('username'));
+        // window.location.reload();
         setDropdown(false);
+        window.location.reload();
     }
 
     function clickHome(): void {
@@ -46,6 +48,7 @@ function Navbar() {
     function signOut() {
         setDropdown(false);
         localStorage.removeItem('token');
+        localStorage.removeItem('username');
         setSignedIn(false);
     }
 
@@ -62,7 +65,7 @@ function Navbar() {
     
     return (
         <div className="wrapper">
-            <img className="logo" onClick={clickHome} src="Images/logoalt.png"></img>
+            <img className="logo" onClick={clickHome} src="/logoalt.png"></img>
             <span className="signin">
                 <button className="prof" onClick={changeDropdown}>
                 <p>&nbsp;</p>
