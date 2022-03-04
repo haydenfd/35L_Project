@@ -20,7 +20,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<MainPage />}/>
           {/* <Route path="/profile" element={<ProfilePage />}/> */}
-          <Route path="/profile" element={<ProfilePage />}/>
+          <Route path="/profile/:username" element={<ProfilePage />}/>
           <Route path="/listing/:id" element={<ListingPage />}/>
           {/* <Route path="/test" element={<Test />}/> */}
         </Routes>

@@ -44,6 +44,7 @@ const ApiService = {
             if (token.res == 200) {
                 console.log("Sign in successfuly!");
                 localStorage.setItem("token", token.token);
+                localStorage.setItem("username", username);
                 return token.res;
             }
             else {
@@ -73,6 +74,40 @@ const ApiService = {
             console.log(res);
             console.log("status: ", res.status)
         })
+    },
+
+    fetchUser: async function fetchUser(username:string) {
+        var userData;
+        await fetch("/api/getuser", {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "username": username,
+            }),
+        }).then(async res => {
+            console.log(res);
+            userData = await res.json();
+        })
+        return userData;
+    },
+
+    getPosts: async function getPosts(chunk_id:string) {
+        var postData;
+        await fetch("/api/getposts", {
+            method:'POST',
+            body: JSON.stringify({
+                'id': chunk_id
+            }),
+            headers: {
+                'Content-Type': 'application/json', 
+            },
+        }).then(async res => {
+            postData = await res.json();
+        })
+        console.log(postData)
+        return postData
     },
 
 

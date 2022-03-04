@@ -10,6 +10,7 @@ import crypto from 'crypto'
 import jwt from "jsonwebtoken"
 import CryptoJS from 'crypto-js' // doesn't support partial imports as of writing :(
 import authenticateJWT from './middleware/authenticate.js'
+import { ObjectId } from 'mongodb'
 
 
 dotenv.config()
@@ -147,6 +148,36 @@ export const likePost = async (req, res) => {
 /// ******* MY CODE 
 
 
+app.post('/api/getposts', async (req, res) => {
+    console.log(req.body.id)
+    var ObjectId = mongodb.ObjectID
+    var obj_id = ObjectId(req.body.id)
+    var rez;
+    var imagedata;
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    const image_collection = db.collection('fs.chunks')
+    let result = {}
+    try {
+        rez = await collection.findOne(obj_id);
+        result['file'] = rez._id;
+        result['metadata'] = rez.metadata;
+        imagedata = await image_collection.findOne({ files_id : rez._id })
+        result['base64'] = imagedata.data
+
+    } catch (err) {
+        console.error(err)
+    }     
+    
+    finally {
+        console.log(result.file);
+        res.send({ result:result });
+        await client.close()
+    }
+})
+
+
 app.post('/api/uploadimg', async (req, res) => {
     await client.connect()
     const db = client.db('projectdb')
@@ -177,12 +208,12 @@ app.post('/api/uploadimg', async (req, res) => {
                 //     bucketName: 'fs',
                 // }
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
-                    const theUser = await db.collection('userinfo').findOne({ email: req.body.email })
+                    const theUser = await db.collection('userinfo').findOne({ username: req.body.username })
                     const oldPfpName = theUser.userinfo.pfp
                     if (oldPfpName) {
                         await deleteImg(oldPfpName)
                     }
-                    await db.collection('userinfo').updateOne({email: req.body.email}, {$set: {'userinfo.pfp': filename}})
+                    await db.collection('userinfo').updateOne({username: req.body.username}, {$set: {'userinfo.pfp': filename}})
                 }
                 
                 resolve(fileInfo);
@@ -208,17 +239,18 @@ app.post('/api/uploadimg', async (req, res) => {
 
 // *****
 app.post('/api/getuser', async (req, res) => {
-    let userEmail = req.body.userEmail
+    let username = req.body.username
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
     let result = null
     try {
-        result = await collection.findOne({ email: userEmail })
+        result = await collection.findOne({ username: username })
     } catch (err) {
         console.error(err)
     } finally {
-        res.send({ result: result })
+        console.log(result);
+        res.send({ result:result });
         await client.close()
     }
 })
