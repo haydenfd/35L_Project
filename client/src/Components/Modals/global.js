@@ -1,0 +1,2 @@
+
+export const errors = ['Incorrect password!', 'Could not find the email address!', 'Passwords do not match!', 'Email already exists!', 'Password must contain at least 8 characters!', 'Password must contain at least one letter, one number and one special character!']
