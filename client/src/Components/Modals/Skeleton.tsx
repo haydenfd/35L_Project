@@ -10,7 +10,7 @@ export default function Layout(props:any) {
   const [showForm, setShowForm] = useState(true)
   const [showLogin, setShowLogin] = useState(true)
   const [showRegister, setShowRegister] = useState(false)
-
+     
   return (
     <div>
       <Header />
