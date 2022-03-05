@@ -584,6 +584,21 @@ app.post('/api/unfavoritepost', async (req, res) => {
     }
 })
 
+app.get('/api/getallposts', async (req, res) => {
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    try {
+        let posts = await collection.find({}).toArray()
+        res.send({ result: 200, posts: posts })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
+
 function decryptString(string) {
     return CryptoJS.AES.decrypt(string, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
 }

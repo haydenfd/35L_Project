@@ -212,6 +212,15 @@ const Middleware = {
         }).then(res => res.json()).then(response => {
             return response
         })
+    },
+
+    getAllPosts: async function getAllPosts(e: React.FocusEvent) {
+        e.preventDefault()
+        return await fetch('/api/getallposts', {
+            method: 'GET',
+        }).then(res => res.json()).then(response => {
+            return response
+        })
     }
 }
 
