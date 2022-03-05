@@ -143,6 +143,33 @@ const ApiService = {
         return postData
     },
 
+    getAllPosts: async function getAllPosts() {
+        var postData;
+        await fetch("/api/getallposts", {
+            method:'GET',
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            postData = await res.json()
+        })
+        console.log(postData)
+        return postData
+    },
+
+    getAllImages: async function getAllImages(imageIds:any) {
+        var imageData;
+        await fetch("/api/get_multiple_posts", {
+            method:'POST',
+            body: JSON.stringify({
+                'ids': imageIds
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            imageData = await res.json()
+        })
+        console.log(imageData)
+        return imageData
+    },
+
 
     test: function test() {
         console.log('test');

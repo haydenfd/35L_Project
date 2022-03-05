@@ -1,137 +1,35 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import Post from './Post'
 import TimelinePost from '../../../Models/TimelinePost'
 import { useNavigate } from "react-router-dom";
-// import SubNavbar from "./SubNavbar/SubNavbar";
 
-function MainPage() {
+
+function MainPage(posts:any) {
     const navigate = useNavigate();
 
-    let dummydata: Array<TimelinePost> = [
-        {
-            id: 1,
-            address: "42 Washington Way",
-            price: 3500,
-            pic: "DummyPosts/post1.jpeg",
-            proximity_to_campus: 4,
-            year: "Spring 2022"
-        },
-        {
-            id: 2,
-            address: "1 Adams Circle",
-            price: 7500,
-            pic: "DummyPosts/post2.jpeg",
-            proximity_to_campus: 1,
-            year: "Fall 2023"
-        },
-        {
-            id: 3,
-            address: "8 Jefferson Court",
-            price: 8200,
-            pic: "DummyPosts/post3.jpeg",
-            proximity_to_campus: 6,
-            year: "Fall 2022"
-        },
-        {
-            id: 4,
-            address: "623 Madison Court",
-            price: 7250,
-            pic: "DummyPosts/post4.jpeg",
-            proximity_to_campus: 3,
-            year: "Winter 2023"
-        },
+    
+    useEffect(() => {
+        console.log(posts)
 
-        {
-            id: 5,
-            address: "4 Monroe Avenue",
-            price: 9050,
-            pic: "DummyPosts/post5.jpeg",
-            proximity_to_campus: 3,
-            year: "Spring 2023"
-        },
+    }, [posts])
 
-        {
-            id: 5,
-            address: "2 Adams Circle",
-            price: 10500,
-            pic: "DummyPosts/post6.jpeg",
-            proximity_to_campus: 1,
-            year: "Fall 2022"
-        },
-
-        {
-            id: 6,
-            address: "1 Old Hickory Way",
-            price: 12500,
-            pic: "DummyPosts/post7.jpeg",
-            proximity_to_campus: 2,
-            year: "Spring 2022"
-        },
-
-        {
-            id: 7,
-            address: "14 Kinderhook Drive",
-            price: 8500,
-            pic: "DummyPosts/post8.jpeg",
-            proximity_to_campus: 5,
-            year: "Winter 2023"
-        },
-
-        {
-            id: 8,
-            address: "3 Tippecanoe Circle",
-            price: 5200,
-            pic: "DummyPosts/post9.jpeg",
-            proximity_to_campus: 8,
-            year: "Spring 2023"
-        },
-
-        {
-            id: 9,
-            address: "11 Tyler Street",
-            price: 4350,
-            pic: "DummyPosts/post10.jpeg",
-            proximity_to_campus: 3,
-            year: "Spring 2022"
-        },
-
-        {
-            id: 10,
-            address: "27 Polk Avenue",
-            price: 5750,
-            pic: "DummyPosts/post11.jpeg",
-            proximity_to_campus: 2,
-            year: "Fall 2022"
-        },
-
-        {
-            id: 11,
-            address: "14 Taylor Way",
-            price: 7700,
-            pic: "DummyPosts/post12.jpeg",
-            proximity_to_campus: 7,
-            year: "Fall 2023"
-        }
-    ]
-
+    
     function lookAtListing(key:number) {
-        navigate('/listing/' + key)
-        // console.log(key)
+        let postId = posts.posts[key]._id
+        navigate('/listing/' + postId)
     }
-
-    const dummyEntries = dummydata.map((key) => {
-        return (
-            <span style={{marginLeft:'3%', marginTop:'1.5%'}} onClick={() => lookAtListing(key.id)}>
-                <Post {...key}/>
-            </span>
-        )
-    })
 
 
     return (
         <div className="wrapperdiv">
             <div className="flex-pos">
-                {dummyEntries}
+                {Object.keys(posts.posts).map((key:any) => {
+                    return (
+                        <span style={{marginLeft:'3%', marginTop:'1.5%'}} onClick={() => lookAtListing(key)}>
+                            <Post {...posts.posts[key]}/>
+                        </span>
+                    )
+                })}
             </div>
         </div>
     )
