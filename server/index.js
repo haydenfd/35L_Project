@@ -510,9 +510,9 @@ app.post('/api/unfollow', async (req, res) => {
 app.post('/api/updateuser', async (req, res) => {
     let updatedUser = req.body.updatedUser
     let userEmail = updatedUser.email
+    await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
-    await client.connect()
     try {
         let user = await collection.findOne({ email: userEmail })
         let checkdupe = await collection.findOne({ username: updatedUser.username })
@@ -544,6 +544,42 @@ app.post('/api/test', async (req, res) => {
         console.error(err)
         // throw err // still want to crash
     } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/favoritepost', async (req, res) => {
+    let useremail = req.body.email
+    let post = req.body.postId
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    try {
+        await collection.updateOne({email: useremail}, {$push: {'userinfo.favoritedPosts': post}})
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    }
+    finally {
+        await client.close()
+    }
+})
+
+app.post('/api/unfavoritepost', async (req, res) => {
+    let useremail = req.body.email
+    let post = req.body.postId
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    try {
+        await collection.updateOne({email: useremail}, {$pull: {'userinfo.favoritedPosts': post}})
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    }
+    finally {
         await client.close()
     }
 })
