@@ -177,6 +177,36 @@ app.post('/api/getposts', async (req, res) => {
     }
 })
 
+app.post('/api/get_multiple_posts', async (req, res) => {
+    var ObjectID = mongodb.ObjectID
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    const image_collection = db.collection('fs.chunks')
+    var response;
+    var imagedata;
+    await client.connect()
+    let result = []
+    try {
+        for (let i = 0; i < req.body.ids.length; i++) {
+            let obj_id = ObjectId(req.body.ids[i])
+            let rez = {}
+            response = await collection.findOne(obj_id)
+            rez['file'] = response._id
+            rez['metadata'] = response.metadata
+            imagedata = await image_collection.findOne( { files_id: response._id } )
+            rez['base64'] = imagedata.data
+            result.push(rez)
+        }
+    } catch(err) {
+        console.log(err)
+    }
+    finally {
+        console.log(result)
+        res.send( {result: result} )
+        await client.close()
+    }
+})
+
 
 app.post('/api/uploadimg', async (req, res) => {
     await client.connect()
@@ -584,7 +614,7 @@ app.post('/api/unfavoritepost', async (req, res) => {
 app.get('/api/getallposts', async (req, res) => {
     await client.connect()
     const db = client.db('projectdb')
-    const collection = db.collection('userinfo')
+    const collection = db.collection('posts')
     try {
         let posts = await collection.find({}).toArray()
         res.send({ result: 200, posts: posts })

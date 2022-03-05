@@ -6,10 +6,6 @@ import swal from 'sweetalert';
 import './index.css'
 import ProfileInfo from '../../Models/ProfileInfo'
 import { useNavigate } from "react-router-dom";
-import getPosts from '../../service'
-import Facilities from "../MainPage/SubNavbar/Facilities";
-import { keys } from "@material-ui/core/styles/createBreakpoints";
-import { userInfo } from "os";
  
  
 function ProfilePage(props:any) {
@@ -30,7 +26,6 @@ function ProfilePage(props:any) {
  
  
    useEffect(() => {
-       console.log("AHHHH")
        const userData_ = async () => {
            console.log("username:::",username)
            let data = await ApiService.fetchUser(username!);
@@ -50,7 +45,6 @@ function ProfilePage(props:any) {
                postsArr.push(dataStream.userinfo.favoritedPosts[i])
            }
            for (let i = 0; i < dataStream.userinfo.favoritedPosts.length; i++) {
-               console.log("ROOOOOO")
                let image = await ApiService.getPosts(postsArr[i])
                postsBase64.push(image)
            }
