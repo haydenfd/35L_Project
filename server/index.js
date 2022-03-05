@@ -494,7 +494,7 @@ app.post('/api/unfollow', async (req, res) => {
     const collection = db.collection('userinfo')
     try {
         await collection.updateOne({username: follower}, {$pull: {'userinfo.following': followee}})
-        await collection.updateOne({username: followee}, {$pull: {'userinfo.following': follower}})
+        await collection.updateOne({username: followee}, {$pull: {'userinfo.followers': follower}})
         res.send({ result: 200 })
     } catch (err) {
         console.error(err)
