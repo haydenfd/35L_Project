@@ -9,7 +9,7 @@ const Middleware = {
     // this function WILL NOT WORK with PASSWORDS OR EMAILS: I will make a separate one if necessary
     updateUser: async function updateUser(e: React.FormEvent, newUserData: userObject) {
         e.preventDefault()
-        await fetch('/api/updateuser', {
+        return await fetch('/api/updateuser', {
             method: 'POST',
             body: JSON.stringify({ "updatedUser": newUserData }),
             headers: {
@@ -37,7 +37,7 @@ const Middleware = {
     // needs username OR email to log in; doesn't need both
     signIn: async function signIn(e: React.FormEvent, userEmail: string = '', username: string = '', userPassword: string) {
         e.preventDefault()
-        await fetch('/api/signin', {
+        return await fetch('/api/signin', {
             method: 'POST',
             body: JSON.stringify({
                 "userEmail": userEmail,
@@ -67,7 +67,7 @@ const Middleware = {
             body: JSON.stringify({"MYDATA": "HI"})
 
         }
-        await fetch('/api/test', postData)
+        return await fetch('/api/test', postData)
     },
 
     submitFile: async function submitFile(e: React.FormEvent, file: HTMLInputElement, isPfp: boolean, email: string, isListing: boolean = false, price: string, location: string) {
@@ -91,7 +91,7 @@ const Middleware = {
             formData.append('location', location)
         }
         formData.append('labelimg', file.files[0])
-        await fetch('/api/uploadimg', {
+        return await fetch('/api/uploadimg', {
             method: 'POST',
             body: formData,
             // headers: {
@@ -102,7 +102,7 @@ const Middleware = {
 
     getImg: async function getImg(e: React.FormEvent, fileName: string) {
         e.preventDefault()
-        await fetch('/api/getimg', {
+        return await fetch('/api/getimg', {
             method: 'POST',
             body: JSON.stringify({ "fileName": fileName}),
             headers: {'Content-Type': 'application/json'}}
@@ -114,7 +114,7 @@ const Middleware = {
 
     addUser: async function addUser( email: string, password: string, username: string) {
         // e.preventDefault()
-        await fetch('/api/adduser', {
+        return await fetch('/api/adduser', {
             method: 'POST',
             body: JSON.stringify({
                 "userEmail": email,
@@ -137,7 +137,7 @@ const Middleware = {
         facilities: String, address: String, rentDate: String
         ) {
         // e.preventDefault()
-        await fetch('/api/addpost', {
+        return await fetch('/api/addpost', {
             method: 'POST',
             body: JSON.stringify({
                 "price": price,
@@ -160,7 +160,7 @@ const Middleware = {
 
     follow: async function follow(e: React.FormEvent, follower: string, followee: string) {
         e.preventDefault()
-        await fetch('/api/follow', {
+        return await fetch('/api/follow', {
             method: 'POST',
             body: JSON.stringify({
                 "follower": follower,
@@ -174,7 +174,7 @@ const Middleware = {
 
     unfollow: async function unfollow(e: React.FormEvent, follower: string, followee: string) {
         e.preventDefault()
-        await fetch('/api/unfollow', {
+        return await fetch('/api/unfollow', {
             method: 'POST',
             body: JSON.stringify({
                 "follower": follower,
@@ -186,6 +186,42 @@ const Middleware = {
         })
     },
 
+    favoritePost: async function favorite(e: React.FormEvent, userEmail: string, postId: string) {
+        e.preventDefault()
+        return await fetch('/api/favoritepost', {
+            method: 'POST',
+            body: JSON.stringify({
+                "email": userEmail,
+                "postId": postId
+            }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json()).then(response => {
+            return response
+        })
+    },
+    
+    unfavoritePost: async function unfavorite(e: React.FormEvent, userEmail: string, postId: string) {
+        e.preventDefault()
+        return await fetch('/api/unfavoritepost', {
+            method: 'POST',
+            body: JSON.stringify({
+                "email": userEmail,
+                "postId": postId
+            }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json()).then(response => {
+            return response
+        })
+    },
+
+    getAllPosts: async function getAllPosts(e: React.FocusEvent) {
+        e.preventDefault()
+        return await fetch('/api/getallposts', {
+            method: 'GET',
+        }).then(res => res.json()).then(response => {
+            return response
+        })
+    }
 }
 
 export default Middleware;
