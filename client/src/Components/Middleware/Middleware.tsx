@@ -189,7 +189,28 @@ const Middleware = {
     favoritePost: async function favorite(e: React.FormEvent, userEmail: string, postId: string) {
         e.preventDefault()
         return await fetch('/api/favoritepost', {
-            method: 'POST'
+            method: 'POST',
+            body: JSON.stringify({
+                "email": userEmail,
+                "postId": postId
+            }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json()).then(response => {
+            return response
+        })
+    },
+    
+    unfavoritePost: async function unfavorite(e: React.FormEvent, userEmail: string, postId: string) {
+        e.preventDefault()
+        return await fetch('/api/unfavoritepost', {
+            method: 'POST',
+            body: JSON.stringify({
+                "email": userEmail,
+                "postId": postId
+            }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json()).then(response => {
+            return response
         })
     }
 }
