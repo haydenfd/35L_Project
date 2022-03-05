@@ -31,6 +31,39 @@ const ApiService = {
         })  
     },
 
+
+    follow: async function follow( follower: string, followee:string ) {
+        await fetch("/api/follow", {
+            method:'POST',
+            body: JSON.stringify({
+                "follower": follower,
+                "followee": followee
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            let data = await res.json()
+            console.log(data)
+            console.log("FOLLOWED!")
+            return data;
+        })
+    },
+
+    unfollow: async function unfollow( follower: string, followee:string ) {
+        await fetch("/api/unfollow", {
+            method:'POST',
+            body: JSON.stringify({
+                "follower": follower,
+                "followee": followee
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            let data = await res.json()
+            console.log(data)
+            console.log("UNFOLLOWED!")
+            return data
+        })
+    },
+
     signIn: async function signIn( username: string, password:string ) {
         await fetch("/api/signin", {
             method: 'POST',

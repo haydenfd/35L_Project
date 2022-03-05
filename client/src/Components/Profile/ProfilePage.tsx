@@ -22,6 +22,9 @@ function ProfilePage(props:any) {
    const [userData, setUserData] = useState(emptyInterface);
    const [postImages, setPostImages] = useState([])
    const [isComponentMounted, setComponentMount] = useState(false);
+   const [isRecentlyFollowed, setRecentlyFollowed] = useState(false)
+   const [isRecentlyUnfollowed, setRecentlyUnfollowed] = useState(false);
+   const [followers, setFollowers] = useState(0)
    var dataStream:any;
    var image_:string = ''
  
@@ -68,8 +71,13 @@ function ProfilePage(props:any) {
                    favoritedPosts: favs.userinfo.favoritedPosts
                }}))
                image_ = "data:image/jpeg;base64," + userData.userinfo.favoritedPosts[0].result.base64
+               let how_many_followers = userData.userinfo.followers.length
+               setFollowers(dataStream.userinfo.followers.length);
                setComponentMount(true);
+
            }
+
+ 
        }
        userData_();
    }, []);
@@ -79,6 +87,42 @@ function ProfilePage(props:any) {
    function useQuery() {
        return new URLSearchParams(useLocation().search);
      }
+
+
+    
+    function followOrUnfollow() {
+        if (isRecentlyFollowed) {
+            setFollowers(followers-1)
+            setRecentlyUnfollowed(true)
+            setRecentlyFollowed(false)
+            return
+        }
+
+        if (isRecentlyUnfollowed) {
+            setFollowers(followers+1)
+            setRecentlyFollowed(true)
+            setRecentlyUnfollowed(false)
+            return
+        }
+        if (localStorage.getItem('username') == undefined) {
+            swal("Not Signed In!")
+            return
+        }
+        if (userData.userinfo.followers.includes(localStorage.getItem('username')!)) {
+            console.log("REMOVE!")
+            ApiService.unfollow(localStorage.getItem('username')!, username!);
+            setRecentlyFollowed(false)
+            setRecentlyUnfollowed(true)
+            setFollowers(followers-1)
+        }
+        else {
+            // follow
+            ApiService.follow(localStorage.getItem('username')!, username!);
+            setRecentlyFollowed(true);
+            setRecentlyUnfollowed(false)
+            setFollowers(followers+1)
+        }
+    }
  
   
   
@@ -114,11 +158,16 @@ function ProfilePage(props:any) {
        }
  
        if (localStorage.getItem('username')) {
-           if (userData.userinfo.followers.includes(localStorage.getItem('username')!)) {
-               return (<button className="followButton" style={{marginTop:'75px', backgroundColor:'#62ec88'}}>Following</button>)
+
+            if (isRecentlyUnfollowed) {
+                return (<button onClick={followOrUnfollow} className="followButton" style={{marginTop:'75px'}}>Follow</button>)
+            }
+
+           if (userData.userinfo.followers.includes(localStorage.getItem('username')!) || isRecentlyFollowed) {
+               return (<button onClick={followOrUnfollow} className="followButton" style={{marginTop:'75px', backgroundColor:'#62ec88'}}>Following</button>)
            }
            else {
-               return (<button className="followButton" style={{marginTop:'75px'}}>Follow</button>)
+               return (<button onClick={followOrUnfollow} className="followButton" style={{marginTop:'75px'}}>Follow</button>)
            }
        }
  
@@ -138,15 +187,7 @@ function ProfilePage(props:any) {
        }
    }
  
-    
-   const posts = postImages.map((key:number) => {
-       return (
-           <span style={{marginLeft:'3%', marginTop:'1.5%'}}>
-               <p>kkey</p>
-           </span>
-       )
-   })
- 
+     
    return (
    <div className="body">
  
@@ -160,7 +201,7 @@ function ProfilePage(props:any) {
        <span className="text_info">
            <h1 className="username">{userData.userinfo.first} {userData.userinfo.last}</h1>
            <div style={{marginTop:'35px'}}></div>
-           <p className="profile_statistics" style={{fontFamily: "Arial, FontAwesome", color:'#A9A9A9'}}>&#xf007; <span style={{paddingRight:'5px'}}></span>{userData.userinfo.followers.length} Followers <span style={{paddingRight:'35px'}}></span> &#xf004;<span style={{paddingRight:'7px'}}></span>{postImages.length} Favorites</p>
+           <p className="profile_statistics" style={{fontFamily: "Arial, FontAwesome", color:'#A9A9A9'}}>&#xf007; <span style={{paddingRight:'5px'}}></span>{followers} Followers <span style={{paddingRight:'35px'}}></span> &#xf004;<span style={{paddingRight:'7px'}}></span>{postImages.length} Favorites</p>
  
            <div style={{marginTop:'75px'}}></div>
            <div className="biowrap">
