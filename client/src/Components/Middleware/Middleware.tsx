@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { userObject, postObject } from './Middlewaretypes';
-import './index.css';
+// import './index.css';
 
 const Middleware = {
 
@@ -70,20 +70,25 @@ const Middleware = {
         return await fetch('/api/test', postData)
     },
 
-    submitFile: async function submitFile(e: React.FormEvent, file: HTMLInputElement, isPfp: boolean, email: string, isListing: boolean = false, price: string, location: string) {
-        e.preventDefault()
-        if (!file.files) return
+    submitFile: async function submitFile(file: HTMLInputElement, isPfp: boolean, email: string, isListing: boolean = false, price: string, location: string, username:string, prevPic:string) {
+        // e.preventDefault()
+        if (!file.files) {
+            return
+        }
         if (!isPfp && !isListing) {
             console.error("Must either be pfp or listing!")
             return
         }
         if (isPfp && isListing) {
+            console.log("HOW?")
             console.error("Image cannot be a listing and a profile picture!")
             return
         }
         let formData = new FormData()
         if (isPfp) {
             formData.append('email', email)
+            formData.append('username', username)
+            formData.append('prevPic', prevPic)
         }
         if (isListing) {
             formData.append('listingName', 'true')
@@ -97,6 +102,9 @@ const Middleware = {
             // headers: {
             //     'Content-Type': 'multipart/form-data'
             // }
+        }).then(res => {
+            console.log("finishing upload")
+            return res.json()
         })
     },
 

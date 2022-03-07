@@ -42,13 +42,11 @@ function ListingPage(props:any) {
 
 
     function displayFollowers() {
-        let mememe = `<html><body><a href="//sweetalert2.github.io">links</a></body></html>`
         let return_string = "<html><body>"
         for (let i = 0; i < post.post[0].favorited.length; i++) {
             return_string += `<a href="http://localhost:3000/profile/${post.post[0].favorited[i]}">${post.post[0].favorited[i]}</a><br><br>`
         }
         return_string += `<script> function hello() {console.log("i am the one")} </script></body></html>`
-        console.log(mememe)
         fire(return_string)
     }
 

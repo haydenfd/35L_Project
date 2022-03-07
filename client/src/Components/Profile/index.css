@@ -145,7 +145,24 @@
   height:150px;
   float: left;
   border-radius: 80px;
+  cursor: pointer;
   /* position: absolute; */
+}
+
+#file-input {
+  display: none;
+}
+
+/* input[type="file"] {
+  display: none;
+} */
+
+/* .image-upload>input .file-input {
+  display: none;
+} */
+
+.prof_pic:hover {
+  opacity: 0.8;
 }
 
 .info_wrapper {

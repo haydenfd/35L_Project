@@ -180,6 +180,32 @@ app.post('/api/getposts', async (req, res) => {
     }
 })
 
+app.post("/api/getprof", async (req, res) => {
+    console.log(req.body.filename)
+    var image;
+    var imagedata;
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    const images = db.collection('fs.chunks')
+    let result = {}
+    try {
+        console.log(req.body.filename)
+        image = await collection.findOne( { filename: req.body.filename } );
+        let id = image._id;
+        imagedata = await images.findOne( { files_id: id } );
+        // let image_data = await images.findOne({ files_id:image_id })
+    }
+    catch(err) {
+        console.log(err)
+    }
+    finally {
+        console.log("IN THE END")
+        res.send({imagedata})
+        await client.close()
+    }
+})
+
 app.post('/api/get_multiple_posts', async (req, res) => {
     var ObjectID = mongodb.ObjectID
     const db = client.db('projectdb')
@@ -211,6 +237,7 @@ app.post('/api/get_multiple_posts', async (req, res) => {
 })
 
 
+
 app.post('/api/uploadimg', async (req, res) => {
     await client.connect()
     const db = client.db('projectdb')
@@ -231,6 +258,8 @@ app.post('/api/uploadimg', async (req, res) => {
                     }
                 } else {
                     filename = buf.toString('hex') + path.extname(file.originalname)
+                    console.log(filename.originalname)
+                    console.log(filename)
                     fileInfo = {
                         filename: filename,
                         bucketName: 'fs',
@@ -243,9 +272,9 @@ app.post('/api/uploadimg', async (req, res) => {
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
                     const theUser = await db.collection('userinfo').findOne({ username: req.body.username })
                     const oldPfpName = theUser.userinfo.pfp
-                    if (oldPfpName) {
-                        await deleteImg(oldPfpName)
-                    }
+                    // if (oldPfpName) {
+                    //     await deleteImg(oldPfpName)
+                    // }
                     await db.collection('userinfo').updateOne({username: req.body.username}, {$set: {'userinfo.pfp': filename}})
                 }
                 

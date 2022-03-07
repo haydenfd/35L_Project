@@ -22,22 +22,11 @@ const ApiService = {
         })
         console.log(response)
         return response
-        
-        
-        // then(res => res.json()).then(response => {
-        //     console.log("response")
-        //     if (response.result) {
-        //         console.log(response.result);
-        //         return false // duplicate username or email
-        //     }
-        //     return true
-        // })
     },
 
     addUser_: function addUser_() {
         axios.post(`/api/adduser`, { userEmail: "ryan@ryan.com", userPassword: "password", userName: "ryan" })
         .then(res => {
-        console.log("AHHHHH!");
           console.log(res);
           console.log(res.data);
         })  
@@ -227,6 +216,22 @@ const ApiService = {
         })
         console.log(imageData)
         return imageData
+    },
+
+    getProfilePicture: async function getProfilePicture(filename:string) {
+        var data:any;
+        await fetch("/api/getprof", {
+            method: 'POST',
+            body: JSON.stringify({
+                'filename':filename
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            data = await res.json()
+            console.log(data.imagedata);
+        })
+        console.log(data)
+        return data!.imagedata
     },
 
 

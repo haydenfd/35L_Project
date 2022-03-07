@@ -6,6 +6,7 @@ import swal from 'sweetalert';
 import './index.css'
 import ProfileInfo from '../../Models/ProfileInfo'
 import { useNavigate } from "react-router-dom";
+import Middleware from '../Middleware/Middleware'
  
  
 function ProfilePage(props:any) {
@@ -21,6 +22,7 @@ function ProfilePage(props:any) {
    const [isRecentlyFollowed, setRecentlyFollowed] = useState(false)
    const [isRecentlyUnfollowed, setRecentlyUnfollowed] = useState(false);
    const [followers, setFollowers] = useState(0)
+   const [_image_, setImage] = useState({image: "/defaulticon.jpeg"})
    var dataStream:any;
    var image_:string = ''
  
@@ -56,8 +58,18 @@ function ProfilePage(props:any) {
            }
            else {
                console.log("call succeeded")
+            //    console.log(dataStream.userinfo.pfp)
+            //    console.log(userData)
+
+               if (dataStream.userinfo.pfp != '') {
+                   let prof_pic:any = await ApiService.getProfilePicture(dataStream.userinfo.pfp);
+                   let photo = "data:image/jpeg;base64," + prof_pic.data;
+                   let profile_photo = {image:photo}
+                   setImage(profile_photo);
+               }
  
                let favs = userData;
+               console.log(favs)
                favs.userinfo.favoritedPosts.push(images);
  
                setUserData(userData => ({...userData, userinfo: {
@@ -127,9 +139,11 @@ function ProfilePage(props:any) {
    }
  
    function checkProf() {
+       return _image_.image;
        let profile_pic = userData.userinfo.pfp
        if (profile_pic != '') {
-           return profile_pic
+           return '/defaulticon.jpeg'
+        //    return profile_pic
        }
        return '/defaulticon.jpeg'
    }
@@ -143,10 +157,18 @@ function ProfilePage(props:any) {
            swal("Oh No!", `${username} doesn't follow you (yet)!`, "error");
        }
    }
+
+   function triggerHiddenFileUpload() {
+    document.getElementById('file-input')?.click()
+   }
  
    function whoseProfile() {
        if (localStorage.getItem('username') == username) {
-           return (<span></span>)
+           return (<span>  <form style={{marginTop:'150px'}} onSubmit={updateProfilePicture}>
+         <input onClick={triggerHiddenFileUpload} className="followButton" type="button" value="Upload Profile Picture"></input>&nbsp;&nbsp;<input className="followButton" style={{backgroundColor:'#0c8f21'}} type='submit' name="submit" placeholder='Submit After Uploading' value='Submit After Uploading' />
+         <input id="file-input" name="file-input" type="file" />
+            </form></span>
+ )
        }
  
        if (localStorage.getItem('username')) {
@@ -177,6 +199,24 @@ function ProfilePage(props:any) {
            return (<button onClick={throwaway_catch_me} className="followButton" style={{marginTop:'75px', backgroundColor:'#606060'}}>Contact</button>
            )
        }
+   }
+
+   async function updateProfilePicture(event:any) {
+       event.preventDefault();
+       const file_uploaded = document.getElementById('file-input') as HTMLInputElement;
+       console.log(document.getElementById('file-input'));
+       if (_image_.image != '/default.png') {
+
+       }
+       let upload = await Middleware.submitFile(file_uploaded, true, 'empty', false, '', '', username!, "THROWAWAY");
+       console.log(upload)
+       if (upload.result == 200) {
+           swal("Successfully Changed Profile Picture!", "Reload the page to see the changes", "success")
+       }
+       else {
+           swal("Uploaded Failed", "", "error")
+       }
+       return '';
    }
  
      
