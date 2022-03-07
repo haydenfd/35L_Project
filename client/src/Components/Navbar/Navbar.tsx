@@ -5,6 +5,7 @@ import { AiOutlineMenu, AiOutlineCaretDown } from 'react-icons/ai'
 import { IconContext } from "react-icons/lib";
 import { useNavigate } from "react-router-dom";
 import Dialog from './Dialog'
+import swal from 'sweetalert';
 
 function Navbar() {
     const navigate = useNavigate();
@@ -35,8 +36,12 @@ function Navbar() {
 
     function isLoginSuccessful(status:boolean) {
         if (status == true) {
+            swal("Successfully Signed In!", "", "success")
             setDropdown(false);
             setSignedIn(true);
+        }
+        else {
+            swal("Sign In Unsuccessful", "", "error")
         }
         console.log(status)
     }
@@ -48,6 +53,7 @@ function Navbar() {
         setDropdown(false);
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        swal("Successfully Signed Out", "","success")
         setSignedIn(false);
     }
 
