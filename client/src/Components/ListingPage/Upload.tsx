@@ -11,15 +11,35 @@ export default function Upload() {
   const [amenities, setAmenities] = useState([])
   const [bathrooms, setBathrooms] = useState(0)
   const [bedrooms, setBedrooms] = useState(0)
-  const [images, setImages] = useState("") //confused about this
+  const [images, setImages] = useState([]) //confused about this
 
 
   return (
+    <div>
+      <title>Add A New Listing</title>
   <form>
+        <label>Address</label>
+        <input required placeholder="Enter Address"/>
+        <label>Price</label>
+        <input required placeholder="Enter Price" />
+        <label>Distance To Campus</label>
+        <input required placeholder="Enter Distance" />
+        <label>Rent By Date</label>
+        <input required placeholder="Enter Last Date" />
+        <label>Seller</label>
+        <input required placeholder="Seller Name" />
+        <label>Amenities</label>
+        <input required placeholder="Amenities" />
+        <label>Bedrooms</label>
+        <input required placeholder="No. Of Bedrooms" />  
+        <label>Bathrooms</label>
+        <input required placeholder="No. Of Bathrooms" /> 
+        <label>Pictures</label>
+        <input required placeholder="Add Image Here" />  
 
-
-
-  </form>
+      <button> Submit </button>
+      </form>
+  </div>
   )
 
 }
