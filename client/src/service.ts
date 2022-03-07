@@ -2,24 +2,36 @@ import axios from 'axios'
 
 const ApiService = {
 
-    addUser: async function addUser( email: string, password: string, username: string) {
+    addUser: async function addUser( email: string, password: string, username: string, first: string, last:string, bio:string, number:string) {
         // e.preventDefault()
+        var response;
         await fetch('/api/adduser', {
             method: 'POST',
             body: JSON.stringify({
                 "userEmail": email,
                 "userPassword": password,
-                "userName": username
+                "userName": username,
+                "first": first,
+                "last": last,
+                "bio": bio,
+                "number": number
             }),
             headers: {'Content-Type': 'application/json'}
-        }).then(res => res.json()).then(response => {
-            console.log("response")
-            if (response.result) {
-                console.log(response.result);
-                return false // duplicate username or email
-            }
-            return true
+        }).then(async res => {
+            response = await res.json();
         })
+        console.log(response)
+        return response
+        
+        
+        // then(res => res.json()).then(response => {
+        //     console.log("response")
+        //     if (response.result) {
+        //         console.log(response.result);
+        //         return false // duplicate username or email
+        //     }
+        //     return true
+        // })
     },
 
     addUser_: function addUser_() {

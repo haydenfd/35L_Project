@@ -47,6 +47,13 @@ function Navbar() {
     }
 
     function isSignupSuccessful(status:boolean) {
+        if (status == true) {
+            swal("Successfully Signed Up!", "Sign in to begin your search!", "success")
+            setDropdown(false);
+        }
+        else {
+            swal("Sign Up Unsuccessful", "", "error")
+        }
     }
 
     function signOut() {
