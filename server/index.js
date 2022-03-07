@@ -10,6 +10,7 @@ import crypto from 'crypto'
 import jwt from "jsonwebtoken"
 import CryptoJS from 'crypto-js' // doesn't support partial imports as of writing :(
 import authenticateJWT from './middleware/authenticate.js'
+import { ObjectId } from 'mongodb'
 
 
 dotenv.config()
@@ -64,7 +65,7 @@ app.listen(PORT, () => {
 /// ******* MY CODE 
 
 // const postObject = {
-//     uniqueID: Number,  
+//     uniqueID: Number,
 //     price: Number, 
 //     distance: Number, // distance from campus, in miles
 //     address: String,
@@ -147,6 +148,96 @@ export const likePost = async (req, res) => {
 /// ******* MY CODE 
 
 
+app.post('/api/getposts', async (req, res) => {
+    console.log(req.body.id)
+    var ObjectId = mongodb.ObjectID
+    var obj_id = ObjectId(req.body.id)
+    var rez;
+    var imagedata;
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    const image_collection = db.collection('fs.chunks')
+    const post_collection = db.collection('posts')
+    let result = {}
+    try {
+        let post_id = await post_collection.findOne({images:obj_id},{ "images.$:": 0 })
+        rez = await collection.findOne(obj_id);
+        result['file'] = rez._id;
+        result['metadata'] = rez.metadata;
+        result['postId'] = post_id._id.toString();
+        imagedata = await image_collection.findOne({ files_id : rez._id })
+        result['base64'] = imagedata.data
+
+    } catch (err) {
+        console.error(err)
+    }     
+    
+    finally {
+        console.log(result.file);
+        res.send({ result:result });
+        await client.close()
+    }
+})
+
+app.post("/api/getprof", async (req, res) => {
+    console.log(req.body.filename)
+    var image;
+    var imagedata;
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    const images = db.collection('fs.chunks')
+    let result = {}
+    try {
+        console.log(req.body.filename)
+        image = await collection.findOne( { filename: req.body.filename } );
+        let id = image._id;
+        imagedata = await images.findOne( { files_id: id } );
+        // let image_data = await images.findOne({ files_id:image_id })
+    }
+    catch(err) {
+        console.log(err)
+    }
+    finally {
+        console.log("IN THE END")
+        res.send({imagedata})
+        await client.close()
+    }
+})
+
+app.post('/api/get_multiple_posts', async (req, res) => {
+    var ObjectID = mongodb.ObjectID
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    const image_collection = db.collection('fs.chunks')
+    var response;
+    var imagedata;
+    await client.connect()
+    let result = []
+    try {
+        for (let i = 0; i < req.body.ids.length; i++) {
+            let obj_id = ObjectId(req.body.ids[i])
+            let rez = {}
+            response = await collection.findOne(obj_id)
+            rez['file'] = response._id
+            rez['metadata'] = response.metadata
+            imagedata = await image_collection.findOne( { files_id: response._id } )
+            rez['base64'] = imagedata.data
+            result.push(rez)
+        }
+    } catch(err) {
+        console.log(err)
+    }
+    finally {
+        console.log(result)
+        res.send( {result: result} )
+        await client.close()
+    }
+})
+
+
+
 app.post('/api/uploadimg', async (req, res) => {
     await client.connect()
     const db = client.db('projectdb')
@@ -167,6 +258,8 @@ app.post('/api/uploadimg', async (req, res) => {
                     }
                 } else {
                     filename = buf.toString('hex') + path.extname(file.originalname)
+                    console.log(filename.originalname)
+                    console.log(filename)
                     fileInfo = {
                         filename: filename,
                         bucketName: 'fs',
@@ -177,12 +270,12 @@ app.post('/api/uploadimg', async (req, res) => {
                 //     bucketName: 'fs',
                 // }
                 if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
-                    const theUser = await db.collection('userinfo').findOne({ email: req.body.email })
+                    const theUser = await db.collection('userinfo').findOne({ username: req.body.username })
                     const oldPfpName = theUser.userinfo.pfp
-                    if (oldPfpName) {
-                        await deleteImg(oldPfpName)
-                    }
-                    await db.collection('userinfo').updateOne({email: req.body.email}, {$set: {'userinfo.pfp': filename}})
+                    // if (oldPfpName) {
+                    //     await deleteImg(oldPfpName)
+                    // }
+                    await db.collection('userinfo').updateOne({username: req.body.username}, {$set: {'userinfo.pfp': filename}})
                 }
                 
                 resolve(fileInfo);
@@ -208,17 +301,18 @@ app.post('/api/uploadimg', async (req, res) => {
 
 // *****
 app.post('/api/getuser', async (req, res) => {
-    let userEmail = req.body.userEmail
+    let username = req.body.username
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
     let result = null
     try {
-        result = await collection.findOne({ email: userEmail })
+        result = await collection.findOne({ username: username })
     } catch (err) {
         console.error(err)
     } finally {
-        res.send({ result: result })
+        console.log(result);
+        res.send({ result:result });
         await client.close()
     }
 })
@@ -276,75 +370,17 @@ app.get('/api/testValidation', authenticateJWT, async (req, res) => {
 })
 
 // this assumes user does not yet exist, always check this first
-app.post('/api/adduser', async (req, res) => {    
-    console.log(process.env.MONGO_URI);
+app.post('/api/adduser', async (req, res) => {
     let userEmail = req.body.userEmail
     let userPassword = req.body.userPassword
     let userName = req.body.userName
     let first = req.body.first
     let last = req.body.last
-    try {
-        await client.connect();
-    }
-    catch {
-        console.log("ERR: ")
-    }
-    const db = client.db('projectdb')
-    const collection = db.collection('userinfo')
-    try {
-        let sameEmail = await collection.findOne({ email: userEmail })
-        let sameUsername = await collection.findOne({ username: userName })
-        if (sameEmail || sameUsername) {
-            // await client.close()
-            res.send({ result: 201 })
-            return
-        }
-    } catch (err) {
-        console.error(err)
-        res.send({ result: 201 })
-        // await client.close()
-    }
-    let userOb = {
-        email: userEmail,
-        username: userName,
-        userinfo: {
-            password: encryptString(userPassword),
-            first: first,
-            last: last,
-            bio: '',
-            followers: [],
-            following: [],
-            pfp: '',
-            phoneNumber: '',
-            favoritedPosts: []
-        }
-    }
-    try {
-        await collection.insertOne(userOb)
-        res.send({ result: 200 })
-    } catch (err) {
-        console.error(err)
-        res.send({ result: 201 })
-    } finally {
-        // await client.close()
-    }
-})
-
-//api for post
-app.post('/api/addpost', async (req, res) => {
-
-    let price = req.body.price
-    let bedrooms = req.body.bedrooms
-    let bathrooms = req.body.bathrooms
-    let amenities = req.body.amenities
-    let facilities = req.body.facilities
-    let address = req.body.adress
-    let rentDate = req.body.rentDate
-
+    let bio = req.body.bio
+    let number = req.body.number
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
-/*
     try {
         let sameEmail = await collection.findOne({ email: userEmail })
         let sameUsername = await collection.findOne({ username: userName })
@@ -358,23 +394,73 @@ app.post('/api/addpost', async (req, res) => {
         res.send({ result: 201 })
         await client.close()
     }
-*/
+    let userOb = {
+        email: userEmail,
+        username: userName,
+        userinfo: {
+            password: encryptString(userPassword),
+            first: first,
+            last: last,
+            bio: bio,
+            followers: [],
+            following: [],
+            pfp: '',
+            phoneNumber: number,
+            favoritedPosts: []
+        }
+    }
+    try {
+        await collection.insertOne(userOb)
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
 
-    // let postObject = {
-    //     uniqueID: Number,
-    //     price: Number, 
-    //     distance: Number, // distance from campus, in miles
-    //     address: String,
-    //     rentByDate: String, // (fall 2022, winter 2023, etc)
-    //     seller: userObject,
-    //     favorites: userObject[],
-    //     bathrooms: Number,
-    //     bedrooms: Number,
-    //     amenities: String,
-    //     facilities: String,
-    //     images: String[]
-        
-    // }
+//api for post
+app.post('/api/addpost', async (req, res) => {
+    let price = req.body.price
+    let bedrooms = req.body.bedrooms
+    let bathrooms = req.body.bathrooms
+    let amenities = req.body.amenities
+    let facilities = req.body.facilities
+    let address = req.body.adress
+    let rentDate = req.body.rentDate
+
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+
+    try {
+        let sameID = await collection.findOne({ id: uniqueID })
+        if (sameID) {
+          //  await client.close()
+            res.send({ result: 201 })
+            return
+        }
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+        // await client.close()
+    }
+
+    let postObject = {
+        uniqueID: Number,
+        price: Number, 
+        distance: Number, // distance from campus, in miles
+        address: String,
+        rentByDate: String, // (fall 2022, winter 2023, etc)
+        seller: String,
+        favorites: [],
+        bathrooms: Number,
+        bedrooms: Number,
+        amenities: String,
+        facilities: String,
+        images: [] 
+    }
 
     try {
         await collection.insertOne(postOb)
@@ -472,7 +558,7 @@ app.post('/api/unfollow', async (req, res) => {
     const collection = db.collection('userinfo')
     try {
         await collection.updateOne({username: follower}, {$pull: {'userinfo.following': followee}})
-        await collection.updateOne({username: followee}, {$pull: {'userinfo.following': follower}})
+        await collection.updateOne({username: followee}, {$pull: {'userinfo.followers': follower}})
         res.send({ result: 200 })
     } catch (err) {
         console.error(err)
@@ -485,9 +571,9 @@ app.post('/api/unfollow', async (req, res) => {
 app.post('/api/updateuser', async (req, res) => {
     let updatedUser = req.body.updatedUser
     let userEmail = updatedUser.email
+    await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
-    await client.connect()
     try {
         let user = await collection.findOne({ email: userEmail })
         let checkdupe = await collection.findOne({ username: updatedUser.username })
@@ -518,6 +604,92 @@ app.post('/api/test', async (req, res) => {
     } catch (err) {
         console.error(err)
         // throw err // still want to crash
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/favoritepost', async (req, res) => {
+    let username = req.body.username
+    let post = req.body.postId
+    var ObjectId = mongodb.ObjectID
+    var post_id = ObjectId(post)
+
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    const second_collection = db.collection('posts')
+    try {
+        let photo_id = await second_collection.findOne(post_id)
+        await collection.updateOne({username: username}, {$push: {'userinfo.favoritedPosts': photo_id.images[0].toString()}})
+        await second_collection.updateOne({_id: post_id}, {$push: {'favorited':username}})
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    }
+    finally {
+        await client.close()
+    }
+})
+
+app.post('/api/unfavoritepost', async (req, res) => {
+    let username = req.body.username
+    let post = req.body.postId
+    var ObjectId = mongodb.ObjectID
+    var post_id = ObjectId(post)
+    // rez = await collection.findOne(obj_id);
+
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('userinfo')
+    const second_collection = db.collection('posts')
+    try {
+        let photo_id = await second_collection.findOne(post_id)
+        // console.log(photo_id.images[0])
+        // return
+        await collection.updateOne({username: username}, {$pull: {'userinfo.favoritedPosts': photo_id.images[0].toString()}})
+        await second_collection.updateOne({_id: post_id}, {$pull: {'favorited':username}})
+        res.send({ result: 200 })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    }
+    finally {
+        await client.close()
+    }
+})
+
+app.get('/api/getallposts', async (req, res) => {
+    await client.connect()
+    const db = client.db('projectdb')
+    const collection = db.collection('posts')
+    try {
+        let posts = await collection.find({}).toArray()
+        res.send({ result: 200, posts: posts })
+    } catch (err) {
+        console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/getSinglePost', async (req, res) => {
+    await client.connect()
+    var ObjectId = mongodb.ObjectID
+    var _id = ObjectId(req.body.id)
+
+    var post_id = req.body.id
+    const db = client.db('projectdb')
+    const collection = db.collection('posts')
+    try {
+        let post = await collection.find( { _id:_id } ).toArray()
+        console.log(post)
+        res.send( { result:200, post: post } )
+    } catch (err) {
+        console.log(err)
+        res.send({ result: 201 })
     } finally {
         await client.close()
     }

@@ -12,6 +12,8 @@ import ProfilePage from './Components/Profile/ProfilePage'
 import reportWebVitals from './reportWebVitals';
 import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';
+import Register from './Components/Modals/Register'
+import Login from './Components/Modals/Login'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,8 +22,9 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<MainPage />}/>
           {/* <Route path="/profile" element={<ProfilePage />}/> */}
-          <Route path="/profile" element={<ProfilePage />}/>
+          <Route path="/profile/:username" element={<ProfilePage />}/>
           <Route path="/listing/:id" element={<ListingPage />}/>
+          <Route path="/test" element={<Register />}/>
           {/* <Route path="/test" element={<Test />}/> */}
         </Routes>
     </Router>
