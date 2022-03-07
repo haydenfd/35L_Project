@@ -88,6 +88,20 @@ const ApiService = {
         })
     },
 
+    getPostFromFilename: async function getPostFromFilename( filename:string ) {
+        var file_data
+        await fetch("/api/get_image_from_filename", {
+            method: 'POST',
+            body: JSON.stringify({
+                "filename":filename
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            file_data = res.json()
+        })
+        return file_data
+    },
+
     validate: async function validate() {
         // headers complains if a key can be null
         var string_storage:string;

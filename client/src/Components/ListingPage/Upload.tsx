@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import React from 'react'
+import Middleware from '../Middleware/Middleware'
+import ApiService from '../../service'
 
 export default function Upload() {
 
@@ -13,12 +15,36 @@ export default function Upload() {
   const [bedrooms, setBedrooms] = useState(0)
   const [images, setImages] = useState([]) //confused about this
 
+  async function submitListing(event:any) {
+    event.preventDefault()
+    console.log("SUBMITTING!!!")
+    // have to first upload the image, then create a new post object which points to the image
+
+
+
+    const file_uploaded = document.getElementById('post-upload') as HTMLInputElement;
+    let uploaded_photo = await Middleware.submitFile(file_uploaded, false, '', true, '2300', '42 Gayley Ave', '', '');
+    console.log(uploaded_photo)
+
+    if (uploaded_photo.result == 200) {
+      let filename = uploaded_photo.filename;
+      let image_id:any = await ApiService.getPostFromFilename(filename)
+      var upload_obj = {}
+
+      console.log(image_id!._id)  
+    }
+
+
+    // ADDING POST W/ IMAGE ID WILL GO HERE
+
+  }
+
 
   return (
     <div>
       <title>Add A New Listing</title>
-  <form>
-        <label>Address</label>
+  <form onSubmit={submitListing}>
+        {/* <label>Address</label>
         <input required placeholder="Enter Address"/>
         <label>Price</label>
         <input required placeholder="Enter Price" />
@@ -35,9 +61,11 @@ export default function Upload() {
         <label>Bathrooms</label>
         <input required placeholder="No. Of Bathrooms" /> 
         <label>Pictures</label>
-        <input required placeholder="Add Image Here" />  
+        <input required placeholder="Add Image Here" />   */}
+        <input id="post-upload" name="file-input" type="file" />
+        <input type="submit" name="submit"></input>
 
-      <button> Submit </button>
+      {/* <button> Submit </button> */}
       </form>
   </div>
   )

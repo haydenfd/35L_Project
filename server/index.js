@@ -206,6 +206,8 @@ app.post("/api/getprof", async (req, res) => {
     }
 })
 
+app.post("/api/getprof", )
+
 app.post('/api/get_multiple_posts', async (req, res) => {
     var ObjectID = mongodb.ObjectID
     const db = client.db('projectdb')
@@ -236,11 +238,35 @@ app.post('/api/get_multiple_posts', async (req, res) => {
     }
 })
 
-
+app.post('/api/get_image_from_filename', async (req, res) => {
+    var filename = req.body.filename
+    var imagedata
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    await client.connect()
+    try {
+        imagedata = await collection.findOne( {filename:filename} )
+    }
+    catch(err) {console.log(err)}
+    finally {
+        console.log(imagedata)
+        res.send(imagedata)
+        await client.close()
+    }
+})
 
 app.post('/api/uploadimg', async (req, res) => {
+    // randomize filename generation
+    const chars_ = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    var random_filename = ''
+    const char_length = chars_.length
+    for (let i = 0; i < 25; i++) {
+        random_filename += chars_.charAt(Math.floor(Math.random() * char_length))
+    }
+    random_filename += '.jpeg'
     await client.connect()
     const db = client.db('projectdb')
+    var fileInfo
     const storage = new GridFsStorage({ db: db, options: { useUnifiedTopology: true, useNewUrlParser: true}, file: (req, file) => {
         return new Promise((resolve, reject) => {
             crypto.randomBytes(16, async (err, buf) => {
@@ -248,9 +274,8 @@ app.post('/api/uploadimg', async (req, res) => {
                     return reject(err);
                 }
                 let filename
-                let fileInfo
                 if (req.body && req.body.listingName) { // if listingName specified, treat as a listing name
-                    filename = file.originalname
+                    filename = random_filename
                     fileInfo = {
                         filename: filename,
                         bucketName: 'fs',
@@ -269,7 +294,7 @@ app.post('/api/uploadimg', async (req, res) => {
                 //     filename: filename,
                 //     bucketName: 'fs',
                 // }
-                if (req.body && req.body.email) { // if email attached to image upload (treated as profile picture)
+                if (req.body && req.body.email != '') { // if email attached to image upload (treated as profile picture)
                     const theUser = await db.collection('userinfo').findOne({ username: req.body.username })
                     const oldPfpName = theUser.userinfo.pfp
                     // if (oldPfpName) {
@@ -294,7 +319,8 @@ app.post('/api/uploadimg', async (req, res) => {
             return
         }
         await client.close()
-        res.send({ result: 200 })
+        console.log(fileInfo);
+        res.send({ result: 200, fileData:fileInfo })
         // Everything went fine 
     })
 })
@@ -422,48 +448,40 @@ app.post('/api/adduser', async (req, res) => {
 
 //api for post
 app.post('/api/addpost', async (req, res) => {
-    let price = req.body.price
-    let bedrooms = req.body.bedrooms
-    let bathrooms = req.body.bathrooms
-    let amenities = req.body.amenities
-    let facilities = req.body.facilities
-    let address = req.body.adress
-    let rentDate = req.body.rentDate
-
     await client.connect()
     const db = client.db('projectdb')
-    const collection = db.collection('userinfo')
+    const collection = db.collection('posts')
 
-    try {
-        let sameID = await collection.findOne({ id: uniqueID })
-        if (sameID) {
-          //  await client.close()
-            res.send({ result: 201 })
-            return
-        }
-    } catch (err) {
-        console.error(err)
-        res.send({ result: 201 })
-        // await client.close()
-    }
+    // try {
+    //     let sameID = await collection.findOne({ id: uniqueID })
+    //     if (sameID) {
+    //       //  await client.close()
+    //         res.send({ result: 201 })
+    //         return
+    //     }
+    // } catch (err) {
+    //     console.error(err)
+    //     res.send({ result: 201 })
+    //     // await client.close()
+    // }
 
     let postObject = {
-        uniqueID: Number,
-        price: Number, 
-        distance: Number, // distance from campus, in miles
-        address: String,
-        rentByDate: String, // (fall 2022, winter 2023, etc)
-        seller: String,
-        favorites: [],
-        bathrooms: Number,
-        bedrooms: Number,
-        amenities: String,
-        facilities: String,
-        images: [] 
     }
 
+    postObject['address'] = req.body.address;
+    postObject['price'] = req.body.price;
+    postObject['distance'] = req.body.distance
+    postObject['rentByDate'] = req.body.rentby
+    postObject['seller'] = req.body.seller
+    postObject['amenities'] = req.body.amenities
+    postObject['facilities'] = req.body.facilities
+    postObject['bathrooms'] = req.body.bathrooms
+    postObject['bedrooms'] = req.body.bedrooms
+    postObject['images'] = req.body.images
+    postObject['favorited'] = []
+
     try {
-        await collection.insertOne(postOb)
+        await collection.insertOne(postObject)
         res.send({ result: 200 })
     } catch (err) {
         console.error(err)

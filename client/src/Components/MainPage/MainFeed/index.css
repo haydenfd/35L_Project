@@ -47,3 +47,19 @@
     flex-direction: row;
     flex-flow: row wrap;
 }
+
+.upload_listing {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.upload-form-wrapper {
+    position: absolute;
+    z-index: 2;
+    background-color: green;
+    min-width: 50%;
+    max-width: 50%;
+    min-height: 50%;
+    margin-left: 25%;
+}
