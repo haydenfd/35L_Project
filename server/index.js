@@ -347,6 +347,8 @@ app.post('/api/adduser', async (req, res) => {
     let userName = req.body.userName
     let first = req.body.first
     let last = req.body.last
+    let bio = req.body.bio
+    let number = req.body.number
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
@@ -370,11 +372,11 @@ app.post('/api/adduser', async (req, res) => {
             password: encryptString(userPassword),
             first: first,
             last: last,
-            bio: '',
+            bio: bio,
             followers: [],
             following: [],
             pfp: '',
-            phoneNumber: '',
+            phoneNumber: number,
             favoritedPosts: []
         }
     }
