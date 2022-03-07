@@ -158,11 +158,14 @@ app.post('/api/getposts', async (req, res) => {
     const db = client.db('projectdb')
     const collection = db.collection('fs.files')
     const image_collection = db.collection('fs.chunks')
+    const post_collection = db.collection('posts')
     let result = {}
     try {
+        let post_id = await post_collection.findOne({images:obj_id},{ "images.$:": 0 })
         rez = await collection.findOne(obj_id);
         result['file'] = rez._id;
         result['metadata'] = rez.metadata;
+        result['postId'] = post_id._id.toString();
         imagedata = await image_collection.findOne({ files_id : rez._id })
         result['base64'] = imagedata.data
 
@@ -576,13 +579,19 @@ app.post('/api/test', async (req, res) => {
 })
 
 app.post('/api/favoritepost', async (req, res) => {
-    let useremail = req.body.email
+    let username = req.body.username
     let post = req.body.postId
+    var ObjectId = mongodb.ObjectID
+    var post_id = ObjectId(post)
+
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
+    const second_collection = db.collection('posts')
     try {
-        await collection.updateOne({email: useremail}, {$push: {'userinfo.favoritedPosts': post}})
+        let photo_id = await second_collection.findOne(post_id)
+        await collection.updateOne({username: username}, {$push: {'userinfo.favoritedPosts': photo_id.images[0].toString()}})
+        await second_collection.updateOne({_id: post_id}, {$push: {'favorited':username}})
         res.send({ result: 200 })
     } catch (err) {
         console.error(err)
@@ -594,13 +603,22 @@ app.post('/api/favoritepost', async (req, res) => {
 })
 
 app.post('/api/unfavoritepost', async (req, res) => {
-    let useremail = req.body.email
+    let username = req.body.username
     let post = req.body.postId
+    var ObjectId = mongodb.ObjectID
+    var post_id = ObjectId(post)
+    // rez = await collection.findOne(obj_id);
+
     await client.connect()
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
+    const second_collection = db.collection('posts')
     try {
-        await collection.updateOne({email: useremail}, {$pull: {'userinfo.favoritedPosts': post}})
+        let photo_id = await second_collection.findOne(post_id)
+        // console.log(photo_id.images[0])
+        // return
+        await collection.updateOne({username: username}, {$pull: {'userinfo.favoritedPosts': photo_id.images[0].toString()}})
+        await second_collection.updateOne({_id: post_id}, {$pull: {'favorited':username}})
         res.send({ result: 200 })
     } catch (err) {
         console.error(err)
@@ -620,6 +638,26 @@ app.get('/api/getallposts', async (req, res) => {
         res.send({ result: 200, posts: posts })
     } catch (err) {
         console.error(err)
+        res.send({ result: 201 })
+    } finally {
+        await client.close()
+    }
+})
+
+app.post('/api/getSinglePost', async (req, res) => {
+    await client.connect()
+    var ObjectId = mongodb.ObjectID
+    var _id = ObjectId(req.body.id)
+
+    var post_id = req.body.id
+    const db = client.db('projectdb')
+    const collection = db.collection('posts')
+    try {
+        let post = await collection.find( { _id:_id } ).toArray()
+        console.log(post)
+        res.send( { result:200, post: post } )
+    } catch (err) {
+        console.log(err)
         res.send({ result: 201 })
     } finally {
         await client.close()

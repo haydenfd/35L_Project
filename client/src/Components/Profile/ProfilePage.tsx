@@ -37,7 +37,7 @@ function ProfilePage(props:any) {
                setUserData(data['result']);
            }
  
-           console.log(dataStream.userinfo.favoritedPosts)
+        //    console.log(dataStream.userinfo.favoritedPosts)
  
            let postsArr = []
            let postsBase64:any = []
@@ -118,11 +118,9 @@ function ProfilePage(props:any) {
         }
     }
  
-  
-  
  
    function redirectToPage(index:number) {
-       var listing_id = postImages[index]['result']['file']
+       var listing_id = postImages[index]['result']['postId']
        navigate('/listing/' + listing_id)
        console.log(index)
        console.log(postImages[index]['result']['file'])

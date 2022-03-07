@@ -120,8 +120,8 @@ const ApiService = {
                 "username": username,
             }),
         }).then(async res => {
-            console.log(res);
             userData = await res.json();
+            console.log(userData)
         })
         return userData;
     },
@@ -153,6 +153,53 @@ const ApiService = {
         })
         console.log(postData)
         return postData
+    },
+
+    getSinglePost: async function getSinglePost(id:string) {
+        var postData;
+        await fetch("/api/getSinglePost", {
+            method:'POST',
+            body: JSON.stringify({
+                'id': id
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            postData = await res.json()
+        })
+        console.log(postData)
+        return postData
+    },
+
+    favoritePost: async function favoritePost(postId:string, username:string) {
+        var response;
+        await fetch("/api/favoritepost", {
+            method: 'POST',
+            body: JSON.stringify({
+                'username':username,
+                'postId': postId
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            response = await res.json()
+        })
+        console.log(response)
+        return response
+    },
+
+    unfavoritePost: async function unfavoritePost(postId:string, username:string) {
+        var response;
+        await fetch("/api/unfavoritepost", {
+            method: 'POST',
+            body: JSON.stringify({
+                'username':username,
+                'postId': postId
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            response = await res.json()
+        })
+        console.log(response)
+        return response;
     },
 
     getAllImages: async function getAllImages(imageIds:any) {

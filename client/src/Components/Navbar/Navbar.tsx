@@ -24,10 +24,9 @@ function Navbar() {
     }
 
     function clickProfile(): void {
-        navigate('/profile/' + localStorage.getItem('username'));
-        // window.location.reload();
+        // NAVIGATE WAS BUGGY 5-10% OF THE TIME - WILL LOOK INTO
+        window.location.assign(`http://localhost:3000/profile/${localStorage.getItem('username')}`)
         setDropdown(false);
-        window.location.reload();
     }
 
     function clickHome(): void {
