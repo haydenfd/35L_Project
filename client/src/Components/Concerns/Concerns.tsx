@@ -1,8 +1,8 @@
 import { red } from "@material-ui/core/colors";
-import React from "react";
+import React from "react"
 import { AiOutlineFontSize } from "react-icons/ai";
 
-function NotFound() {
+function Concerns() {
     const styleObj = {
         font: "Airbnb Cereal",
         fontSize: 30,
@@ -10,7 +10,13 @@ function NotFound() {
         textAlign: "center" as "center",
         paddingTop: "10px",
     }
-
+    const styleObj2 = {
+        font: "Airbnb Cereal",
+        fontSize: 15,
+        color: "blue",
+        textAlign: "center" as "center",
+        paddingTop: "10px",
+    }
 
     function excitFont() {
         const styleObj = {
@@ -25,9 +31,10 @@ function NotFound() {
     <div className="body">
 
        
-        <p style={styleObj}><b> Airbnb Page Not Found!</b></p> 
-        <img src="https://media.giphy.com/media/dsWOUTBz5aae8ET8Ss/giphy.gif" alt="gif 404 image" /> 
+        <p style={styleObj}><b> Do you have any concerns?</b></p> 
 
+        <img src="https://media.giphy.com/media/js5AuAD9ZJkKKNjVrw/giphy.gif" alt="gif concern image" /> 
+        <p style={styleObj2}><b> Please reach us at lordeggert@gmail.com. </b></p> 
 
 
 
@@ -37,4 +44,4 @@ function NotFound() {
     )
 }
 
-export default NotFound;
+export default Concerns;

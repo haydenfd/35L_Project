@@ -13,6 +13,7 @@ import reportWebVitals from './reportWebVitals';
 import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';
 import NotFound from './Components/NotFound/NotFound';
+import Concerns from './Components/Concerns/Concerns'; 
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,6 +26,7 @@ ReactDOM.render(
           <Route path="/listing/:id" element={<ListingPage />}/>
           {/* <Route path="/test" element={<Test />}/> */}
           <Route path="/NotFound" element={<NotFound />} />
+          <Route path="/Concerns" element={<Concerns />}/>
         </Routes>
     </Router>
   </React.StrictMode>,
