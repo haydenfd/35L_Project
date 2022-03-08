@@ -21,7 +21,6 @@ function LoginModal(props:any) {
     }
 
     async function logIn() {   
-        console.log('logging in...')
         await ApiService.signIn(username, password);
         if (isSignedIn()) {
             props.isLoginSuccessful(true);
@@ -41,12 +40,12 @@ function LoginModal(props:any) {
     return (
         <div className="formWrapper">
         <form>
-            <input onChange={updateUsername} className="input_forms" type="text" id="username" name="username" placeholder="&#xf007; &nbsp; Username" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updatePassword} className="input_forms" type="password" id="password" name="password" placeholder="&#xf023; &nbsp; Password" style={{fontFamily: "Arial, FontAwesome"}} />
+            <input onChange={updateUsername} className="input_forms" type="text" id="username" name="username" placeholder="&#xf007; &nbsp; Enter Username" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updatePassword} className="input_forms" type="password" id="password" name="password" placeholder="&#xf023; &nbsp; Enter Password" style={{fontFamily: "Montserrat, FontAwesome"}} />
         </form>
-        <div style={{marginTop:'10px'}}></div>
-        <button className="submit_signin" onClick={logIn}>Sign In</button>
-        <div style={{marginTop:'15px'}}></div>
+        <div className="div-button-top"></div>
+            <button className="submit_signin" onClick={logIn} style={{fontFamily: "Montserrat, FontAwesome"}}>Log In</button>
+        <div className="div-button-bottom"></div>
 
     </div>
 )
