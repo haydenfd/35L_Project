@@ -8,6 +8,11 @@
   box-shadow: inset 1px 5px 9px -6px #f1f1ff;
 }
 
+.bodyProfile {
+  border-top: 1px solid #eeeeee;
+  box-shadow: inset 1px 5px 9px -6px #f1f1ff;
+}
+
 hr {
   border-top: 1px solid #F0F0F0;
 }
