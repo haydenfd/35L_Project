@@ -83,20 +83,20 @@ function LoginModal(props:any) {
     return (
         <div className="formWrapper">
         <form>
-            <input onChange={updateFirst} className="input_forms" type="text" id="first" name="first" placeholder="&#xf2bb; &nbsp; First Name" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updateLast} className="input_forms" type="text" id="last" name="last" placeholder="&#xf299; &nbsp; Last Name" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updateUsername} className="input_forms" type="text" id="username" name="username" placeholder="&#xf007; &nbsp; Username" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updateEmail} className="input_forms" type="text" id="username" name="username" placeholder="&#xf064; &nbsp; Email" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updatePassword} className="input_forms" type="password" id="password" name="password" placeholder="&#xf023; &nbsp; Password" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updateConfirm} className="input_forms" type="password" id="confirm" name="confirm" placeholder="&#xf023; &nbsp; Confirm Password" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updateBio} className="input_forms" type="text" id="confirm" name="confirm" placeholder="&#xf035; &nbsp; Bio" style={{fontFamily: "Arial, FontAwesome"}} />
-            <input onChange={updateNumber} className="input_forms" type="text" id="confirm" name="confirm" placeholder="&#xf095; &nbsp; Phone Number" style={{fontFamily: "Arial, FontAwesome"}} />
+            <input onChange={updateFirst} className="input_forms" type="text" id="first" name="first" placeholder="&#xf2bb; &nbsp; First Name" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updateLast} className="input_forms" type="text" id="last" name="last" placeholder="&#xf299; &nbsp; Last Name" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updateUsername} className="input_forms" type="text" id="username" name="username" placeholder="&#xf007; &nbsp; Username" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updateEmail} className="input_forms" type="text" id="username" name="username" placeholder="&#xf064; &nbsp; Email" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updatePassword} className="input_forms" type="password" id="password" name="password" placeholder="&#xf023; &nbsp; Password" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updateConfirm} className="input_forms" type="password" id="confirm" name="confirm" placeholder="&#xf023; &nbsp; Confirm Password" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updateBio} className="input_forms" type="text" id="confirm" name="confirm" placeholder="&#xf035; &nbsp; Bio" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <input onChange={updateNumber} className="input_forms" type="text" id="confirm" name="confirm" placeholder="&#xf095; &nbsp; Phone Number" style={{fontFamily: "Montserrat, FontAwesome"}} />
         </form>
-        <div style={{marginTop:'10px'}}></div>
+        <div className="div-button-top"></div>
         <button onClick={attemptSignUp} className="submit_signin">Sign Up</button>
         {formEmpty ? <p className="warning">All forms must be filled out!</p> : <span></span>}
         {passwordsDontMatch ? <p className="warning">Passwords must match!</p> : <span></span>}
-        <div style={{marginTop:'15px'}}></div>
+        <div className="div-button-bottom"></div>
     </div>
 )
 }
