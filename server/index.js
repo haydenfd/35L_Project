@@ -163,6 +163,7 @@ app.post('/api/getposts', async (req, res) => {
     try {
         let post_id = await post_collection.findOne({images:obj_id},{ "images.$:": 0 })
         rez = await collection.findOne(obj_id);
+        console.log(rez)
         result['file'] = rez._id;
         result['metadata'] = rez.metadata;
         result['postId'] = post_id._id.toString();
@@ -468,21 +469,28 @@ app.post('/api/addpost', async (req, res) => {
     let postObject = {
     }
 
+    let image_id_data = req.body.images[0]._id
+    var Image_To_Push = mongodb.ObjectID
+    var post_id = Image_To_Push(image_id_data)
+
+    let image_data_array = []
+    image_data_array.push(post_id)
+
     postObject['address'] = req.body.address;
     postObject['price'] = req.body.price;
     postObject['distance'] = req.body.distance
-    postObject['rentByDate'] = req.body.rentby
+    postObject['rentByDate'] = req.body.rentByDate
     postObject['seller'] = req.body.seller
     postObject['amenities'] = req.body.amenities
     postObject['facilities'] = req.body.facilities
     postObject['bathrooms'] = req.body.bathrooms
     postObject['bedrooms'] = req.body.bedrooms
-    postObject['images'] = req.body.images
+    postObject['images'] = image_data_array
     postObject['favorited'] = []
 
     try {
         await collection.insertOne(postObject)
-        res.send({ result: 200 })
+        res.send({ status:200 })
     } catch (err) {
         console.error(err)
         res.send({ result: 201 })

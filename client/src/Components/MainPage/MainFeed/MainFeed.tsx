@@ -3,6 +3,7 @@ import Post from './Post'
 import TimelinePost from '../../../Models/TimelinePost'
 import { useNavigate } from "react-router-dom";
 import Upload from '../../ListingPage/Upload'
+import swal from "sweetalert";
 
 
 function MainPage(posts:any) {
@@ -22,17 +23,24 @@ function MainPage(posts:any) {
     }
 
     function setUpload() {
+        if (localStorage.getItem('username') == undefined) {
+            swal("Failure", "Must be signed in to upload a listing!", "error")
+            return
+        }
         if (!updatingFile) {
             setUpdatingFile(true)
         }
+    }
+
+    function finishedUploading() {
+        setUpdatingFile(false)
     }
 
 
     return (
         <div className="wrapperdiv">
             {updatingFile ? <div className="upload-form-wrapper">
-                <p >this is one of the all time great moments in Celtics history</p>
-                <Upload />
+                <Upload finishedUploading={finishedUploading}/>
             </div> : <span></span>}
             <div className="flex-pos">
                 {Object.keys(posts.posts).map((key:any) => {
@@ -44,7 +52,7 @@ function MainPage(posts:any) {
                 })}
             </div>
             {/* <p style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf0f5;&nbsp;&nbsp;Appliances</p> */}
-            <button onClick={setUpload} className="upload_listing"><span style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf0f5;</span></button>
+            <button onClick={setUpload} className="upload_listing"><span style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf093;</span></button>
         </div>
     )
 }

@@ -52,14 +52,28 @@
     position: absolute;
     bottom: 0;
     right: 0;
+    border: 0px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    border-radius: 50px;
+    background-color: white;
+    border: 1px solid black;
+    cursor: pointer;
 }
 
 .upload-form-wrapper {
     position: absolute;
-    z-index: 2;
-    background-color: green;
+    z-index: 6;
+    width: 50%;
+    margin-left: 20%;
+    /* margin-left: 40%; */
+    /* background-color: pink; */
+    /* min-width: 100%; */
+    /* max-width: 40%; */
+    /* background-color: green;
     min-width: 50%;
     max-width: 50%;
     min-height: 50%;
-    margin-left: 25%;
+    margin-left: 25%; */
 }

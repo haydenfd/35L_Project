@@ -88,6 +88,11 @@ const ApiService = {
         })
     },
 
+
+    // getPostFromFilename: async function getPostFromFilename( filename:string ) {
+
+    // }
+
     getPostFromFilename: async function getPostFromFilename( filename:string ) {
         var file_data
         await fetch("/api/get_image_from_filename", {
@@ -97,9 +102,32 @@ const ApiService = {
             }),
             headers: {'Content-Type': 'application/json'}
         }).then(async res => {
-            file_data = res.json()
+            file_data = await res.json()
         })
         return file_data
+    },
+
+    uploadPost: async function uploadPost(address:string, price:string, distance:number, rentByDate:string, seller:string, amenities:any, facilities:any, bathrooms:number, bedrooms:number, images:any) {
+        var response;
+        await fetch("/api/addpost", {
+            method: 'POST',
+            body: JSON.stringify({
+                'address': address,
+                'price': price,
+                'distance': distance,
+                'rentByDate': rentByDate,
+                'seller': seller,
+                'amenities': amenities,
+                'facilities': facilities,
+                'bathrooms': bathrooms,
+                'bedrooms': bedrooms,
+                'images': images
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            response = await res.json()
+        })
+        return response;
     },
 
     validate: async function validate() {

@@ -47,8 +47,18 @@ function ProfilePage(props:any) {
                postsArr.push(dataStream.userinfo.favoritedPosts[i])
            }
            for (let i = 0; i < dataStream.userinfo.favoritedPosts.length; i++) {
-               let image = await ApiService.getPosts(postsArr[i])
-               postsBase64.push(image)
+               console.log("TOP")
+               console.log(postsArr[i])
+               console.log("BOTTOM")
+               try {
+                   let image = postsArr[i].result.file
+                   let image_upload = await ApiService.getPosts(image)
+                   postsBase64.push(image_upload)
+               }
+               catch {
+                    let image = await ApiService.getPosts(postsArr[i])
+                    postsBase64.push(image)                
+                }
            }
            let images = await ApiService.getPosts(postsArr[0]);
            setPostImages(postsBase64)

@@ -15,6 +15,7 @@ import ListingPage from './Components/ListingPage/ListingPage';
 import Register from './Components/Modals/Register'
 import Login from './Components/Modals/Login'
 import Upload from './Components/ListingPage/Upload'
+import NotFound from './Components/NotFound/NotFound';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,6 +28,7 @@ ReactDOM.render(
           <Route path="/listing/:id" element={<ListingPage />}/>
           {/* <Route path="/test" element={<Register />}/> */}
           <Route path="/test" element={<Upload />}/>
+          <Route path="/NotFound" element={<NotFound />} />
         </Routes>
     </Router>
   </React.StrictMode>,
