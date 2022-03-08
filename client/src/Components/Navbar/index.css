@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
+
 .wrapper {
     padding-top: 0.25%;
     padding-bottom: 0.25%;
@@ -68,7 +70,7 @@
 }
 
 .dropdown > button:hover {
-    background-color: pink;
+    background-color: rgb(230, 124, 142);
 }
 
 
@@ -88,7 +90,7 @@
     display: flex;
     border-radius: 50px;
     margin-left: -50%;
-    border: 1px solid #dddddd;
+    border: 2px solid #dddddd;
     align-items: flex-start;
     padding-right: -100px;
 }
@@ -108,15 +110,15 @@
 }
 
 .toggleIsActive {
-    color: black;
+    color: darkblue;
 }
 
 .toggleIsActive > hr {
-    border-color: black;
+    border-color: darkblue;
 }
 
 .toggleIsDormant {
-    color: #A9A9A9
+    color: #a39a9a
 }
 
 .formWrapper {
@@ -127,13 +129,11 @@
     box-sizing: border-box;
     width: 100%;
     margin: 8px 0;
-    border: 1px solid #ccc;
+    border: 1px solid rgb(209, 208, 208);
     padding: 12px 20px;
     border-radius: 4px;
+    font-family: 'Montserrat';
 }
-
-input[type=text], select {
-  }
 
 .submit_signin {
     width: 100%;
@@ -147,8 +147,8 @@ input[type=text], select {
     cursor: pointer;
 }
 
-.signedInDropdown {
-}
+/* .signedInDropdown {
+} */
 
 .signedInDropdown > button {
     width: 90%;
@@ -165,6 +165,13 @@ input[type=text], select {
     background-color: #F0F0F0;
 }
 
+.div-button-top{
+    margin-top:10px;
+}
+
+.div-button-bottom{
+    margin-top:15px;
+}
 .warning {
     color: crimson;
     font-size: 15px;
