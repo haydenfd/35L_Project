@@ -14,6 +14,7 @@ function LoginModal(props:any) {
     const [number, setNumber] = useState("")
     const [formEmpty, setFormEmpty] = useState(false)
     const [passwordsDontMatch, setPasswordsDontMatch] = useState(false)
+    const [isInvalidPassword, setIsInvalidPassword] = useState(false)
 
     // THIS IS HIDEOUS
     function updateFirst(event:any) {
@@ -65,6 +66,11 @@ function LoginModal(props:any) {
             setFormEmpty(false)
             return
         }
+        if (password.length < 6) { 
+            setIsInvalidPassword(true)
+            setFormEmpty(false)
+            return
+        }
 
         setFormEmpty(false)
         setPasswordsDontMatch(false)
@@ -76,7 +82,7 @@ function LoginModal(props:any) {
         else {
             props.isSignupSuccessful(false)
         }
-        console.log(response)
+        // console.log(response)
     }
 
 
@@ -94,7 +100,8 @@ function LoginModal(props:any) {
         </form>
         <div className="div-button-top"></div>
         <button onClick={attemptSignUp} className="submit_signin">Sign Up</button>
-        {formEmpty ? <p className="warning">All forms must be filled out!</p> : <span></span>}
+            {formEmpty ? <p className="warning">All fields must be filled out!</p> : <span></span>}
+            {isInvalidPassword ? <p className="warning">Password length must be min. 6 chars!</p> : <span></span>}
         {passwordsDontMatch ? <p className="warning">Passwords must match!</p> : <span></span>}
         <div className="div-button-bottom"></div>
     </div>
