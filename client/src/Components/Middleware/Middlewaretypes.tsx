@@ -21,10 +21,9 @@ export interface postObject {
     address: String,
     rentByDate: String, // (fall 2022, winter 2023, etc)
     seller: String,
-    favorites: String[],
     bathrooms: Number,
     bedrooms: Number,
-    amenities: String,
-    facilities: String,
+    amenities: String[],
+    facilities: String[],
     images: String[]
 }
