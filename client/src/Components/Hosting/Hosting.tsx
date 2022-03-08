@@ -2,20 +2,21 @@ import { red } from "@material-ui/core/colors";
 import React from "react";
 import { AiOutlineFontSize } from "react-icons/ai";
 
+
 function Hosting() {
     const styleObj = {
         font: "Airbnb Cereal",
         fontSize: 50,
         color: "white",
         textAlign: "center" as "center",
-        paddingTop: "10px",
+        paddingTop: "100px",
     }
     const styleObj2 = {
         font: "Airbnb Cereal",
         fontSize: 30,
         color: "white",
         textAlign: "center" as "center",
-        paddingTop: "80px",
+        paddingTop: "120px",
     }
 
 
@@ -27,6 +28,13 @@ function Hosting() {
             paddingTop: "10px",
         }
     }
+
+    const padding = {
+        paddingTop: "10px",
+        paddingRight: "50px",
+        paddingBottom: "50px",
+        paddingLeft: "50px",
+      }
 
     // change background color for whole body..
     function changebackground(){
@@ -44,8 +52,10 @@ function Hosting() {
 
     window.addEventListener("load",function() { changebackground() });
        
-         
-
+     <div className="container">
+        <button className="btn">click here for assistance. clicked <span id=" num "> 0</span> 
+        times</button>
+        </div>
 
 
 
