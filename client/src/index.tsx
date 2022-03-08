@@ -14,6 +14,7 @@ import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';
 import NotFound from './Components/NotFound/NotFound';
 import Concerns from './Components/Concerns/Concerns'; 
+import Hosting from './Components/Hosting/Hosting';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,6 +28,7 @@ ReactDOM.render(
           {/* <Route path="/test" element={<Test />}/> */}
           <Route path="/NotFound" element={<NotFound />} />
           <Route path="/Concerns" element={<Concerns />}/>
+          <Route path="/Hosting" element={<Hosting />}/>
         </Routes>
     </Router>
   </React.StrictMode>,
