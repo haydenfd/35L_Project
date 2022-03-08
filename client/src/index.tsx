@@ -12,6 +12,7 @@ import ProfilePage from './Components/Profile/ProfilePage'
 import reportWebVitals from './reportWebVitals';
 import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';
+import NotFound from './Components/NotFound/NotFound';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.render(
           <Route path="/profile" element={<ProfilePage />}/>
           <Route path="/listing/:id" element={<ListingPage />}/>
           {/* <Route path="/test" element={<Test />}/> */}
+          <Route path="/NotFound" element={<NotFound />} />
         </Routes>
     </Router>
   </React.StrictMode>,
