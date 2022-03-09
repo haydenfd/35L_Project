@@ -22,7 +22,7 @@ const Middleware = {
 
     getUser: async function getUser(e: React.FormEvent, email: string) {
         e.preventDefault()
-        await fetch('/api/getuser', {
+        return await fetch('/api/getuser', {
             method: 'POST',
             body: JSON.stringify({ "userEmail": email}),
             headers: {
