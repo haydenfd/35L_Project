@@ -41,6 +41,10 @@ function SubNavbar(props:any) {
        }
        return false;
    }
+
+   function reload() {
+       window.location.reload()
+   }
  
    return (
        <div>
@@ -92,8 +96,16 @@ function SubNavbar(props:any) {
                 </div>
 
                 <span className="separator"></span>
-
                 </div>
+
+                <span className="separator"></span>
+
+                <div>
+                <button className='baseButton' onClick={reload}>Reset Filters </button>
+
+                <span className="separator"></span>
+                </div>
+
 
            </div>
        </div>

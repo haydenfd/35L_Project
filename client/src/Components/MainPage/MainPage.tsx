@@ -33,27 +33,32 @@ function MainPage() {
 
     function sortByPrice(min:number, max:number) {
         let sortedByPrice = Filter.sortByPrice(postsArr, min, max)
-        console.log(sortedByPrice)
+        updatePostsArr(sortedByPrice)
+        // console.log(sortedByPrice)
     }
 
     function sortByBedrooms(num:number) {
         let sortedByBedrooms = Filter.sortByBedrooms(postsArr, num)
-        console.log(sortedByBedrooms)
+        updatePostsArr(sortedByBedrooms)
+        // console.log(sortedByBedrooms)
     }
 
     function sortByBathrooms(num:number) {
         let sortedByBathrooms = Filter.sortByBathrooms(postsArr, num);
+        updatePostsArr(sortedByBathrooms);
         console.log(sortedByBathrooms);
     }
 
     function sortByAmenities(amenities:any) {
         let sortedByAmenities = Filter.sortByAmenities(postsArr, amenities);
-        console.log(sortedByAmenities)
+        updatePostsArr(sortedByAmenities)
+        // console.log(sortedByAmenities)
     }
 
     function sortByFacilities(facilities:any) {
         let sortedByFacilities = Filter.sortByFacilities(postsArr, facilities);
-        console.log(sortedByFacilities);
+        updatePostsArr(sortedByFacilities);
+        // console.log(sortedByFacilities);
     }
 
 
@@ -62,7 +67,7 @@ function MainPage() {
             {isDataLoaded ? 
                 <div className="body">
                 <SubNavbar sortByPrice={sortByPrice} sortByBedrooms={sortByBedrooms} sortByBathrooms={sortByBathrooms} sortByAmenities={sortByAmenities} sortByFacilities={sortByFacilities} listings={postsArr} min={minPrice} max={maxPrice}/>
-                <MainFeed posts={postsArr}/>            
+                {postsArr.length == 0 ? <div> <img src="/empty.png"></img><p>No Listings Meet that Criteria!<br></br>Reset the Filters!</p> </div> : <MainFeed posts={postsArr}/> }           
                 </div>
                 : <div className="body"><img className="defaultPost" src="/loading.gif"></img> </div>
         }
