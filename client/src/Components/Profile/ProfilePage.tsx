@@ -3,6 +3,8 @@ import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import { useParams } from "react-router";
 import ApiService from '../../service'
 import swal from 'sweetalert';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import './index.css'
 import ProfileInfo from '../../Models/ProfileInfo'
 import { useNavigate } from "react-router-dom";
@@ -175,7 +177,26 @@ function ProfilePage(props:any) {
    function isSubmitDisplayed() {
     console.log("SUBMIT!")
    }
- 
+
+
+
+   function viewFollowers() {
+        let return_string = "<html><body>"
+        for (let i = 0; i < userData.userinfo.followers.length; i++) {
+            return_string += `<a href="http://localhost:3000/profile/${userData.userinfo.followers[i]}">${userData.userinfo.followers[i]}</a><br><br>`
+        }
+        return_string += `</body></html>`
+        fire(return_string)
+   }
+
+   function fire(html_string:string) {
+    Swal.fire({
+        title: "<i>Followers</i>", 
+        html:html_string,  
+        confirmButtonText: "Close", 
+      });
+   }
+  
    function whoseProfile() {
        if (localStorage.getItem('username') == username) {
            return (<span>  <form style={{marginTop:'150px'}} onSubmit={updateProfilePicture}>
@@ -247,7 +268,7 @@ function ProfilePage(props:any) {
        <span className="text_info">
            <h1 className="username">{userData.userinfo.first} {userData.userinfo.last}</h1>
            <div style={{marginTop:'35px'}}></div>
-           <p className="profile_statistics" style={{fontFamily: "Arial, FontAwesome", color:'#A9A9A9'}}>&#xf007; <span style={{paddingRight:'5px'}}></span>{followers} Followers <span style={{paddingRight:'35px'}}></span> &#xf004;<span style={{paddingRight:'7px'}}></span>{postImages.length} Favorites</p>
+       <p className="profile_statistics" style={{fontFamily: "Arial, FontAwesome", color:'#A9A9A9'}}>&#xf007; <span style={{paddingRight:'5px'}}></span><span style={{cursor:'pointer'}} onClick={viewFollowers}>{followers} Followers</span> <span style={{paddingRight:'35px'}}></span> &#xf004;<span style={{paddingRight:'7px'}}></span>{postImages.length} Favorites</p>
  
            <div style={{marginTop:'75px'}}></div>
            <div className="biowrap">

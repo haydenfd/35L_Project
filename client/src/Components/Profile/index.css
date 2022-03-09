@@ -145,7 +145,7 @@
   height:150px;
   float: left;
   border-radius: 80px;
-  cursor: pointer;
+  /* cursor: pointer; */
   /* position: absolute; */
 }
 
@@ -162,7 +162,7 @@
 } */
 
 .prof_pic:hover {
-  opacity: 0.8;
+  /* opacity: 0.8; */
 }
 
 .info_wrapper {
@@ -277,6 +277,10 @@
   height: 250px;
   border-radius: 25px;
   cursor: pointer;
+}
+
+.displayimg:hover {
+  opacity: 0.8;
 }
 
 .noPosts {
