@@ -8,12 +8,9 @@ import {
 import './index.css';
 import App from './App';
 import ProfilePage from './Components/Profile/ProfilePage'
-// import Test from './Components/Tests/Test'
 import reportWebVitals from './reportWebVitals';
 import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';
-import Register from './Components/Modals/Register'
-import Login from './Components/Modals/Login'
 import Upload from './Components/ListingPage/Upload'
 import NotFound from './Components/NotFound/NotFound';
 import Concerns from './Components/Concerns/Concerns'; 

@@ -7,20 +7,19 @@ function Bathrooms(props:any) {
     const [bathrooms, setBathrooms] = useState(0);
     const [change, setChange] = useState(false);
 
-
     function isAtMin() {
-        if (bathrooms == 0) return true;
+        if (bathrooms === 0) return true;
         return false;
     }
 
     function isAtMax() {
-        if (bathrooms == 9) return true;
+        if (bathrooms === 9) return true;
         return false;
     }
 
     function display() {
-        if (bathrooms == 0) {
-            return "N/A";
+        if (bathrooms === 0) {
+            return 0;
         }
         else {
             return bathrooms;

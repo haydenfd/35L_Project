@@ -1,5 +1,6 @@
 .parent {
-    max-width: 280px;
+    /* may need to change max-width back to 280px here */
+    max-width: 300px; 
     position: relative;
     cursor: pointer;
 }
@@ -35,6 +36,7 @@
     color: #585858;
     float: left;
     margin-top: 4px;
+    margin-left:4px;
 }
 
 .wrapperdiv {
@@ -53,12 +55,12 @@
     bottom: 0;
     right: 0;
     border: 0px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    padding: 20px;
+    margin-right: 20px;
+    margin-bottom: 25px;
+    padding: 22.5px;
     border-radius: 50px;
-    background-color: white;
-    border: 1px solid black;
+    background-color: #FFE800;
+    border: 1px solid grey;
     cursor: pointer;
 }
 
