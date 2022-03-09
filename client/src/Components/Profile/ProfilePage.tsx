@@ -42,28 +42,20 @@ function ProfilePage(props:any) {
            }
  
         //    console.log(dataStream.userinfo.favoritedPosts)
- 
+
+           var images_multiple:any;
+
            let postsArr = []
            let postsBase64:any = []
            for (let i = 0; i < dataStream.userinfo.favoritedPosts.length; i++) {
                postsArr.push(dataStream.userinfo.favoritedPosts[i])
            }
-           for (let i = 0; i < dataStream.userinfo.favoritedPosts.length; i++) {
-               console.log("TOP")
-               console.log(postsArr[i])
-               console.log("BOTTOM")
-               try {
-                   let image = postsArr[i].result.file
-                   let image_upload = await ApiService.getPosts(image)
-                   postsBase64.push(image_upload)
-               }
-               catch {
-                    let image = await ApiService.getPosts(postsArr[i])
-                    postsBase64.push(image)                
-                }
-           }
+           images_multiple = await ApiService.getProfileImages(postsArr)
+           console.log(images_multiple['result'])
+
            let images = await ApiService.getPosts(postsArr[0]);
-           setPostImages(postsBase64)
+           console.log(postsBase64)
+           setPostImages(images_multiple['result'])
            console.log(images)
            if (images == undefined) {
                console.log("call failed")
@@ -318,5 +310,3 @@ function ProfilePage(props:any) {
 }
  
 export default ProfilePage;
- 
-
