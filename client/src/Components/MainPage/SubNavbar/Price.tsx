@@ -6,7 +6,23 @@ import {Button} from '@material-ui/core'; //importing material ui component
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 
-function Price(props:any) {      
+function Price(props:any) {
+
+    function checkIfInteger(value:string) {
+        return /^\d+$/.test(value);
+    }
+    
+    function updatePrice() {
+        let min = document.getElementById('min-price') as HTMLInputElement;
+        let min_val = min.value
+        let max = document.getElementById('max-price') as HTMLInputElement;
+        let max_val = max.value;
+        if (checkIfInteger(min_val) && (checkIfInteger(max_val) && (parseInt(max_val) > parseInt(min_val)))) {
+            props.adjustStyles("price")
+            props.sortByPrice(parseInt(min_val), parseInt(max_val))
+        }
+        return
+    }
 
     return (
         <span>
@@ -30,7 +46,7 @@ function Price(props:any) {
             </div>  
             <br></br>
 
-            <button className="update_price">Update</button>
+            <button className="update_price" onClick={updatePrice}>Update</button>
             </div>
       </span>
 )

@@ -38,7 +38,19 @@ function Bathrooms(props:any) {
         if (!change) setChange(true);
         if (bathrooms >= 1) {
             setBathrooms(bathrooms-1)
+            if (bathrooms-1 <= 0) {
+                setChange(false)
+            }
         }
+    }
+
+    function sortByBathrooms() {
+        if (bathrooms == 0) {
+            console.log("CAN'T SUBMIT")
+            return
+        }
+        props.sortByBathrooms(bathrooms)
+        props.adjustStyles('bathrooms')
     }
 
     return (
@@ -53,7 +65,7 @@ function Bathrooms(props:any) {
             <br></br>
             <div style={{paddingTop:'20px'}}></div>
 
-             <button className={!change ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>      
+             <button onClick={sortByBathrooms} className={!change ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>      
 
       </span>
 )
