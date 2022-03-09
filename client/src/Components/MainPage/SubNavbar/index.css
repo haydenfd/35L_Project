@@ -1,7 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .flex {
     display: flex;
     flex-direction: row;
     margin-left: 4%;
+    justify-content: space-between;
+    width: 55%;
+    height: 90px;
+    padding-top:15px;
+    padding-bottom:10px;
   }
 
 @media (max-width: 800px) {
@@ -28,12 +39,20 @@
   cursor: pointer;
   border-radius: 20px;
   background-color: #ffffff;
-  border: 1px solid #dddddd;
+  border: 1px solid #000000;
   padding: 12px;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: #606060;
-  font-family: Helvetica, sans-serif;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  color: #000000;
+  font-size: 14px;
+}
+
+.baseButton:hover {
+  border: 2px solid #000000;
+  transform: scaleY(1.05);
+  transform: scaleX(1.00);
 }
 
 .separator {
@@ -41,7 +60,7 @@
 }
 
 .clicked {
-  border: 1px solid black;
+  border: 2px solid black;
 }
 
 .base_dropdown {
@@ -83,26 +102,13 @@
 
 input {
   border-radius: 8px;
-  border: 1px solid grey;
+  border: 1px solid black;
   outline: none;
   padding: 6px 10px;
 }
 
 .price_fields {
   padding: 15px 15px;
-}
-
-.update_price {
-  cursor: pointer;
-  margin-top: 20px;
-  float:right;
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 14px;
-  border: 0px;
-  background-color: #282828;
-  color: #F5F5F5;
-  font-family: Helvetica, sans-serif
 }
 
 .update_amenities {
@@ -120,21 +126,22 @@ input {
 }
 
 .update_counter {
-  cursor: pointer;
-  margin-top: 15px;
-  float:center;
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 14px;
-  border: 0px;
-  background-color: #098bd5;
-  color: white;
-  font-family: Helvetica, sans-serif
+    cursor: pointer;
+    margin-top: 15px;
+    float: center;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 0px;
+    background-color: #1e90ff;
+    color: #FFE800;
+    width: 50%;
 }
 
 .update_counter_idle {
   cursor: default;
-  background-color: #D0D0D0;
+  background-color: #1e90ff;
 }
 
 .check_wrapper {
@@ -153,13 +160,13 @@ input {
 
 .check {
   top: 5px;
-  left: 20px;
+  left: 18px;
   height: 20px;
   width: 20px;
   position: absolute;
-  border-radius: 5px;
+  border-radius: 20px;
   background-color: white;
-  border: 2px solid #C8C8C8
+  border: 2px solid #000000;
 }
 
 .check:after {
@@ -177,7 +184,7 @@ input {
   top: 1px;
   width: 5px;
   height: 12px;
-  border: solid black;
+  border: solid #1e90ff;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -186,9 +193,9 @@ input {
 
 
 .counter_wrapper {
-  border: 1px solid #D3D3D3;
+  border: 1px solid #000000;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 4px;
   padding-top: 10px;
   padding-bottom: 10px;
   -moz-user-select: none;
@@ -200,7 +207,7 @@ input {
   cursor: pointer;
   width: 33%;
   height: 100%;
-  background-color: #098bd5;
+  background-color: #1e90ff;
   border-radius: 2px 0px 0px 2px;
   padding: 10px;
   color: white;
@@ -214,7 +221,7 @@ input {
   cursor: pointer;
   width: 33%;
   height: 100%;
-  background-color: #098bd5;
+  background-color: #1e90ff;
   border-radius: 0px 2px 2px 0px;
   padding: 10px;
   color: white;
@@ -229,3 +236,35 @@ input {
   cursor: default;
   background-color: #D0D0D0;
 }
+
+
+.modified-btn-1 {
+position: relative;
+bottom: 12px;
+left:-2px;
+
+
+}
+
+.modified-btn-2 {
+position: relative;
+bottom: 12px;
+left:-3px;
+
+
+}
+
+
+/* redundant code moved here */
+/* .update_price {
+  cursor: pointer;
+  margin-top: 20px;
+  float:right;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 0px;
+  background-color: #000000;
+  color: #F5F5F5;
+  font-family: Helvetica, sans-serif
+} */

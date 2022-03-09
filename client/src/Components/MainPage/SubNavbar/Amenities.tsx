@@ -50,8 +50,7 @@ function Amenities(props:any) {
               <span className="check"></span>
             </label>
 
-            <button className="update_amenities">Update</button>
-            
+        <button className="update_counter modified-btn-2" style={{ marginBottom: '-20px' }}>Update</button>
 
       </span>
 )

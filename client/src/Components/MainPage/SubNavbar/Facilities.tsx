@@ -46,7 +46,7 @@ function Facilities(props:any) {
             <div style={{paddingTop:'4px'}}></div>
             
 
-            <button className="update_amenities">Update</button>
+            <button className="update_counter modified-btn-1">Update</button>
             
 
       </span>
