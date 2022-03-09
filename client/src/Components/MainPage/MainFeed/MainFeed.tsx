@@ -22,8 +22,9 @@ function MainPage(posts:any) {
         navigate('/listing/' + postId)
     }
 
+    // funny...strict equality comparison defaults to showing form
     function setUpload() {
-        if (localStorage.getItem('username') == undefined) {
+        if (localStorage.getItem('username') === undefined) {
             swal("Failure", "Must be signed in to upload a listing!", "error")
             return
         }

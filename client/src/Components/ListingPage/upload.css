@@ -1,22 +1,18 @@
-/* *{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-} */
-
+* {
+  font-family: 'Montserrat', sans-serif;
+}
 .form-box {
-    width: 80%;
-    /* height: 100vh; */
-    margin: 2rem auto;
-    padding: 3vw ;
+    width: 100%;
+    margin: auto;
+    height: 830px;
+    padding-bottom: 3vw ;
     position:relative; 
     align-items: center;
     text-align:center;
-    border: solid black 3px;
-    border-radius: 10px;
-    background-color: #D0D0D0;
-    margin-top: -50px;
-    /* background-color: rgba(0,0,0,0.1); */
+    border: solid black 1.5px;
+    border-radius: 6px;
+    background-color: rgb(255,255,255);
+    margin-top: -80px;
 }
 
 .form-box > *{
@@ -27,10 +23,10 @@
 
 .input-div_ > label {
   display:inline-block;
-  width: 150px;
+  width: 180px;
   text-align: left;
-  margin-right: 30px;
-
+  margin-right: 50px;
+  font-weight: bold;
 }
 
 .input-div_ > h1 {
@@ -41,19 +37,83 @@
   margin-bottom: 20px;
 }
 
-.form-box > input {
+/* .form-box > input {
   height: 1.5em;
-  border-radius: 3px;
+  border-radius: 6px;
+} */
+
+.btn {
+  margin-top: 50px;
+  border-radius: 6px;
+  border-color: #1e90ff;
+  background-color:#1e90ff ;
+  color: #FFE800;
+  font-weight: 700;
+  height: 40px;
+  width:120px;
+  margin-right: 30px;
+  position: relative;
+  left: 12;
 }
 
-.form-box > .btn {
-  margin-top: 50px;
-  border-radius: 5.5px;
-  border-color: white;
-  height: 70px;
-  width:150px;
+.head {
+  color: #FFE800;
+  font-weight: 700;
+  position: relative;
+  padding-top: 25px;
 }
 
 .form-box > .form {
   margin-top: 40px;
+}
+
+.title {
+  width:100%;
+  height:10%;
+  background-color: #1e90ff;
+  position:relative; 
+  margin-top: -22px;
+  border-radius:3px;
+}
+
+#Address, #Price, #Distance, #RentBy, #Bedrooms, #Bathrooms {
+  padding: 10px;
+}
+
+.list{
+  margin-top: 30px;
+  height: 150px;
+  width: 100%;
+  display: flex;
+  flex: 1;
+  margin-bottom: 20px;
+  padding-left:110px;
+}
+
+.checkboxes {
+  width: 50%;
+  text-align: left;
+  font-weight: bold;
+  line-height: 12px;
+  align-items: center;
+}
+
+#furnished,
+#appliances,
+#balcony, 
+#parking, 
+#hardwood,
+#gym,
+#courtyard,
+#spa,
+#laundry,
+#pool
+{
+  margin-bottom: 15px;
+}
+
+
+.picture-label{
+  margin-top:20px;
+  margin-left:20px;
 }
