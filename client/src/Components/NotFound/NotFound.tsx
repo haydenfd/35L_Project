@@ -1,8 +1,7 @@
-import { red } from "@material-ui/core/colors";
 import React from "react";
 import { AiOutlineFontSize } from "react-icons/ai";
 
-function NotFound() {
+/* function NotFound() {
     const styleObj = {
         font: "Airbnb Cereal",
         fontSize: 30,
@@ -38,3 +37,4 @@ function NotFound() {
 }
 
 export default NotFound;
+ */

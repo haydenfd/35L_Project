@@ -12,9 +12,9 @@ import reportWebVitals from './reportWebVitals';
 import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';
 import Upload from './Components/ListingPage/Upload'
-import NotFound from './Components/NotFound/NotFound';
-import Concerns from './Components/Concerns/Concerns'; 
-import Hosting from './Components/Hosting/Hosting';
+// import NotFound from './Components/NotFound/NotFound';
+// import Concerns from './Components/Concerns/Concerns'; 
+// import Hosting from './Components/Hosting/Hosting';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -27,9 +27,9 @@ ReactDOM.render(
           <Route path="/listing/:id" element={<ListingPage />}/>
           {/* <Route path="/test" element={<Register />}/> */}
           <Route path="/test" element={<Upload />}/>
-          <Route path="/NotFound" element={<NotFound />} />
+       {/*    <Route path="/NotFound" element={<NotFound />} />
           <Route path="/Concerns" element={<Concerns />}/>
-          <Route path="/Hosting" element={<Hosting />}/>
+          <Route path="/Hosting" element={<Hosting />}/> */}
         </Routes>
     </Router>
   </React.StrictMode>,
