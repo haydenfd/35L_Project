@@ -24,7 +24,8 @@ function ProfilePage(props:any) {
    const [isRecentlyFollowed, setRecentlyFollowed] = useState(false)
    const [isRecentlyUnfollowed, setRecentlyUnfollowed] = useState(false);
    const [followers, setFollowers] = useState(0)
-   const [_image_, setImage] = useState({image: "/defaulticon.jpeg"})
+//    const [_image_, setImage] = useState({image: "/defaulticon.jpeg"})
+   const [_image_, setImage] = useState("/defaulticon.jpeg")
    var dataStream:any;
    var image_:string = ''
  
@@ -57,7 +58,8 @@ function ProfilePage(props:any) {
            console.log(postsBase64)
            setPostImages(images_multiple['result'])
            console.log(images)
-           if (images == undefined) {
+           if (!images) {
+            // if (false) {
                console.log("call failed")
            }
            else {
@@ -66,11 +68,16 @@ function ProfilePage(props:any) {
             //    console.log(userData)
 
                if (dataStream.userinfo.pfp != '') {
-                   let prof_pic:any = await ApiService.getProfilePicture(dataStream.userinfo.pfp);
+                //    let prof_pic:any = await ApiService.getProfilePicture(dataStream.userinfo.pfp);
+                    let prof_pic:any = await Middleware.getImg(null, dataStream.userinfo.pfp)
                    console.log(prof_pic)
-                   let photo = "data:image/jpeg;base64," + prof_pic.data;
+                   let photo = prof_pic.base64Data;
+                //    let profel: HTMLImageElement = document.getElementsByClassName('prof_pic')[0] as HTMLImageElement
+                //    profel.src = photo
                    let profile_photo = {image:photo}
-                   setImage(profile_photo);
+                //    setImage(profile_photo);
+                // console.log("photo: " + photo)
+                   setImage(photo);
                }
  
                let favs = userData;
@@ -81,7 +88,10 @@ function ProfilePage(props:any) {
                    ...userData.userinfo,
                    favoritedPosts: favs.userinfo.favoritedPosts
                }}))
-               image_ = "data:image/jpeg;base64," + userData.userinfo.favoritedPosts[0].result.base64
+
+               // FIX THIS if no favorited images the code throws errors!!!
+
+               image_ = userData.userinfo.favoritedPosts[0].result.base64
                let how_many_followers = userData.userinfo.followers.length
                setFollowers(dataStream.userinfo.followers.length);
                setComponentMount(true);
@@ -144,10 +154,11 @@ function ProfilePage(props:any) {
    }
  
    function checkProf() {
-       return _image_.image;
+    //    return _image_.image;
        let profile_pic = userData.userinfo.pfp
        if (profile_pic != '') {
            return '/defaulticon.jpeg'
+        // return profile_pic
         //    return profile_pic
        }
        return '/defaulticon.jpeg'
@@ -233,9 +244,9 @@ function ProfilePage(props:any) {
        event.preventDefault();
        const file_uploaded = document.getElementById('file-input') as HTMLInputElement;
        console.log(document.getElementById('file-input'));
-       if (_image_.image != '/default.png') {
+    //    if (_image_.image != '/default.png') {
 
-       }
+    //    }
        let upload = await Middleware.submitFile(file_uploaded, true, 'empty', false, '', '', username!, "THROWAWAY");
        console.log(upload)
        if (upload.result == 200) {
@@ -256,7 +267,8 @@ function ProfilePage(props:any) {
        <div style={{paddingTop:'50px'}}></div>
        <div className="info">
        <span className="photo">
-           <img className="prof_pic" src={checkProf()}></img>
+           {/* <img className="prof_pic" src={checkProf()}></img> */}
+           <img className="prof_pic" src={_image_}></img>
        </span>
        <span className="text_info">
            <h1 className="username">{userData.userinfo.first} {userData.userinfo.last}</h1>
@@ -289,7 +301,7 @@ function ProfilePage(props:any) {
        {Object.keys(postImages).map((key:any) => {
        return (
            <span style={{marginLeft:'3%', marginTop:'1.5%'}}>
-               <img onClick={() => {redirectToPage(key)}} className="displayimg" src={`data:image/jpg;base64,${postImages[key]['result']['base64']}`}></img>                       
+               <img onClick={() => {redirectToPage(key)}} className="displayimg" src={`${postImages[key]['result']['base64']}`}></img>                       
            </span>
        )
    })}

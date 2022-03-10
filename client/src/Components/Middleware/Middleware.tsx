@@ -108,8 +108,10 @@ const Middleware = {
         })
     },
 
-    getImg: async function getImg(e: React.FormEvent, fileName: string) {
-        e.preventDefault()
+    getImg: async function getImg(e: React.FormEvent | null, fileName: string) {
+        if (e) {
+            e.preventDefault()
+        }
         return await fetch('/api/getimg', {
             method: 'POST',
             body: JSON.stringify({ "fileName": fileName}),
