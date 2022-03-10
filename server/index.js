@@ -84,7 +84,7 @@ export const getPosts = async (req, res) => {
     try {
 
         const postMessages = await PostMessage.find();
-        console.log(postMessages);
+        // console.log(postMessages);
         res.status(200).json(postMessages);
        
     } catch (error) {
@@ -149,7 +149,7 @@ export const likePost = async (req, res) => {
 
 
 app.post('/api/getposts', async (req, res) => {
-    console.log(req.body.id)
+    // console.log(req.body.id)
     var ObjectId = mongodb.ObjectID
     var obj_id = ObjectId(req.body.id)
     var rez;
@@ -163,7 +163,7 @@ app.post('/api/getposts', async (req, res) => {
     try {
         let post_id = await post_collection.findOne({images:obj_id},{ "images.$:": 0 })
         rez = await collection.findOne(obj_id);
-        console.log(rez)
+        // console.log(rez)
         result['file'] = rez._id;
         result['metadata'] = rez.metadata;
         result['postId'] = post_id._id.toString();
@@ -175,14 +175,14 @@ app.post('/api/getposts', async (req, res) => {
     }     
     
     finally {
-        console.log(result.file);
+        // console.log(result.file);
         res.send({ result:result });
         await client.close()
     }
 })
 
 app.post("/api/getprof", async (req, res) => {
-    console.log(req.body.filename)
+    // console.log(req.body.filename)
     var image;
     var imagedata;
     await client.connect()
@@ -191,7 +191,7 @@ app.post("/api/getprof", async (req, res) => {
     const images = db.collection('fs.chunks')
     let result = {}
     try {
-        console.log(req.body.filename)
+        // console.log(req.body.filename)
         image = await collection.findOne( { filename: req.body.filename } );
         let id = image._id;
         imagedata = await images.findOne( { files_id: id } );
@@ -233,7 +233,7 @@ app.post('/api/get_multiple_posts', async (req, res) => {
         console.log(err)
     }
     finally {
-        console.log(result)
+        // console.log(result)
         res.send( {result: result} )
         await client.close()
     }
@@ -250,7 +250,7 @@ app.post('/api/get_image_from_filename', async (req, res) => {
     }
     catch(err) {console.log(err)}
     finally {
-        console.log(imagedata)
+        // console.log(imagedata)
         res.send(imagedata)
         await client.close()
     }
@@ -284,8 +284,8 @@ app.post('/api/uploadimg', async (req, res) => {
                     }
                 } else {
                     filename = buf.toString('hex') + path.extname(file.originalname)
-                    console.log(filename.originalname)
-                    console.log(filename)
+                    // console.log(filename.originalname)
+                    // console.log(filename)
                     fileInfo = {
                         filename: filename,
                         bucketName: 'fs',
@@ -311,7 +311,7 @@ app.post('/api/uploadimg', async (req, res) => {
     // const upload = multer({ storage }).any('labelimg')
     const upload = multer({ storage }).any()
     upload(req, res, async function (err) {
-        console.log(req.body);
+        // console.log(req.body);
         if (err) {
             // This is a good practice when you want to handle your errors differently
             console.error(err);
@@ -320,7 +320,7 @@ app.post('/api/uploadimg', async (req, res) => {
             return
         }
         await client.close()
-        console.log(fileInfo);
+        // console.log(fileInfo);
         res.send({ result: 200, fileData:fileInfo })
         // Everything went fine 
     })
@@ -338,7 +338,7 @@ app.post('/api/getuser', async (req, res) => {
     } catch (err) {
         console.error(err)
     } finally {
-        console.log(result);
+        // console.log(result);
         res.send({ result:result });
         await client.close()
     }
@@ -382,7 +382,7 @@ app.post('/api/signin', async (req, res) => {
             );
         }
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.json({
             res: 500
         })
@@ -536,7 +536,7 @@ app.post('/api/getimg', async (req, res) => {
 
 app.post('/api/getdummydata', async (req, res) => {
     let fileName = req.body.fileName
-    console.log(fileName)
+    // console.log(fileName)
     await client.connect()
     const db = client.db('projectdb')
     const filescoll = awaitdb.collection('fs.files')
@@ -621,7 +621,7 @@ app.post('/api/updateuser', async (req, res) => {
 app.post('/api/test', async (req, res) => {
     res.send({ express: "APP IS CONNECTED" })
     await client.connect()
-    console.log(req.body)
+    // console.log(req.body)
     let data = { myData: req.body.MYDATA }
     const db = client.db('projectdb')
     const collection = db.collection('userinfo')
@@ -711,7 +711,7 @@ app.post('/api/getSinglePost', async (req, res) => {
     const collection = db.collection('posts')
     try {
         let post = await collection.find( { _id:_id } ).toArray()
-        console.log(post)
+        // console.log(post)
         res.send( { result:200, post: post } )
     } catch (err) {
         console.log(err)
