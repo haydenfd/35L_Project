@@ -98,7 +98,7 @@ function ListingPage(props:any) {
                 return (<p style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf253;&nbsp;&nbsp;Laundry Room</p>)
             }
             case 'pool': {
-                return (<p style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf185;&nbsp;&nbsp;Laundry Room</p>)
+                return (<p style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf185;&nbsp;&nbsp;Pool</p>)
             }
         }
     }

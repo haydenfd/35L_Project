@@ -50,12 +50,13 @@ export default function Upload(props:any) {
   }
 
   function checkAmenities() {
+    console.log("HERE")
     var amenities = []
-    let furnished_status = document.getElementById("furnished") as HTMLInputElement;
-    let appliances_status = document.getElementById("appliances") as HTMLInputElement;
-    let balcony_status = document.getElementById("balcony") as HTMLInputElement
-    let parking_status = document.getElementById("parking") as HTMLInputElement
-    let hardwood_status = document.getElementById("hardwood") as HTMLInputElement;
+    let furnished_status = document.getElementById("_furnished_") as HTMLInputElement;
+    let appliances_status = document.getElementById("_appliances_") as HTMLInputElement;
+    let balcony_status = document.getElementById("_balcony_") as HTMLInputElement
+    let parking_status = document.getElementById("_parking_") as HTMLInputElement
+    let hardwood_status = document.getElementById("_hardwood_") as HTMLInputElement;
 
     if (furnished_status.checked) {
       amenities.push('furnished')
@@ -81,11 +82,11 @@ export default function Upload(props:any) {
 
   function checkFacilities() {
     var facilities = []
-    let gym_status = document.getElementById("gym") as HTMLInputElement;
-    let courtyard_status = document.getElementById("courtyard") as HTMLInputElement;
-    let spa_status = document.getElementById("spa") as HTMLInputElement
-    let laundry_status = document.getElementById("laundry") as HTMLInputElement
-    let pool_status = document.getElementById("pool") as HTMLInputElement;
+    let gym_status = document.getElementById("_gym_") as HTMLInputElement;
+    let courtyard_status = document.getElementById("_courtyard_") as HTMLInputElement;
+    let spa_status = document.getElementById("_spa_") as HTMLInputElement
+    let laundry_status = document.getElementById("_laundry_") as HTMLInputElement
+    let pool_status = document.getElementById("_pool_") as HTMLInputElement;
 
     if (gym_status.checked) {
       facilities.push('gym')
@@ -117,7 +118,6 @@ export default function Upload(props:any) {
     console.log(bedrooms)
     var amenities = checkAmenities()
     var facilities = checkFacilities()
-
 
     // have to first upload the image, then create a new post object which points to the image
 
@@ -184,37 +184,37 @@ export default function Upload(props:any) {
 
         <div className='list'>
         <div className='input-div_'>
-          <input type="checkbox" id="furnished" value="furnished" name="furnished"></input>
-          <label htmlFor="furnished"> Fully Furnished</label><br></br>
+          <input type="checkbox" id='_furnished_'></input>
+          <label htmlFor="_furnished_"> Fully Furnished</label><br></br>
 
-          <input type="checkbox" id="appliances" value="appliances" name="appliances"></input>
-          <label htmlFor="appliances"> Appliances Included</label><br></br>
+          <input type="checkbox" id="_appliances_" value="appliances" name="appliances"></input>
+          <label htmlFor="_appliances_"> Appliances Included</label><br></br>
 
-          <input type="checkbox" id="balcony" value="balcony" name="balcony"></input>
-          <label htmlFor="balcony"> Balcony</label><br></br>
+          <input type="checkbox" id="_balcony_" value="balcony" name="balcony"></input>
+          <label htmlFor="_balcony_"> Balcony</label><br></br>
 
-          <input type="checkbox" id="parking" value="parking" name="parking"></input>
-          <label htmlFor="parking"> Parking</label><br></br>
+          <input type="checkbox" id="_parking_" value="parking" name="parking"></input>
+          <label htmlFor="_parking_"> Parking</label><br></br>
 
-          <input type="checkbox" id="hardwood" value="hardwood" name="hardwood" ></input>
-          <label htmlFor="hardwood"> Hardwood</label><br></br>
+          <input type="checkbox" id="_hardwood_" value="hardwood" name="hardwood" ></input>
+          <label htmlFor="_hardwood_"> Hardwood</label><br></br>
         </div>
         
         <div className='input-div_'>
-        <input type="checkbox" id="gym" value="gym" name="gym"></input>
-          <label htmlFor="gym"> Gym</label><br></br>
+        <input type="checkbox" id="_gym_" value="gym" name="gym"></input>
+          <label htmlFor="_gym_"> Gym</label><br></br>
 
-          <input type="checkbox" id="courtyard" value="courtyard" name="courtyard"></input>
-          <label htmlFor="courtyard"> Courtyard</label><br></br>
+          <input type="checkbox" id="_courtyard_" value="courtyard" name="courtyard"></input>
+          <label htmlFor="_courtyard_"> Courtyard</label><br></br>
 
-          <input type="checkbox" id="spa" value="spa" name="spa"></input>
-          <label htmlFor="spa"> Spa</label><br></br>
+          <input type="checkbox" id="_spa_" value="spa" name="spa"></input>
+          <label htmlFor="_spa_"> Spa</label><br></br>
 
-          <input type="checkbox" id="laundry" value="laundry" name="laundry"></input>
-          <label htmlFor="laundry"> Laundry Room</label><br></br>
+          <input type="checkbox" id="_laundry_" value="laundry" name="laundry"></input>
+          <label htmlFor="_laundry_"> Laundry Room</label><br></br>
 
-          <input type="checkbox" id="pool" value="pool" name="pool"></input>
-          <label htmlFor="pool"> Swimming Pool</label><br></br>
+          <input type="checkbox" id="_pool_" value="pool" name="pool"></input>
+          <label htmlFor="_pool_"> Swimming Pool</label><br></br>
         </div>
     </div>
         <div className='input-div_'>

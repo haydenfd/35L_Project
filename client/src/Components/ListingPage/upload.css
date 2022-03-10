@@ -98,16 +98,16 @@
   align-items: center;
 }
 
-#furnished,
-#appliances,
-#balcony, 
-#parking, 
-#hardwood,
-#gym,
-#courtyard,
-#spa,
-#laundry,
-#pool
+#_furnished_,
+#_appliances_,
+#_balcony_, 
+#_parking_, 
+#_hardwood_,
+#_gym_,
+#_courtyard_,
+#_spa_,
+#_laundry_,
+#_pool_
 {
   margin-bottom: 15px;
 }
