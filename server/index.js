@@ -173,7 +173,7 @@ app.post('/api/getMultipleProfilePosts', async (req, res) => {
             result.push({result: entry})
     
         }
-        catch(err) {console.log(err)}
+        catch(err) {console.error(err)}
     }
     res.send({result:result})
     await client.close()
@@ -229,7 +229,7 @@ app.post("/api/getprof", async (req, res) => {
         // let image_data = await images.findOne({ files_id:image_id })
     }
     catch(err) {
-        console.log(err)
+        console.error(err)
     }
     finally {
         // console.log("IN THE END")
