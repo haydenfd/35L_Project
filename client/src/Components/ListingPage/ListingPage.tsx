@@ -45,7 +45,7 @@ function ListingPage(props:any) {
         for (let i = 0; i < post.post[0].favorited.length; i++) {
             return_string += `<a href="http://localhost:3000/profile/${post.post[0].favorited[i]}">${post.post[0].favorited[i]}</a><br><br>`
         }
-        return_string += `<script> function hello() {console.log("i am the one")} </script></body></html>`
+        return_string += `</body></html>`
         fire(return_string)
     }
 

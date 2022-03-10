@@ -3,6 +3,8 @@ import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import { useParams } from "react-router";
 import ApiService from '../../service'
 import swal from 'sweetalert';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import './index.css'
 import ProfileInfo from '../../Models/ProfileInfo'
 import { useNavigate } from "react-router-dom";
@@ -40,28 +42,20 @@ function ProfilePage(props:any) {
            }
  
         //    console.log(dataStream.userinfo.favoritedPosts)
- 
+
+           var images_multiple:any;
+
            let postsArr = []
            let postsBase64:any = []
            for (let i = 0; i < dataStream.userinfo.favoritedPosts.length; i++) {
                postsArr.push(dataStream.userinfo.favoritedPosts[i])
            }
-           for (let i = 0; i < dataStream.userinfo.favoritedPosts.length; i++) {
-               console.log("TOP")
-               console.log(postsArr[i])
-               console.log("BOTTOM")
-               try {
-                   let image = postsArr[i].result.file
-                   let image_upload = await ApiService.getPosts(image)
-                   postsBase64.push(image_upload)
-               }
-               catch {
-                    let image = await ApiService.getPosts(postsArr[i])
-                    postsBase64.push(image)                
-                }
-           }
+           images_multiple = await ApiService.getProfileImages(postsArr)
+           console.log(images_multiple['result'])
+
            let images = await ApiService.getPosts(postsArr[0]);
-           setPostImages(postsBase64)
+           console.log(postsBase64)
+           setPostImages(images_multiple['result'])
            console.log(images)
            if (images == undefined) {
                console.log("call failed")
@@ -73,6 +67,7 @@ function ProfilePage(props:any) {
 
                if (dataStream.userinfo.pfp != '') {
                    let prof_pic:any = await ApiService.getProfilePicture(dataStream.userinfo.pfp);
+                   console.log(prof_pic)
                    let photo = "data:image/jpeg;base64," + prof_pic.data;
                    let profile_photo = {image:photo}
                    setImage(profile_photo);
@@ -175,11 +170,30 @@ function ProfilePage(props:any) {
    function isSubmitDisplayed() {
     console.log("SUBMIT!")
    }
- 
+
+
+
+   function viewFollowers() {
+        let return_string = "<html><body>"
+        for (let i = 0; i < userData.userinfo.followers.length; i++) {
+            return_string += `<a href="http://localhost:3000/profile/${userData.userinfo.followers[i]}">${userData.userinfo.followers[i]}</a><br><br>`
+        }
+        return_string += `</body></html>`
+        fire(return_string)
+   }
+
+   function fire(html_string:string) {
+    Swal.fire({
+        title: "<i>Followers</i>", 
+        html:html_string,  
+        confirmButtonText: "Close", 
+      });
+   }
+  
    function whoseProfile() {
        if (localStorage.getItem('username') == username) {
            return (<span>  <form style={{marginTop:'150px'}} onSubmit={updateProfilePicture}>
-         <input onChange={isSubmitDisplayed} onClick={triggerHiddenFileUpload} className="followButton" type="button" value="Upload Profile Picture"></input>&nbsp;&nbsp;<input className="followButton" style={{backgroundColor:'#0c8f21'}} type='submit' name="submit" placeholder='Submit After Uploading' value='Submit After Uploading' />
+         <input onChange={isSubmitDisplayed} onClick={triggerHiddenFileUpload} className="followButton" type="button" value="Upload a JPEG Profile Picture"></input>&nbsp;&nbsp;<input className="followButton" style={{backgroundColor:'#0c8f21'}} type='submit' name="submit" placeholder='Submit After Uploading' value='Submit After Uploading' />
          <input id="file-input" name="file-input" type="file" />
             </form></span>
  )
@@ -247,7 +261,7 @@ function ProfilePage(props:any) {
        <span className="text_info">
            <h1 className="username">{userData.userinfo.first} {userData.userinfo.last}</h1>
            <div style={{marginTop:'35px'}}></div>
-           <p className="profile_statistics" style={{fontFamily: "Arial, FontAwesome", color:'#A9A9A9'}}>&#xf007; <span style={{paddingRight:'5px'}}></span>{followers} Followers <span style={{paddingRight:'35px'}}></span> &#xf004;<span style={{paddingRight:'7px'}}></span>{postImages.length} Favorites</p>
+       <p className="profile_statistics" style={{fontFamily: "Arial, FontAwesome", color:'#A9A9A9'}}>&#xf007; <span style={{paddingRight:'5px'}}></span><span style={{cursor:'pointer'}} onClick={viewFollowers}>{followers} Followers</span> <span style={{paddingRight:'35px'}}></span> &#xf004;<span style={{paddingRight:'7px'}}></span>{postImages.length} Favorites</p>
  
            <div style={{marginTop:'75px'}}></div>
            <div className="biowrap">
@@ -297,5 +311,3 @@ function ProfilePage(props:any) {
 }
  
 export default ProfilePage;
- 
-

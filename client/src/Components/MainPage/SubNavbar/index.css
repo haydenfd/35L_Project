@@ -16,11 +16,13 @@
   }
 
 @media (max-width: 800px) {
+
+  .buttonWrapper {
+    /* margin-top: 500px; */
+  }
+
     .flex {
       flex-direction: column;
-    }
-    .base_dropdown {
-      display: none;
     }
 
     .baseButton { 
@@ -82,7 +84,7 @@
 
 .checklist_dropdown {
   min-width: 205px;
-  min-height: 320px;
+  min-height: 280px;
 }
 
 .facilities_dropdown {
