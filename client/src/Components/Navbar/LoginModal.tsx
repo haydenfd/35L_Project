@@ -20,7 +20,8 @@ function LoginModal(props:any) {
         setPassword(event.target.value);
     }
 
-    async function logIn() {   
+    async function logIn(e: React.FormEvent) {   
+        e.preventDefault()
         await ApiService.signIn(username, password);
         if (isSignedIn()) {
             props.isLoginSuccessful(true);
@@ -42,10 +43,13 @@ function LoginModal(props:any) {
         <form>
             <input onChange={updateUsername} className="input_forms" type="text" id="username" name="username" placeholder="&#xf007; &nbsp; Enter Username" style={{fontFamily: "Montserrat, FontAwesome"}} />
             <input onChange={updatePassword} className="input_forms" type="password" id="password" name="password" placeholder="&#xf023; &nbsp; Enter Password" style={{fontFamily: "Montserrat, FontAwesome"}} />
-        </form>
         <div className="div-button-top"></div>
-            <button className="submit_signin" onClick={logIn} style={{fontFamily: "Montserrat, FontAwesome"}}>Log In</button>
+            <input className="submit_signin" type="submit" onClick={(e: React.FormEvent) => {logIn(e)}} value="Log In" style={{fontFamily: "Montserrat, FontAwesome"}} />
         <div className="div-button-bottom"></div>
+        </form>
+        {/* <div className="div-button-top"></div>
+            <button className="submit_signin" onClick={logIn} style={{fontFamily: "Montserrat, FontAwesome"}}>Log In</button>
+        <div className="div-button-bottom"></div> */}
 
     </div>
 )
