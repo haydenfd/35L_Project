@@ -260,6 +260,22 @@ const ApiService = {
         return imageData
     },
 
+    getProfileImages: async function getProfileImages(imageIds:any) {
+        var imageData;
+        await fetch("/api/getMultipleProfilePosts", {
+            method:'POST',
+            body: JSON.stringify({
+                'ids': imageIds
+            }),
+            headers: {'Content-Type': 'application/json'}
+        }).then(async res => {
+            imageData = await res.json()
+        })
+        console.log(imageData)
+        return imageData
+    },
+
+
     getProfilePicture: async function getProfilePicture(filename:string) {
         var data:any;
         await fetch("/api/getprof", {

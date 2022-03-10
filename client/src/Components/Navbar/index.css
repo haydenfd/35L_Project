@@ -19,9 +19,8 @@
   }
 
 .logo {
-    padding: 8px;
     margin-left: 5%;
-    height: 35px;
+    height: 55px;
     margin-top: auto;
     margin-bottom: auto;
     position: relative;
@@ -102,7 +101,7 @@
 .flex {
     display: flex;
     flex-direction: row;
-    margin-left: 4%;
+    margin-left: 6%;
   }
   
 .toggle {

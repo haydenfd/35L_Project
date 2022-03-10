@@ -9,18 +9,20 @@
     flex-direction: row;
     margin-left: 4%;
     justify-content: space-between;
-    width: 55%;
-    height: 90px;
+    width: 75%;
+    height: 100px;
     padding-top:15px;
     padding-bottom:10px;
   }
 
 @media (max-width: 800px) {
+
+  .buttonWrapper {
+    /* margin-top: 500px; */
+  }
+
     .flex {
       flex-direction: column;
-    }
-    .base_dropdown {
-      display: none;
     }
 
     .baseButton { 
@@ -56,7 +58,7 @@
 }
 
 .separator {
-  margin-left: 1%;
+  margin-left: 5%;
 }
 
 .clicked {
@@ -82,7 +84,7 @@
 
 .checklist_dropdown {
   min-width: 205px;
-  min-height: 320px;
+  min-height: 280px;
 }
 
 .facilities_dropdown {
@@ -94,7 +96,6 @@
   min-width: 200px;
   min-height: 150px;
 }
-
 
 .notClickedDisplay {
   display: none;
@@ -250,8 +251,6 @@ left:-2px;
 position: relative;
 bottom: 12px;
 left:-3px;
-
-
 }
 
 

@@ -148,6 +148,37 @@ export const likePost = async (req, res) => {
 /// ******* MY CODE 
 
 
+app.post('/api/getMultipleProfilePosts', async (req, res) => {
+    var ObjectId = mongodb.ObjectID
+    var result = []
+    var rez;
+    await client.connect()
+    var imagedata;
+    const db = client.db('projectdb')
+    const collection = db.collection('fs.files')
+    const image_collection = db.collection('fs.chunks')
+    const post_collection = db.collection('posts')
+
+    for (let i = 0; i < req.body.ids.length; i++) {
+        try {
+            let id = ObjectId(req.body.ids[i])
+            let entry = {}
+            let post_id = await post_collection.findOne({images:id},{"images.$":0})
+            rez = await collection.findOne(id)
+            entry['file'] = rez._id
+            entry['metadata'] = rez.metadata
+            entry['postId'] = post_id._id.toString()
+            let imagedata = await image_collection.findOne({files_id:rez._id})
+            entry['base64'] = imagedata.data
+            result.push({result: entry})
+    
+        }
+        catch(err) {console.log(err)}
+    }
+    res.send({result:result})
+    await client.close()
+})
+
 app.post('/api/getposts', async (req, res) => {
     // console.log(req.body.id)
     var ObjectId = mongodb.ObjectID
@@ -699,6 +730,34 @@ app.get('/api/getallposts', async (req, res) => {
     } finally {
         await client.close()
     }
+})
+
+app.post('/api/getMultiplePostsAtOnce', async (req, res) => {
+    console.log("BRUVV????")
+    await client.connect()
+    console.log("BRUVV????")
+    var ObjectId = mongodb.ObjectID
+    const db = client.db('projectdb')
+    const collection = db.collection('posts')
+    var result = []
+    console.log("BRUVV????")
+
+    for (let i = 0; i < req.body.ids.length; i++) {
+        console.log("bruv")
+        try {
+            let _id = ObjectId(req.body.ids[i])
+            console.log(req.body.ids[i])
+            let post = await collection.find( { _id: _id } ).toArray()
+            console.log(post)
+            result.push(post)
+        }
+        catch (err) {console.log(err)}
+        finally {
+            res.send(result)
+            await client.close();
+        }    
+    }
+
 })
 
 app.post('/api/getSinglePost', async (req, res) => {

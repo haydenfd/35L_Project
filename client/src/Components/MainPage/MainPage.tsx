@@ -2,11 +2,14 @@ import React, {useEffect, useState} from "react"
 import SubNavbar from "./SubNavbar/SubNavbar";
 import MainFeed from './MainFeed/MainFeed';
 import ApiService from '../../service'
+import Filter from './MainFeed/filter'
 
 function MainPage() {
 
     const [postsArr, updatePostsArr] = useState<any>()
     const [isDataLoaded, setDataLoaded] = useState(false)
+    const [minPrice, setMinPrice] = useState()
+    const [maxPrice, setMaxPrice] = useState()
 
 
     useEffect(() => {
@@ -28,22 +31,43 @@ function MainPage() {
     }, [])
 
 
-    // TO BE USED TO UPDATE STATE CLIENT-SIDE WHEN FILTERED
-    function filter() {
-        let newArr:any = postsArr!.slice();
-        console.log(newArr)
-        updatePostsArr(newArr);
-        console.log(newArr)
+    function sortByPrice(min:number, max:number) {
+        let sortedByPrice = Filter.sortByPrice(postsArr, min, max)
+        updatePostsArr(sortedByPrice)
+        // console.log(sortedByPrice)
     }
 
+    function sortByBedrooms(num:number) {
+        let sortedByBedrooms = Filter.sortByBedrooms(postsArr, num)
+        updatePostsArr(sortedByBedrooms)
+        // console.log(sortedByBedrooms)
+    }
+
+    function sortByBathrooms(num:number) {
+        let sortedByBathrooms = Filter.sortByBathrooms(postsArr, num);
+        updatePostsArr(sortedByBathrooms);
+        console.log(sortedByBathrooms);
+    }
+
+    function sortByAmenities(amenities:any) {
+        let sortedByAmenities = Filter.sortByAmenities(postsArr, amenities);
+        updatePostsArr(sortedByAmenities)
+        // console.log(sortedByAmenities)
+    }
+
+    function sortByFacilities(facilities:any) {
+        let sortedByFacilities = Filter.sortByFacilities(postsArr, facilities);
+        updatePostsArr(sortedByFacilities);
+        // console.log(sortedByFacilities);
+    }
 
 
     return (
         <div>
             {isDataLoaded ? 
                 <div className="body">
-                <SubNavbar />
-                <MainFeed posts={postsArr}/>            
+                <SubNavbar sortByPrice={sortByPrice} sortByBedrooms={sortByBedrooms} sortByBathrooms={sortByBathrooms} sortByAmenities={sortByAmenities} sortByFacilities={sortByFacilities} listings={postsArr} min={minPrice} max={maxPrice}/>
+                {postsArr.length == 0 ? <div> <img src="/empty.png"></img><p>No Listings Meet that Criteria!<br></br>Reset the Filters!</p> </div> : <MainFeed posts={postsArr}/> }           
                 </div>
                 : <div className="body"><img className="defaultPost" src="/loading.gif"></img> </div>
         }

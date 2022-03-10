@@ -35,7 +35,7 @@ function Navbar() {
     } 
 
     function isLoginSuccessful(status:boolean) {
-        if (status == true) {
+        if (status) {
             swal("Successfully Signed In!", "", "success")
             setDropdown(false);
             setSignedIn(true);
@@ -47,7 +47,7 @@ function Navbar() {
     }
 
     function isSignupSuccessful(status:boolean) {
-        if (status == true) {
+        if (status) {
             swal("Successfully Signed Up!", "Sign in to begin your search!", "success")
             setDropdown(false);
         }
@@ -77,7 +77,7 @@ function Navbar() {
     
     return (
         <div className="wrapper">
-            <img className="logo" onClick={clickHome} src="/logoalt.png"></img>
+            <img className="logo" onClick={clickHome} src="/new_logo.png"></img>
             <span className="signin">
                 <button className="prof" onClick={changeDropdown}>
                 <p>&nbsp;</p>

@@ -1,6 +1,6 @@
 .parent {
     /* may need to change max-width back to 280px here */
-    max-width: 300px; 
+    max-width: 280px; 
     position: relative;
     cursor: pointer;
 }
@@ -44,6 +44,13 @@
     margin-left: 2%;
 }
 
+@media (max-width: 800px) {
+    /* SO NO OVERLAP WITH BUTTONS ON MOBILE */
+    .flex-pos {
+        margin-top: 210px;
+    }
+}
+
 .flex-pos {
     display: flex;
     flex-direction: row;
@@ -69,13 +76,4 @@
     z-index: 6;
     width: 50%;
     margin-left: 20%;
-    /* margin-left: 40%; */
-    /* background-color: pink; */
-    /* min-width: 100%; */
-    /* max-width: 40%; */
-    /* background-color: green;
-    min-width: 50%;
-    max-width: 50%;
-    min-height: 50%;
-    margin-left: 25%; */
 }
