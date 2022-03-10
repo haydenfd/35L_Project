@@ -64,7 +64,7 @@ function Bathrooms(props:any) {
             <br></br>
             <div style={{paddingTop:'20px'}}></div>
 
-             <button onClick={sortByBathrooms} className={!change ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>      
+             {/* <button onClick={sortByBathrooms} className={!change ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>       */}
 
       </span>
 )

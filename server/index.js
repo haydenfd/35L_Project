@@ -419,7 +419,8 @@ app.post('/api/signin', async (req, res) => {
         })
         console.error(err)
     } finally {
-        res.json({res:401}) 
+        // res.json({res:401}) // never send headers twice (causes error)
+        await client.close()
     }
 })
 
