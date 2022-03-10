@@ -143,7 +143,6 @@
 .prof_pic {
   width: 150px;
   height:150px;
-  float: left;
   border-radius: 80px;
   /* cursor: pointer; */
   /* position: absolute; */
@@ -155,15 +154,16 @@
 
 /* input[type="file"] {
   display: none;
-} */
+} 
 
-/* .image-upload>input .file-input {
+.image-upload>input .file-input {
   display: none;
-} */
+} 
 
-.prof_pic:hover {
-  /* opacity: 0.8; */
+ .prof_pic:hover {
+   opacity: 0.8; 
 }
+*/
 
 .info_wrapper {
   float: left;
@@ -181,6 +181,8 @@
 .profile_statistics {
   float: left;
   position: absolute;
+  font-family: 'Montserrat', sans-serif;
+
   /* margin-left: 5%; */
   /* margin-top: 200px; */
   /* margin-top: 200px; */
@@ -233,18 +235,24 @@
 }
 
 .photo {
-  /* display: inline-block; */
-  width: 150px;
-  float: left;
-  /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    position: relative;
+    right: -243px;
+    bottom: -75px;
+}
+.photo-holder {
+  width: 100%;
+  height:250px;
+  padding-bottom: 20px;
 }
 
 .text_info {
   /* display: inline-block; */
-  margin-left: 5%;
   float: left;
   overflow: hidden;
-  /* max-width: 150px; */
+  width: 800px;
   /* overflow: hidden; */
 }
 
@@ -257,13 +265,14 @@
   font-weight: 600;
   cursor: pointer;
 }
-
+/*
 .wrapperdiv {
-  /* margin-top: 10px; */
-  /* margin-left: 500px; */
-  /* margin-left: 0%; */
-  /* width: 80%; */
+   margin-top: 10px; 
+   margin-left: 500px; 
+   margin-left: 0%; 
+   width: 80%; 
 }
+*/
 
 .flex-pos_ {
   display: flex;
@@ -283,9 +292,9 @@
   opacity: 0.8;
 }
 
-.noPosts {
+/* .noPosts {
 
-}
+} */
 
 .defaultPost {
   width: 500px;
