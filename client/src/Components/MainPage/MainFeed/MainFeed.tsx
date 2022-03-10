@@ -24,7 +24,8 @@ function MainPage(posts:any) {
 
     // funny...strict equality comparison defaults to showing form
     function setUpload() {
-        if (localStorage.getItem('username') == undefined) {
+        // if (localStorage.getItem('username') === undefined) {
+        if (!localStorage.getItem('username')) {
             swal("Failure", "Must be signed in to upload a listing!", "error")
             return
         }

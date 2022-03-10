@@ -1,8 +1,5 @@
-import { red } from "@material-ui/core/colors";
+
 import React from "react";
-import { AiOutlineFontSize } from "react-icons/ai";
-
-
 /* function Hosting() {
     const styleObj = {
         font: "Airbnb Cereal",
