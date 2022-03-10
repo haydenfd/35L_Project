@@ -113,11 +113,11 @@
 }
 
 .toggleIsActive {
-    color: darkblue;
+    color: black;
 }
 
 .toggleIsActive > hr {
-    border-color: darkblue;
+    border-color: black;
 }
 
 .toggleIsDormant {
