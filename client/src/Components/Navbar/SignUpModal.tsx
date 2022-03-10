@@ -56,19 +56,22 @@ function LoginModal(props:any) {
         return true
     }
 
-    async function attemptSignUp() {
+    async function attemptSignUp(e: React.FormEvent) {
         if (!checkIfAllFilled()) {
             setFormEmpty(true)
+            e.preventDefault()
             return;
         }
         if (password != confirmPassword) {
             setPasswordsDontMatch(true)
             setFormEmpty(false)
+            e.preventDefault()
             return
         }
         if (password.length < 6) { 
             setIsInvalidPassword(true)
             setFormEmpty(false)
+            e.preventDefault()
             return
         }
 
@@ -78,9 +81,11 @@ function LoginModal(props:any) {
         let response:any = await ApiService.addUser(email, password, username, first, last, bio, number)
         if (response!.result == 200) {
             props.isSignupSuccessful(true)
+            
         }
         else {
             props.isSignupSuccessful(false)
+            e.preventDefault()
         }
         // console.log(response)
     }
@@ -97,13 +102,19 @@ function LoginModal(props:any) {
             <input onChange={updateConfirm} className="input_forms" type="password" id="confirm" name="confirm" placeholder="&#xf023; &nbsp; Confirm Password" style={{fontFamily: "Montserrat, FontAwesome"}} />
             <input onChange={updateBio} className="input_forms" type="text" id="confirm" name="confirm" placeholder="&#xf035; &nbsp; Bio" style={{fontFamily: "Montserrat, FontAwesome"}} />
             <input onChange={updateNumber} className="input_forms" type="text" id="confirm" name="confirm" placeholder="&#xf095; &nbsp; Phone Number" style={{fontFamily: "Montserrat, FontAwesome"}} />
+            <div className="div-button-top"></div>
+            <input onClick={(e: React.FormEvent) => {attemptSignUp(e)}} value="Sign Up" type="submit" className="submit_signin" />
+                {formEmpty ? <p className="warning">All fields must be filled out!</p> : <span></span>}
+                {isInvalidPassword ? <p className="warning">Password length must be min. 6 chars!</p> : <span></span>}
+            {passwordsDontMatch ? <p className="warning">Passwords must match!</p> : <span></span>}
+            <div className="div-button-bottom"></div>
         </form>
-        <div className="div-button-top"></div>
+        {/* <div className="div-button-top"></div>
         <button onClick={attemptSignUp} className="submit_signin">Sign Up</button>
             {formEmpty ? <p className="warning">All fields must be filled out!</p> : <span></span>}
             {isInvalidPassword ? <p className="warning">Password length must be min. 6 chars!</p> : <span></span>}
         {passwordsDontMatch ? <p className="warning">Passwords must match!</p> : <span></span>}
-        <div className="div-button-bottom"></div>
+        <div className="div-button-bottom"></div> */}
     </div>
 )
 }
