@@ -21,8 +21,8 @@ function Dialog(props:any) {
     </div>
 
     const modal_when_signed_out = <div className="signedInDropdown">
-        <button onClick={props.navigateToProfile}>My Profile</button>
-        <button onClick={props.signOut}>Sign Out</button>
+        <button onClick={props.navigateToProfile} className='profile'>My Profile</button>
+        <button onClick={props.signOut} className='profile'>Sign Out</button>
     </div>
 
     return (

@@ -54,7 +54,7 @@ function MainPage(posts:any) {
                 })}
             </div>
 
-            <button onClick={setUpload} className="upload_listing"><span style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf093;</span></button>
+            <button onClick={setUpload} className="upload_listing"><span style={{fontFamily: "Montserrat, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf093;</span></button>
         </div>
     )
 }

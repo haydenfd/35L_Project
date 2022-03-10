@@ -178,3 +178,10 @@
     font-size: 15px;
     font-weight: bold;
 }
+
+.profile {
+    font-size: 16px;
+    color: black;
+    padding: 6px;
+    margin: 6px;
+}
