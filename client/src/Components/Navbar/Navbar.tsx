@@ -65,12 +65,12 @@ function Navbar() {
     }
 
     const menu = 
-    <IconContext.Provider value = {{ color: '#606060', size: '17px' }}>
+    <IconContext.Provider value = {{ color: '#00000', size: '17px' }}>
     <AiOutlineMenu style={{ marginTop:'auto', marginBottom:'auto' }} />
 </IconContext.Provider>
 
     const caret =
-    <IconContext.Provider value = {{ color: '#606060', size: '17px' }}>
+    <IconContext.Provider value = {{ color: '#000000', size: '17px' }}>
     <AiOutlineCaretDown style={{ marginTop:'auto', marginBottom:'auto' }} />
 </IconContext.Provider>
 
@@ -83,7 +83,7 @@ function Navbar() {
                 <p>&nbsp;</p>
                     {!signedIn ? menu : caret}
                     <p>&nbsp;&nbsp;</p>
-                <IconContext.Provider value = {{ color: '#606060', size: '40px' }}>
+                <IconContext.Provider value = {{ color: '#000000', size: '40px' }}>
                     <IoPersonCircleOutline />
                 </IconContext.Provider>
                 </button>
