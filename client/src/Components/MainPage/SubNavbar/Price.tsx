@@ -27,7 +27,7 @@ function Price(props:any) {
     return (
         <span>
             <div className="price_fields">
-            <div style={{display:"inline-block", paddingRight:'10px'}}>
+            <div style={{display:"inline-block", paddingRight:'10px', fontFamily:"Montserrat", color: 'black'}}>
                 <TextField 
                 id="min-price" 
                 label="Min Price" 
@@ -36,7 +36,7 @@ function Price(props:any) {
                 />
             </div>
 
-            <div style={{display:"inline-block", paddingLeft:'10px'}}>
+            <div style={{display:"inline-block", paddingLeft:'10px', color: 'black', fontFamily:"Montserrat"}}>
                 <TextField
                  id="max-price" 
                  label="Max Price" 
@@ -45,8 +45,7 @@ function Price(props:any) {
                  />
             </div>  
             <br></br>
-
-            <button className="update_price" onClick={updatePrice}>Update</button>
+            <button onClick={updatePrice} className="update_counter">Update</button>
             </div>
       </span>
 )

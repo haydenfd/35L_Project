@@ -70,7 +70,7 @@ function Facilities(props:any) {
             <div style={{paddingTop:'4px'}}></div>
             
 
-            <button onClick={sortByFacilities} className="update_amenities">Update</button>
+            <button onClick={sortByFacilities} className="update_counter modified-btn-1">Update</button>
             
 
       </span>

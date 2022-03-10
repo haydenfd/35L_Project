@@ -5,7 +5,7 @@ import ApiService from '../../service'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-
+//lots of problematic code written
 function ListingPage(props:any) {
 
     const MySwal = withReactContent(Swal)
@@ -39,7 +39,6 @@ function ListingPage(props:any) {
         }
         post_()
     }, [])
-
 
     function displayFollowers() {
         let return_string = "<html><body>"

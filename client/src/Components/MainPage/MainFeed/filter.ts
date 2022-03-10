@@ -50,6 +50,9 @@ const Filter = {
         console.log(':::::sorting by amenities:::::');
         console.log(amenities)
         var newarr = [];
+        if (amenities.length == 0) {
+            return listings
+        }
         for (let i = 0; i < listings.length; i++) {
             for (let j = 0; j < amenities.length; j++) {
                 if (listings[i].amenities.includes(amenities[j])) {
@@ -68,6 +71,9 @@ const Filter = {
         console.log(":::::sorting by facilities:::::")
         console.log(facilities)
         var newarr = [];
+        if (facilities.length == 0) {
+            return listings
+        }
         for (let i = 0; i < listings.length; i++) {
             for (let j = 0; j < facilities.length; j++) {
                 if (listings[i].facilities.includes(facilities[j])) {

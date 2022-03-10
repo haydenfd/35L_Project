@@ -9,7 +9,7 @@ export const updatePost = (id, post) => async (dispatch) => {
     }
 }
 */
-
+//Major bug here
 export const reducer = (state, action) => {
     if (action.type = "UPDATE") {
         return {

@@ -9,18 +9,18 @@ function Bedrooms(props:any) {
 
 
     function isAtMin() {
-        if (bedrooms == 0) return true;
+        if (bedrooms === 0) return true;
         return false;
     }
 
     function isAtMax() {
-        if (bedrooms == 9) return true;
+        if (bedrooms === 9) return true;
         return false;
     }
 
     function display() {
-        if (bedrooms == 0) {
-            return "N/A";
+        if (bedrooms === 0) {
+            return 0;
         }
         else {
             return bedrooms;
@@ -63,7 +63,7 @@ function Bedrooms(props:any) {
                 <span onClick={increment} className={isAtMax() ? 'plus at_min' : 'plus'}>+</span>
             </span>  
             <br></br>
-            <div style={{paddingTop:'20px'}}></div>
+            <div style={{paddingTop:'15px'}}></div>
             <button onClick={sortByBedrooms} className={!change_ ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>      
 
              {/* <button onClick={sortByBedrooms} className={!change ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>       */}

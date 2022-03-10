@@ -67,6 +67,7 @@ function ProfilePage(props:any) {
 
                if (dataStream.userinfo.pfp != '') {
                    let prof_pic:any = await ApiService.getProfilePicture(dataStream.userinfo.pfp);
+                   console.log(prof_pic)
                    let photo = "data:image/jpeg;base64," + prof_pic.data;
                    let profile_photo = {image:photo}
                    setImage(profile_photo);
@@ -192,7 +193,7 @@ function ProfilePage(props:any) {
    function whoseProfile() {
        if (localStorage.getItem('username') == username) {
            return (<span>  <form style={{marginTop:'150px'}} onSubmit={updateProfilePicture}>
-         <input onChange={isSubmitDisplayed} onClick={triggerHiddenFileUpload} className="followButton" type="button" value="Upload Profile Picture"></input>&nbsp;&nbsp;<input className="followButton" style={{backgroundColor:'#0c8f21'}} type='submit' name="submit" placeholder='Submit After Uploading' value='Submit After Uploading' />
+         <input onChange={isSubmitDisplayed} onClick={triggerHiddenFileUpload} className="followButton" type="button" value="Upload a JPEG Profile Picture"></input>&nbsp;&nbsp;<input className="followButton" style={{backgroundColor:'#0c8f21'}} type='submit' name="submit" placeholder='Submit After Uploading' value='Submit After Uploading' />
          <input id="file-input" name="file-input" type="file" />
             </form></span>
  )

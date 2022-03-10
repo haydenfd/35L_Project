@@ -77,7 +77,7 @@ function Navbar() {
     
     return (
         <div className="wrapper">
-            <img className="logo" onClick={clickHome} src="/logoalt.png"></img>
+            <img className="logo" onClick={clickHome} src="/new_logo.png"></img>
             <span className="signin">
                 <button className="prof" onClick={changeDropdown}>
                 <p>&nbsp;</p>

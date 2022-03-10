@@ -5,6 +5,8 @@ import ApiService from '../../service'
 import Amenities from '../../Components/MainPage/SubNavbar/Amenities'
 import './upload.css'
 import swal from 'sweetalert'
+import TextField from "@material-ui/core/TextField" 
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 export default function Upload(props:any) {
 
@@ -150,7 +152,9 @@ export default function Upload(props:any) {
   return (
 
     <div className='form-box'>
-      <h1>Add A Listing</h1>
+      <div className='title'>
+        <h1 className='head'>Add A Listing</h1>
+        </div>
       <form className='form' onSubmit={submitListing}>
         <div className='input-div_'>
         <label htmlFor="Address" >Address</label>
@@ -161,20 +165,25 @@ export default function Upload(props:any) {
           <input onChange={updatePrice} required placeholder="Enter Price" id="Price" />
         </div>
         <div className='input-div_'>
-        <label htmlFor="Distance">Distance To Campus   </label>
+          <label htmlFor="Distance">Distance To Campus</label>
           <input onChange={updateDistance} required placeholder="Enter Distance" id="Distance" />
         </div>
         <div className='input-div_'>
         <label htmlFor="RentBy">Rent By Date </label>
           <input onChange={updateRentBy} required placeholder="Enter Last Date" id="RentBy" />
         </div>
-        {/* <div className='input-div_'>
-        <label htmlFor="Seller">Seller</label>
-          <input  required placeholder="Seller Name" id="Seller" />
-        </div> */}
-        <div className='input-div_'>
-        {/* <label htmlFor="Amenities">Amenities</label> */}
 
+        <div className='input-div_'>
+        <label htmlFor="Bedrooms">Bedrooms</label>
+          <input onChange={updateBedrooms} required placeholder="No. Of Bedrooms" id="Bedrooms" /> 
+        </div>
+        <div className='input-div_'>
+        <label htmlFor="Bathrooms">Bathrooms</label>
+          <input onChange={updateBathrooms} required placeholder="No. Of Bathrooms" id="Bathrooms" /> 
+        </div>
+
+        <div className='list'>
+        <div className='input-div_'>
           <input type="checkbox" id="furnished" value="furnished" name="furnished"></input>
           <label htmlFor="furnished"> Fully Furnished</label><br></br>
 
@@ -187,12 +196,10 @@ export default function Upload(props:any) {
           <input type="checkbox" id="parking" value="parking" name="parking"></input>
           <label htmlFor="parking"> Parking</label><br></br>
 
-          <input type="checkbox" id="hardwood" value="hardwood" name="hardwood"></input>
+          <input type="checkbox" id="hardwood" value="hardwood" name="hardwood" ></input>
           <label htmlFor="hardwood"> Hardwood</label><br></br>
-
-
-          {/* <input required placeholder="Amenities" id="Amenities" /> */}
         </div>
+        
         <div className='input-div_'>
         <input type="checkbox" id="gym" value="gym" name="gym"></input>
           <label htmlFor="gym"> Gym</label><br></br>
@@ -209,22 +216,14 @@ export default function Upload(props:any) {
           <input type="checkbox" id="pool" value="pool" name="pool"></input>
           <label htmlFor="pool"> Swimming Pool</label><br></br>
         </div>
-
+    </div>
         <div className='input-div_'>
-        <label htmlFor="Bedrooms">Bedrooms</label>
-          <input onChange={updateBedrooms} required placeholder="No. Of Bedrooms" id="Bedrooms" /> 
-        </div>
-        <div className='input-div_'>
-        <label htmlFor="Bathrooms">Bathrooms</label>
-          <input onChange={updateBathrooms} required placeholder="No. Of Bathrooms" id="Bathrooms" /> 
-        </div>
-        <div className='input-div_'>
-        <label htmlFor="Pictures">Pictures</label>
+        <label htmlFor="Pictures" id="picture-label">Pictures</label>
           {/* <input required placeholder="Add Image Here" id="Pictures" />  */}
           <input id="post-upload" name="file-input" type="file" />
         </div>
        <input type="submit" value="Submit" className='btn'/>
-       <button onClick={close}>Close</button>
+       <button onClick={close} className='btn'>Close</button>
       </form>
     </div>
   )
