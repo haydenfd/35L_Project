@@ -35,7 +35,7 @@ function Navbar() {
     } 
 
     function isLoginSuccessful(status:boolean) {
-        if (status == true) {
+        if (status) {
             swal("Successfully Signed In!", "", "success")
             setDropdown(false);
             setSignedIn(true);
@@ -47,7 +47,7 @@ function Navbar() {
     }
 
     function isSignupSuccessful(status:boolean) {
-        if (status == true) {
+        if (status) {
             swal("Successfully Signed Up!", "Sign in to begin your search!", "success")
             setDropdown(false);
         }

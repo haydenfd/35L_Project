@@ -9,8 +9,8 @@
     flex-direction: row;
     margin-left: 4%;
     justify-content: space-between;
-    width: 55%;
-    height: 90px;
+    width: 75%;
+    height: 100px;
     padding-top:15px;
     padding-bottom:10px;
   }
@@ -58,7 +58,7 @@
 }
 
 .separator {
-  margin-left: 1%;
+  margin-left: 5%;
 }
 
 .clicked {
@@ -96,7 +96,6 @@
   min-width: 200px;
   min-height: 150px;
 }
-
 
 .notClickedDisplay {
   display: none;
@@ -252,8 +251,6 @@ left:-2px;
 position: relative;
 bottom: 12px;
 left:-3px;
-
-
 }
 
 

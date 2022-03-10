@@ -50,8 +50,7 @@ function SubNavbar(props:any) {
        <div>
            <br></br>
            <div className="flex">
-
-               <span className="separator"></span>
+                <span className="separator"></span>
                 <div>
                 <div className="buttonWrapper">
                 <button className={isButtonClicked("price") ? 'baseButton clicked': 'baseButton'} onClick={() => adjustStyles("price")}>Price <span>{isButtonClicked("price") ? downward_caret : upward_caret}</span> </button>
