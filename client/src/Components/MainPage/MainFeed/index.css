@@ -58,16 +58,15 @@
 }
 
 .upload_listing {
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    right: 0;
-    border: 0px;
+    right: 31px;
     margin-right: 20px;
     margin-bottom: 25px;
     padding: 22.5px;
     border-radius: 50px;
     background-color: #FFE800;
-    border: 1px solid grey;
+    border: 1px solid #FFE800;
     cursor: pointer;
 }
 

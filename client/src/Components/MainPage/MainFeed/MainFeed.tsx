@@ -24,7 +24,8 @@ function MainPage(posts:any) {
 
     // funny...strict equality comparison defaults to showing form
     function setUpload() {
-        if (localStorage.getItem('username') == undefined) {
+        // if (localStorage.getItem('username') === undefined) {
+        if (!localStorage.getItem('username')) {
             swal("Failure", "Must be signed in to upload a listing!", "error")
             return
         }
@@ -53,7 +54,7 @@ function MainPage(posts:any) {
                 })}
             </div>
 
-            <button onClick={setUpload} className="upload_listing"><span style={{fontFamily: "Arial, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf093;</span></button>
+            <button onClick={setUpload} className="upload_listing"><span style={{fontFamily: "Montserrat, FontAwesome", color:'#383838', fontSize: '22px'}}>&#xf093;</span></button>
         </div>
     )
 }

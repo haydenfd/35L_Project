@@ -2,11 +2,8 @@ import { useState } from 'react'
 import React from 'react'
 import Middleware from '../Middleware/Middleware'
 import ApiService from '../../service'
-import Amenities from '../../Components/MainPage/SubNavbar/Amenities'
 import './upload.css'
 import swal from 'sweetalert'
-import TextField from "@material-ui/core/TextField" 
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 export default function Upload(props:any) {
 
@@ -219,7 +216,7 @@ export default function Upload(props:any) {
     </div>
         <div className='input-div_'>
         <label htmlFor="Pictures" id="picture-label">Pictures</label>
-          {/* <input required placeholder="Add Image Here" id="Pictures" />  */}
+  {/* <input required placeholder="Add Image Here" id="Pictures" />  */}
           <input id="post-upload" name="file-input" type="file" />
         </div>
        <input type="submit" value="Submit" className='btn'/>
