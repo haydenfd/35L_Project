@@ -3,7 +3,7 @@ import React from "react";
 import { AiOutlineFontSize } from "react-icons/ai";
 
 
-function Hosting() {
+/* function Hosting() {
     const styleObj = {
         font: "Airbnb Cereal",
         fontSize: 50,
@@ -66,3 +66,4 @@ function Hosting() {
 }
 
 export default Hosting;
+ */

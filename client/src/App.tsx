@@ -7,7 +7,7 @@ import Navbar from './Components/Navbar/Navbar'
 
 import { Container, AppBar, Typography, Grow, Grid } from '@material-ui/core';
 
-import Form from './Components/Form/form';
+// import Form from './Components/Form/form';
 
 
 function App() {
