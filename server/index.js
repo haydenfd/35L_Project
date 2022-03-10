@@ -232,7 +232,7 @@ app.post("/api/getprof", async (req, res) => {
         console.log(err)
     }
     finally {
-        console.log("IN THE END")
+        // console.log("IN THE END")
         res.send({imagedata})
         await client.close()
     }
@@ -261,7 +261,7 @@ app.post('/api/get_multiple_posts', async (req, res) => {
             result.push(rez)
         }
     } catch(err) {
-        console.log(err)
+        console.error(err)
     }
     finally {
         // console.log(result)
@@ -279,7 +279,7 @@ app.post('/api/get_image_from_filename', async (req, res) => {
     try {
         imagedata = await collection.findOne( {filename:filename} )
     }
-    catch(err) {console.log(err)}
+    catch(err) {console.error(err)}
     finally {
         // console.log(imagedata)
         res.send(imagedata)
@@ -733,25 +733,25 @@ app.get('/api/getallposts', async (req, res) => {
 })
 
 app.post('/api/getMultiplePostsAtOnce', async (req, res) => {
-    console.log("BRUVV????")
+    // console.log("BRUVV????")
     await client.connect()
-    console.log("BRUVV????")
+    // console.log("BRUVV????")
     var ObjectId = mongodb.ObjectID
     const db = client.db('projectdb')
     const collection = db.collection('posts')
     var result = []
-    console.log("BRUVV????")
+    // console.log("BRUVV????")
 
     for (let i = 0; i < req.body.ids.length; i++) {
-        console.log("bruv")
+        // console.log("bruv")
         try {
             let _id = ObjectId(req.body.ids[i])
-            console.log(req.body.ids[i])
+            // console.log(req.body.ids[i])
             let post = await collection.find( { _id: _id } ).toArray()
-            console.log(post)
+            // console.log(post)
             result.push(post)
         }
-        catch (err) {console.log(err)}
+        catch (err) {console.error(err)}
         finally {
             res.send(result)
             await client.close();
@@ -773,7 +773,7 @@ app.post('/api/getSinglePost', async (req, res) => {
         // console.log(post)
         res.send( { result:200, post: post } )
     } catch (err) {
-        console.log(err)
+        console.error(err)
         res.send({ result: 201 })
     } finally {
         await client.close()
