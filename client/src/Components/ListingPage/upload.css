@@ -112,8 +112,14 @@
   margin-bottom: 15px;
 }
 
+#picture-label{
+    margin-top: 20px;
+    margin-left: 23px;
+    margin-right: 20px;
+}
 
-.picture-label{
-  margin-top:20px;
-  margin-left:20px;
+#post-upload {
+  padding-right: 0px;
+  padding-left: 15px;
+  width: 200px;
 }

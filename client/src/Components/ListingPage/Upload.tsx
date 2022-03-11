@@ -215,7 +215,7 @@ export default function Upload(props:any) {
         </div>
     </div>
         <div className='input-div_'>
-        <label htmlFor="Pictures" id="picture-label">Pictures</label>
+        <label htmlFor="Pictures" id="picture-label">Picture</label>
   {/* <input required placeholder="Add Image Here" id="Pictures" />  */}
           <input id="post-upload" name="file-input" type="file" />
         </div>
