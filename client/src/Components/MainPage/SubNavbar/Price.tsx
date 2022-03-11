@@ -3,7 +3,6 @@ import './index.css'
 import TextField from "@material-ui/core/TextField" 
 import InputAdornment from '@material-ui/core/InputAdornment';
 
-
 function Price(props:any) {
 
     function checkIfInteger(value:string) {
@@ -47,8 +46,6 @@ function Price(props:any) {
             </div>
       </span>
 )
-
-
 }
 
 export default Price;
