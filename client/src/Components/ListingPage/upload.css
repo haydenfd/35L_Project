@@ -87,8 +87,18 @@
   display: flex;
   flex: 1;
   margin-bottom: 20px;
-  padding-left:110px;
+  padding-left:28%;
 }
+
+@media (max-width: 1200px) {
+  .list {
+    display: inline;
+  }
+  .form-box { 
+    /* padding-bottom: 500px; */
+    min-height: 1500px;
+  }
+  }
 
 .checkboxes {
   width: 50%;

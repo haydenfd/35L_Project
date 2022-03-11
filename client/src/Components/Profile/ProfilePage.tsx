@@ -102,6 +102,7 @@ function ProfilePage(props:any) {
 
     
     function followOrUnfollow() {
+        console.log('wut')
         if (isRecentlyFollowed) {
             setFollowers(followers-1)
             setRecentlyUnfollowed(true)
