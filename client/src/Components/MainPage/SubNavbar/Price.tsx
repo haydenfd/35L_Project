@@ -1,8 +1,6 @@
 import React from "react"
 import './index.css'
 import TextField from "@material-ui/core/TextField" 
-// import { TextField } from '@mui/material';
-import {Button} from '@material-ui/core'; //importing material ui component
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 
@@ -45,7 +43,7 @@ function Price(props:any) {
                  />
             </div>  
             <br></br>
-            {/* <button onClick={updatePrice} className="update_counter">Update</button> */}
+          <button onClick={updatePrice} className="update_counter">Update</button> 
             </div>
       </span>
 )

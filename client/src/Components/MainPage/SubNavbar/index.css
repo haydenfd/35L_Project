@@ -17,10 +17,6 @@
 
 @media (max-width: 800px) {
 
-  .buttonWrapper {
-    /* margin-top: 500px; */
-  }
-
     .flex {
       flex-direction: column;
     }

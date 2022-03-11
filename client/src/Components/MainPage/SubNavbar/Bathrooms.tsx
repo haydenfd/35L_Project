@@ -44,8 +44,7 @@ function Bathrooms(props:any) {
     }
 
     function sortByBathrooms() {
-        if (bathrooms == 0) {
-            console.log("CAN'T SUBMIT")
+        if (bathrooms === 0) {
             return
         }
         props.sortByBathrooms(bathrooms)
@@ -64,7 +63,7 @@ function Bathrooms(props:any) {
             <br></br>
             <div style={{paddingTop:'20px'}}></div>
 
-             {/* <button onClick={sortByBathrooms} className={!change ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>       */}
+         <button onClick={sortByBathrooms} className={!change ? 'update_counter update_counter_idle' : 'update_counter'}>Update</button>  
 
       </span>
 )

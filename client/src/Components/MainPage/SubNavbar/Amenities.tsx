@@ -67,7 +67,7 @@ function Amenities(props:any) {
               <span className="check"></span>
             </label>
 
-        {/* <button onClick={sortByAmenities} className="update_counter modified-btn-2" style={{ marginBottom: '-20px' }}>Update</button> */}
+       <button onClick={sortByAmenities} className="update_counter modified-btn-2" style={{ marginBottom: '-20px' }}>Update</button>
 
       </span>
 )

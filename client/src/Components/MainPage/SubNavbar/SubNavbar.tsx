@@ -5,7 +5,6 @@ import Price from './Price';
 import Amenities from './Amenities'
 import Facilities from "./Facilities";
 import Bathrooms from './Bathrooms';
-import bedrooms from './Bedrooms';
 import Bedrooms from "./Bedrooms";
  
 function SubNavbar(props:any) {
