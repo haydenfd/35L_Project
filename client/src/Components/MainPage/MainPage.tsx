@@ -24,7 +24,7 @@ function MainPage() {
             for (let j = 0; j < post_res!['posts']['length']; j++) {
                 post_res!['posts'][j]['image_data'] = image_data!['result'][j]
             }
-            updatePostsArr(post_res!['posts'])
+            updatePostsArr(post_res!['posts'].reverse())
             setDataLoaded(true)
         }
         posts()

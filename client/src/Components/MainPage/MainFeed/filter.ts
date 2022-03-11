@@ -22,7 +22,7 @@ const Filter = {
         var newarr = [];
         for (let i = 0; i < listings.length; i++) {
             let bedrooms = (listings[i].bedrooms)
-            if (bedrooms >= num) {
+            if (bedrooms == num) {
                 newarr.push(listings[i])
             }
         }
@@ -34,7 +34,7 @@ const Filter = {
         var newarr = [];
         for (let i = 0; i < listings.length; i++) {
             let bathrooms = (listings[i].bathrooms)
-            if (bathrooms >= num) {
+            if (bathrooms == num) {
                 newarr.push(listings[i])
             }
         }

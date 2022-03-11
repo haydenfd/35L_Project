@@ -159,11 +159,11 @@ export default function Upload(props:any) {
         </div>
         <div className='input-div_'>
         <label htmlFor="Price">Price</label>
-          <input onChange={updatePrice} required placeholder="Enter Price" id="Price" />
+          <input onChange={updatePrice} required placeholder="Enter Price (monthly)" id="Price" />
         </div>
         <div className='input-div_'>
           <label htmlFor="Distance">Distance To Campus</label>
-          <input onChange={updateDistance} required placeholder="Enter Distance" id="Distance" />
+          <input onChange={updateDistance} required placeholder="Enter Distance (miles)" id="Distance" />
         </div>
         <div className='input-div_'>
         <label htmlFor="RentBy">Rent By Date </label>

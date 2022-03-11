@@ -42,7 +42,7 @@ function Price(props:any) {
                  />
             </div>  
             <br></br>
-          <button onClick={updatePrice} className="update_counter">Update</button> 
+          <button onClick={updatePrice} className="update_price__">Update</button> 
             </div>
       </span>
 )
