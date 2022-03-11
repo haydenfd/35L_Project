@@ -105,6 +105,9 @@ function ListingPage(props:any) {
 
     function favoriteOrUnfavorite() {
         let username_ = localStorage.getItem('username')
+        if (!username_) {
+            return;
+        }
         let postId = post.post[0]._id;
 
         if (post.post[0].favorited.includes(localStorage.getItem('username')) || isRecentlyFavorited) {
