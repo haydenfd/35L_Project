@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineFontSize } from "react-icons/ai";
 
-/* function NotFound() {
+function NotFound() {
     const styleObj = {
         font: "Airbnb Cereal",
         fontSize: 30,
@@ -37,4 +37,3 @@ import { AiOutlineFontSize } from "react-icons/ai";
 }
 
 export default NotFound;
- */

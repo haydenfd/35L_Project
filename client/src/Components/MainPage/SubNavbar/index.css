@@ -122,6 +122,21 @@ input {
   font-family: Helvetica, sans-serif
 }
 
+.update_price__ {
+  cursor: pointer;
+  margin-top: 15px;
+  float: center;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 0px;
+  background-color: #1e90ff;
+  color: #FFE800;
+  width: 25%;
+  float: right;
+}
+
 .update_counter {
     cursor: pointer;
     margin-top: 15px;

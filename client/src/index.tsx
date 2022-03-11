@@ -12,7 +12,7 @@ import reportWebVitals from './reportWebVitals';
 import MainPage from './Components/MainPage/MainPage';
 import ListingPage from './Components/ListingPage/ListingPage';
 import Upload from './Components/ListingPage/Upload'
-// import NotFound from './Components/NotFound/NotFound';
+import NotFound from './Components/NotFound/NotFound';
 // import Concerns from './Components/Concerns/Concerns'; 
 // import Hosting from './Components/Hosting/Hosting';
 
@@ -27,6 +27,7 @@ ReactDOM.render(
           <Route path="/listing/:id" element={<ListingPage />}/>
           {/* <Route path="/test" element={<Register />}/> */}
           <Route path="/test" element={<Upload />}/>
+          <Route path="*" element={<NotFound />} />
        {/*    <Route path="/NotFound" element={<NotFound />} />
           <Route path="/Concerns" element={<Concerns />}/>
           <Route path="/Hosting" element={<Hosting />}/> */}

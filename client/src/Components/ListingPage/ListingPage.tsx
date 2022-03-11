@@ -145,7 +145,7 @@ function ListingPage(props:any) {
             <div className="listing_wrapper">
                 <div style={{ marginTop:'30px' }}> </div>
                 <span><p className="listing_address_display">{post!.post[0].address}</p><p className="listing_price_display">${post!.post[0].price} / month</p></span>
-                <img className="display_listing_image" src={`data:image/jpg;base64,${post.post[0].image_data.base64}`}></img>
+                <img className="display_listing_image" src={`data:image/jpeg;base64,${post.post[0].image_data.base64}`}></img>
                 <div style={{marginTop:'10px'}}></div>
                 <span>{getFavoriteButtonStyle()}&nbsp;&nbsp;<button className="favoriteButton" style={{backgroundColor:'#606060'}} onClick={displayFollowers}>View Followers</button></span>
                 <div style={{marginTop:'10px'}}></div>
