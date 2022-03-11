@@ -1,7 +1,5 @@
 import React from "react"
 import './index.css'
-
-
 function Post(props:any) {
 
     return (

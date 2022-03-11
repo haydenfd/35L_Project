@@ -63,9 +63,9 @@ function MainPage() {
             {isDataLoaded ? 
                 <div className="body">
                 <SubNavbar sortByPrice={sortByPrice} sortByBedrooms={sortByBedrooms} sortByBathrooms={sortByBathrooms} sortByAmenities={sortByAmenities} sortByFacilities={sortByFacilities} listings={postsArr} min={minPrice} max={maxPrice}/>
-                {postsArr.length == 0 ? <div> <img src="/empty.png" alt="No matches"></img><p>No Listings Meet that Criteria!<br></br>Reset the Filters!</p> </div> : <MainFeed posts={postsArr}/> }           
+                {postsArr.length === 0 ? <div> <img src="/empty.png" alt="No matches"></img><p>No Listings Meet that Criteria!<br></br>Reset the Filters!</p> </div> : <MainFeed posts={postsArr}/> }           
                 </div>
-                : <div className="body"><img className="defaultPost" src="/loading.gif"></img> </div>
+                : <div className="body"><img alt="loading" className="defaultPost" src="/loading.gif"></img> </div>
         }
         </div>
 

@@ -1,7 +1,5 @@
 import React from "react"
 import './index.css'
-
-
 function Facilities(props:any) { 
   
   function sortByFacilities() {
@@ -45,23 +43,18 @@ function Facilities(props:any) {
 
             <div style={{paddingTop:'4px'}}></div>
 
-
             <label className="check_wrapper"><span style={{fontSize:'14px', marginLeft:'-80px'}}>Spa</span>
               <input id="spa" type="checkbox"/>
               <span className="check"></span>
             </label>
 
             <div style={{paddingTop:'4px'}}></div>
-
-
             <label className="check_wrapper"><span style={{fontSize:'14px', marginLeft:'-11px'}}>Laundry Room</span>
               <input id="laundry" type="checkbox"/>
               <span className="check"></span>
             </label>
 
             <div style={{paddingTop:'4px'}}></div>
-
-
             <label className="check_wrapper"><span style={{fontSize:'14px', marginLeft:'-5px'}}>Swimming Pool</span>
               <input id="pool" type="checkbox"/>
               <span className="check"></span>
@@ -69,13 +62,10 @@ function Facilities(props:any) {
 
             <div style={{paddingTop:'4px'}}></div>
             
-
             <button onClick={sortByFacilities} className="update_counter modified-btn-1">Update</button>
-            
 
       </span>
 )
-
 
 }
 

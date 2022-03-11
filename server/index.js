@@ -23,9 +23,6 @@ const client = new MongoClient(process.env.MONGO_URI, {
 { useUnifiedTopology: true }, { useNewUrlParser: true })
 
 
-// const client_ = new MongoClient(process.env.MONGO_URI);
-
-
 const PORT = process.env.PORT || 8000
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY
 
@@ -33,51 +30,10 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(multer().any())
-
-// client.connect(err => {
-//     if (err) throw err
-//     console.log("db connected");
-// })
-
-
-/* user interface (db)
-
-{
-    email: <email>
-    userinfo: {
-        password: <password> <---encrypted!
-        first: <first>
-        last: <last>
-        bio: <bio>
-        followers: <followers>
-        following: <following>
-        pfp: <picturename>
-    }
-}
- */
 
 app.listen(PORT, () => {
     console.log(`listening on port ${PORT}`)
 })
-
-
-/// ******* MY CODE 
-
-// const postObject = {
-//     uniqueID: Number,
-//     price: Number, 
-//     distance: Number, // distance from campus, in miles
-//     address: String,
-//     rentByDate: String, // (fall 2022, winter 2023, etc)
-//     seller: userObject,
-//     favorites: userObject[],
-//     bathrooms: Number,
-//     bedrooms: Number,
-//     amenities: String,
-//     facilities: String,
-//     images: String[]
-// };
 
 export const getPosts = async (req, res) => {
 
@@ -144,10 +100,6 @@ export const likePost = async (req, res) => {
     res.json(updatedPost);
 }
 
-
-/// ******* MY CODE 
-
-
 app.post('/api/getMultipleProfilePosts', async (req, res) => {
     var ObjectId = mongodb.ObjectID
     var result = []
@@ -180,7 +132,6 @@ app.post('/api/getMultipleProfilePosts', async (req, res) => {
 })
 
 app.post('/api/getposts', async (req, res) => {
-    // console.log(req.body.id)
     var ObjectId = mongodb.ObjectID
     var obj_id = ObjectId(req.body.id)
     var rez;
@@ -194,7 +145,6 @@ app.post('/api/getposts', async (req, res) => {
     try {
         let post_id = await post_collection.findOne({images:obj_id},{ "images.$:": 0 })
         rez = await collection.findOne(obj_id);
-        // console.log(rez)
         result['file'] = rez._id;
         result['metadata'] = rez.metadata;
         result['postId'] = post_id._id.toString();
@@ -206,14 +156,13 @@ app.post('/api/getposts', async (req, res) => {
     }     
     
     finally {
-        // console.log(result.file);
+
         res.send({ result:result });
         await client.close()
     }
 })
 
 app.post("/api/getprof", async (req, res) => {
-    // console.log(req.body.filename)
     var image;
     var imagedata;
     await client.connect()
@@ -222,7 +171,7 @@ app.post("/api/getprof", async (req, res) => {
     const images = db.collection('fs.chunks')
     let result = {}
     try {
-        // console.log(req.body.filename)
+    
         image = await collection.findOne( { filename: req.body.filename } );
         let id = image._id;
         imagedata = await images.findOne( { files_id: id } );

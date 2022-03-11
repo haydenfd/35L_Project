@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import Post from './Post'
-import TimelinePost from '../../../Models/TimelinePost'
 import { useNavigate } from "react-router-dom";
 import Upload from '../../ListingPage/Upload'
 import swal from "sweetalert";
@@ -22,9 +21,8 @@ function MainPage(posts:any) {
         navigate('/listing/' + postId)
     }
 
-    // funny...strict equality comparison defaults to showing form
     function setUpload() {
-        // if (localStorage.getItem('username') === undefined) {
+    
         if (!localStorage.getItem('username')) {
             swal("Failure", "Must be signed in to upload a listing!", "error")
             return
