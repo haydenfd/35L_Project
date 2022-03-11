@@ -7,6 +7,9 @@
 * Richard Li
 * Hayden D'Souza
 
+
+<h1>Running Locally</h1>
+
 <h3>This assumes NPM is already installed</h3>
 <p>To clone the repository locally, run</p>
 
